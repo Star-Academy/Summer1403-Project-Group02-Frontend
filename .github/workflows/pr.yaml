@@ -1,0 +1,22 @@
+on:
+    pull_request:
+        branches:
+            - main
+        types: [opened, synchronize, reopened]
+
+jobs:
+    pr-enforce-cc:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            pull-requests: read
+
+        steps:
+            - name: "Checkout repository"
+              uses: actions/checkout@v4
+
+            - name: "Validate conventional commit messages"
+              id: cc
+              uses: ./.github/actions/pr-enforce-cc
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
