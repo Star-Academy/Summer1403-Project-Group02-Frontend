@@ -1,0 +1,17 @@
+name: 'Validate conventional commit messages'
+description: 'Validate conventional commit messages of newly added commits.'
+inputs: {}
+outputs:
+  valid:
+    description: 'Whether the commits are valid ("true" | "false")'
+
+  valid_commits:
+    description: 'The valid commit messages (json)'
+  
+  invalid_commits:
+    description: 'The invalid commits (json)'
+
+
+runs:
+  using: 'node20'
+  main: 'index.js'
