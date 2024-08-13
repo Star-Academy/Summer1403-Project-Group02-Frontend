@@ -1,0 +1,28 @@
+# TODO: Coverage report
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20"
+
+      - uses: browser-actions/setup-chrome@v1
+        id: chromedriver
+        with:
+          chrome-version: stable
+          install-chromedriver: true
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        env:
+          CHROME_BIN: ${{ steps.chromedriver.outputs.chrome-path }}
+        run: npm run test:ci
