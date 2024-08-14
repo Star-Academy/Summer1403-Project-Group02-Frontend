@@ -1,0 +1,38 @@
+name: Run tests
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - uses: browser-actions/setup-chrome@v1
+        id: chromedriver
+        with:
+          chrome-version: stable
+          install-chromedriver: true
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        env:
+          CHROME_BIN: ${{ steps.chromedriver.outputs.chrome-path }}
+        run: npm run test:ci
+
+      - name: Upload results to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
