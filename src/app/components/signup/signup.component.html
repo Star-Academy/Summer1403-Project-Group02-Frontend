@@ -1,7 +1,8 @@
 <div class="flex justify-around items-center h-screen">
   <div tuiCardLarge tuiSurface="elevated">
     <form [formGroup]="signup_form">
-      <h3 class="tui-form__header">Create New User</h3>
+      <h3 class="tui-form__header text-center">Create New User</h3>
+
       <div class="tui-form__row">
         <tui-input formControlName="name" [tuiTextfieldCleaner]="true">
           name
@@ -9,6 +10,23 @@
           <span class="tui-required"></span>
         </tui-input>
       </div>
+
+      <div class="tui-form__row">
+        <tui-multi-select
+          [editable]="false"
+          [rows]="1"
+          [tuiTextfieldLabelOutside]="true"
+          formControlName="role"
+        >
+          Roles
+          <tui-data-list-wrapper
+            tuiMultiSelectGroup
+            *tuiDataList
+            [items]="system_role"
+          />
+        </tui-multi-select>
+      </div>
+
       <div class="tui-form__row">
         <tui-input formControlName="username" [tuiTextfieldCleaner]="true">
           username
@@ -16,6 +34,7 @@
           <span class="tui-required"></span>
         </tui-input>
       </div>
+
       <div class="tui-form__row">
         <tui-input formControlName="email" [tuiTextfieldCleaner]="true">
           email
@@ -23,6 +42,7 @@
           <span class="tui-required"></span>
         </tui-input>
       </div>
+
       <div class="tui-form__row">
         <tui-input-password
           formControlName="password"
@@ -33,19 +53,10 @@
           <span class="tui-required"></span>
         </tui-input-password>
       </div>
-      <div class="tui-form__buttons">
-        <button size="l" tuiButton type="submit" class="tui-form__button">
-          Submit
-        </button>
-        <button
-          appearance="flat"
-          size="l"
-          tuiButton
-          type="button"
-          class="tui-form__button"
-        >
-          Cancel
-        </button>
+
+      <div class="tui-form__buttons_align_center">
+        <button tuiButton type="submit">Submit</button>
+        <button appearance="secondary" type="button" tuiButton>Cancel</button>
       </div>
     </form>
   </div>
