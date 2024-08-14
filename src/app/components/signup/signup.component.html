@@ -1,0 +1,52 @@
+<div class="flex justify-around items-center h-screen">
+  <div tuiCardLarge tuiSurface="elevated">
+    <form [formGroup]="signup_form">
+      <h3 class="tui-form__header">Create New User</h3>
+      <div class="tui-form__row">
+        <tui-input formControlName="name" [tuiTextfieldCleaner]="true">
+          name
+          <input type="text" tuiTextfieldLegacy />
+          <span class="tui-required"></span>
+        </tui-input>
+      </div>
+      <div class="tui-form__row">
+        <tui-input formControlName="username" [tuiTextfieldCleaner]="true">
+          username
+          <input type="username" tuiTextfieldLegacy />
+          <span class="tui-required"></span>
+        </tui-input>
+      </div>
+      <div class="tui-form__row">
+        <tui-input formControlName="email" [tuiTextfieldCleaner]="true">
+          email
+          <input type="email" tuiTextfieldLegacy />
+          <span class="tui-required"></span>
+        </tui-input>
+      </div>
+      <div class="tui-form__row">
+        <tui-input-password
+          formControlName="password"
+          [tuiTextfieldCleaner]="true"
+        >
+          password
+          <input type="password" tuiTextfieldLegacy />
+          <span class="tui-required"></span>
+        </tui-input-password>
+      </div>
+      <div class="tui-form__buttons">
+        <button size="l" tuiButton type="submit" class="tui-form__button">
+          Submit
+        </button>
+        <button
+          appearance="flat"
+          size="l"
+          tuiButton
+          type="button"
+          class="tui-form__button"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
