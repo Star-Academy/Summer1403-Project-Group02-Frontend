@@ -2,7 +2,7 @@
   <div class="sm:w-50 md:w-50 lg:w-1/3">
     <form [formGroup]="form">
       <div class="tui-col_12">
-        <div tuiCardLarge tuiSurface="flat">
+        <div tuiCardLarge class="tui-island">
           <h3 class="tui-island__title">Sign in</h3>
           <p class="tui-island__paragraph">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -20,14 +20,6 @@
                 <tui-input-password formControlName="password">
                   Type a password
                 </tui-input-password>
-              </p>
-            </div>
-
-            <div class="tui-form__row">
-              <p>
-                <tui-checkbox-labeled formControlName="remember">
-                  Remember me?
-                </tui-checkbox-labeled>
               </p>
             </div>
           </div>
