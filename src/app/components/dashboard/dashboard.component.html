@@ -1,0 +1,104 @@
+<header id="header" tuiNavigationHeader>
+  <button
+    appearance=""
+    iconStart="@tui.layout-grid"
+    (click)="expanded = !expanded"
+    tuiIconButton
+  >
+    Menu
+  </button>
+
+  <span tuiNavigationLogo>
+    <span>{{ title }}</span>
+  </span>
+
+  <hr />
+
+  <button iconStart="@tui.sun" tuiIconButton>Change Theme</button>
+  <button iconStart="@tui.bell" tuiIconButton>
+    Notifications
+    <tui-badge-notification />
+  </button>
+  <button appearance="secondary" iconStart="@tui.user" tuiButton>
+    {{ full_name | titlecase }}
+  </button>
+</header>
+
+<div id="container" [style.display]="'flex'">
+  <aside [tuiNavigationAside]="expanded">
+    <header>
+      <button iconStart="@tui.home" appearance="secondary" tuiAsideItem>
+        <span tuiFade>Dasboard</span>
+      </button>
+    </header>
+
+    <button iconStart="@tui.users" tuiAsideItem>
+      <span tuiFade>Users</span>
+    </button>
+
+    <button iconStart="@tui.search" tuiAsideItem>
+      <span tuiFade>Search</span>
+    </button>
+
+    <button iconStart="@tui.heart" tuiAsideItem>
+      <span tuiFade>Favorite</span>
+    </button>
+
+    <button iconStart="@tui.pie-chart" tuiAsideItem>
+      <span tuiFade>Charts</span>
+    </button>
+
+    <hr />
+    <button iconStart="@tui.plus" tuiAsideItem><span tuiFade>Add</span></button>
+    <footer>
+      <button iconStart="@tui.user" tuiAsideItem>
+        <span tuiFade>Profile</span>
+      </button>
+      <button iconStart="@tui.settings" tuiAsideItem>
+        <span tuiFade>Settings</span>
+      </button>
+      <button
+        tuiAsideItem
+        [iconStart]="expanded ? '@tui.chevron-left' : '@tui.chevron-right'"
+        (click)="expanded = !expanded"
+      >
+        <span tuiFade>{{ expanded ? "Collapse" : "Expand" }}</span>
+      </button>
+    </footer>
+  </aside>
+
+  <tui-scrollbar [hidden]="false">
+    <main id="main" tuiNavigationMain>
+      <nav tuiNavigationNav [style.top]="0" [style.position]="'sticky'">
+        <a routerLink=".">
+          <tui-icon icon="@tui.chevron-left" />
+          Back
+        </a>
+        /
+        <span tuiNavigationLogo>
+          <span tuiFade>Groups</span>
+          <tui-badge iconStart="@tui.lock">Status</tui-badge>
+        </span>
+        <hr />
+        <tui-tabs tuiFade>
+          <button tuiTab>Default view</button>
+          <button tuiTab>Details</button>
+          <button tuiTab>Followers</button>
+        </tui-tabs>
+        <button appearance="secondary" tuiButton>Secondary</button>
+        <button tuiButton>Primary</button>
+      </nav>
+      <div
+        *tuiRepeatTimes="let index of 10"
+        tuiCardLarge
+        tuiHeader
+        tuiSurface="elevated"
+      >
+        <h2 tuiTitle>
+          Some random content
+          <span tuiSubtitle>A subtitle</span>
+        </h2>
+      </div>
+    </main>
+  </tui-scrollbar>
+</div>

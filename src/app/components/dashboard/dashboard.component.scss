@@ -1,0 +1,11 @@
+#header {
+    height: calc(var(--tui-height-m) + 0.25rem);
+}
+
+#container {
+    height: calc(100vh - var(--tui-height-m) - 0.25rem);
+}
+
+#main {
+    overflow-y: auto;
+}
