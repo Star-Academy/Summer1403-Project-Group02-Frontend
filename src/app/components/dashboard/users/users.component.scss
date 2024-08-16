@@ -1,11 +1,25 @@
-#user-nav {
-  align-items: center;
-}
-
 hr {
-    block-size: 1px;
+  block-size: 1px;
 }
 
 #user-container {
-    padding: 0;
+  padding: 0;
+  margin: 2.5rem;
+  border: 1px solid #a5a5a5;
+
+  #user-nav {
+    align-items: center;
+  }
+
+  table {
+    #table_header {
+      background-color: #ebebeb;
+      border-block-end: 1px solid #c5c5c5;
+
+      th {
+        color: black;
+        font-weight: bold;
+      }
+    }
+  }
 }
