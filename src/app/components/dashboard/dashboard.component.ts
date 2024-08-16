@@ -1,29 +1,21 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
-import { TuiRepeatTimes } from '@taiga-ui/cdk';
+// import angular
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { TitleCasePipe } from '@angular/common';
+
+// import tui
 import {
-    TuiAppearance,
     TuiButton,
-    TuiDataList,
-    TuiDropdown,
     TuiIcon,
-    TuiSurface,
-    TuiTitle,
     TuiScrollbar,
 } from '@taiga-ui/core';
 import {
-    TuiAvatar,
-    TuiBadge,
     TuiBadgeNotification,
-    TuiChevron,
-    TuiDataListDropdownManager,
     TuiFade,
-    TuiTabs,
-    TuiBreadcrumbs,
 } from '@taiga-ui/kit';
-import { TuiCardLarge, TuiHeader, TuiNavigation } from '@taiga-ui/layout';
-import { TuiItem } from '@taiga-ui/cdk';
-import { TitleCasePipe } from '@angular/common';
+import { TuiCardLarge, TuiNavigation } from '@taiga-ui/layout';
+
+
 @Component({
     exportAs: "Example1",
     imports: [
@@ -31,26 +23,13 @@ import { TitleCasePipe } from '@angular/common';
         TuiScrollbar,
         TuiButton,
         TuiIcon,
-        TuiChevron,
-        TuiDropdown,
         TuiFade,
-        TuiDataList,
         TuiBadgeNotification,
-        TuiAvatar,
+        TitleCasePipe,
+        TuiCardLarge,
+        RouterOutlet,
         RouterLink,
         RouterLinkActive,
-        TuiAppearance,
-        TitleCasePipe,
-        TuiBadge,
-        TuiTabs,
-        TuiItem,
-        TuiBreadcrumbs,
-        TuiRepeatTimes,
-        TuiCardLarge,
-        TuiHeader,
-        TuiSurface,
-        TuiTitle,
-        TuiDataListDropdownManager,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 

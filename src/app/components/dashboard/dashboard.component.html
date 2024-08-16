@@ -1,6 +1,5 @@
 <header id="header" tuiNavigationHeader>
   <button
-    appearance=""
     iconStart="@tui.layout-grid"
     (click)="expanded = !expanded"
     tuiIconButton
@@ -27,12 +26,17 @@
 <div id="container" [style.display]="'flex'">
   <aside [tuiNavigationAside]="expanded">
     <header>
-      <button iconStart="@tui.home" appearance="secondary" tuiAsideItem>
+      <button
+        routerLink="/dashboard"
+        iconStart="@tui.home"
+        [routerLinkActiveOptions]="{ exact: true }"
+        tuiAsideItem
+      >
         <span tuiFade>Dasboard</span>
       </button>
     </header>
 
-    <button iconStart="@tui.users" tuiAsideItem>
+    <button routerLink="users" iconStart="@tui.users" tuiAsideItem>
       <span tuiFade>Users</span>
     </button>
 
@@ -69,36 +73,7 @@
 
   <tui-scrollbar [hidden]="false">
     <main id="main" tuiNavigationMain>
-      <nav tuiNavigationNav [style.top]="0" [style.position]="'sticky'">
-        <a routerLink=".">
-          <tui-icon icon="@tui.chevron-left" />
-          Back
-        </a>
-        /
-        <span tuiNavigationLogo>
-          <span tuiFade>Groups</span>
-          <tui-badge iconStart="@tui.lock">Status</tui-badge>
-        </span>
-        <hr />
-        <tui-tabs tuiFade>
-          <button tuiTab>Default view</button>
-          <button tuiTab>Details</button>
-          <button tuiTab>Followers</button>
-        </tui-tabs>
-        <button appearance="secondary" tuiButton>Secondary</button>
-        <button tuiButton>Primary</button>
-      </nav>
-      <div
-        *tuiRepeatTimes="let index of 10"
-        tuiCardLarge
-        tuiHeader
-        tuiSurface="elevated"
-      >
-        <h2 tuiTitle>
-          Some random content
-          <span tuiSubtitle>A subtitle</span>
-        </h2>
-      </div>
+      <router-outlet />
     </main>
   </tui-scrollbar>
 </div>
