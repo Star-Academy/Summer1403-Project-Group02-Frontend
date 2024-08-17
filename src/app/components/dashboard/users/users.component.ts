@@ -6,6 +6,7 @@ import { TuiButton, TuiIcon, TuiSurface, TuiTitle } from '@taiga-ui/core';
 import { TuiBadge, TuiBadgeNotification, TuiBreadcrumbs, TuiChip, TuiFade } from '@taiga-ui/kit';
 import { TuiCardLarge, TuiHeader } from '@taiga-ui/layout';
 import { RoleAppearancePipe } from '../../../pipes/role-appearance.pipe';
+import { UsernamePipe } from '../../../pipes/username.pipe';
 
 interface Users {
   name: string;
@@ -18,7 +19,7 @@ interface Users {
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [TuiIcon, TuiFade, TuiButton, TuiCardLarge, TuiSurface, TuiHeader, TuiTitle, TuiBadgeNotification, TuiBadge, TuiItem,
+  imports: [UsernamePipe, TuiIcon, TuiFade, TuiButton, TuiCardLarge, TuiSurface, TuiHeader, TuiTitle, TuiBadgeNotification, TuiBadge, TuiItem,
     TuiBreadcrumbs, RouterLink, TitleCasePipe, RoleAppearancePipe, TuiChip, NgForOf],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',

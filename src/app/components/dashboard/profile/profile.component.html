@@ -5,12 +5,9 @@
     <tui-avatar id="avatar" size="xxl" src="{{ name | avatarText }}" />
 
     <!-- name username -->
-    <div id="name-username">
-      <h1>{{ name }}</h1>
-      <!-- <p>{{ username }}</p> -->
-
-      <!-- info -->
-    </div>
-    
+    <h2 tuiTitle="m">
+      {{ name | titlecase }}
+      <div tuiSubtitle>{{ username | username }}</div>
+    </h2>
   </div>
 </div>
