@@ -1,0 +1,24 @@
+#profile-card {
+  padding: 0;
+  border: 1px solid #a5a5a5;
+
+  #bg-user {
+    background: url("/user-bg.jpeg") no-repeat center / cover;
+    height: 14rem;
+    border-end-end-radius: 0;
+    border-end-start-radius: 0;
+    border: 0;
+
+    &:before {
+      background: rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  #avatar {
+    transform: translateY(calc(-50% - var(--t-gap)));
+    border: 1px solid #858585;
+    margin-inline-start: 2rem;
+    background-color: var(--tui-background-base-alt);
+    color: var(--tui-text-primary);
+  }
+}

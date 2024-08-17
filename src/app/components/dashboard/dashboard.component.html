@@ -18,7 +18,12 @@
     Notifications
     <tui-badge-notification />
   </button>
-  <button appearance="secondary" iconStart="@tui.user" tuiButton>
+  <button
+    routerLink="profile"
+    appearance="secondary"
+    iconStart="@tui.user"
+    tuiButton
+  >
     {{ full_name | titlecase }}
   </button>
 </header>
@@ -55,7 +60,7 @@
     <hr />
     <button iconStart="@tui.plus" tuiAsideItem><span tuiFade>Add</span></button>
     <footer>
-      <button iconStart="@tui.user" tuiAsideItem>
+      <button routerLink="profile" iconStart="@tui.user" tuiAsideItem>
         <span tuiFade>Profile</span>
       </button>
       <button iconStart="@tui.settings" tuiAsideItem>
