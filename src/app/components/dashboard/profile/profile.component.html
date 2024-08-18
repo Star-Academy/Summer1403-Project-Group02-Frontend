@@ -1,13 +1,96 @@
 <div tuiCardLarge id="profile-card" tuiSurface="elevated">
   <div tuiCardLarge tuiTheme="dark" id="bg-user"></div>
 
-  <div id="card-up">
+  <div id="card-up" class="flex flex-col items-center md:items-start">
     <tui-avatar id="avatar" size="xxl" src="{{ name | avatarText }}" />
 
-    <!-- name username -->
-    <h2 tuiTitle="m">
-      {{ name | titlecase }}
-      <div tuiSubtitle>{{ username | username }}</div>
-    </h2>
+    <div
+      id="prof-header"
+      class="w-full gap-4 flex flex-col md:flex-row justify-center md:justify-between items-center"
+    >
+      <div class="gap-4 md:gap-8 flex flex-col md:flex-row items-center">
+        <h2 tuiTitle="m" class="flex flex-col items-center md:items-start">
+          {{ name | titlecase }}
+          <div tuiSubtitle>
+            {{ username | username }}
+          </div>
+        </h2>
+        <div class="flex gap-1 md:gap-2">
+          <tui-chip
+            *ngFor="let r of roles"
+            appearance="{{ r | roleAppearance }}"
+            size="s"
+            class="tui-space_right-1"
+          >
+            {{ r }}
+          </tui-chip>
+        </div>
+      </div>
+
+      <div class="flex gap-2 w-full md:w-auto flex-col md:flex-row">
+        <button tuiButton appearance="secondary" size="m">
+          change password
+        </button>
+        <button tuiButton appearance="destructive" size="m">logout</button>
+      </div>
+    </div>
+
+    <div
+      class="flex flex-col md:flex-row w-full h-full gap-4 items-stretch justify-center"
+    >
+      <form [formGroup]="info_form" class="flex w-full flex-col gap-2">
+        <tui-input
+          [disabled]="loading_btn"
+          tuiTextfieldSize="m"
+          [readOnly]="!enable_edit"
+          formControlName="first_name"
+          [tuiTextfieldLabelOutside]="true"
+        >
+          type your first name
+          <input tuiTextfieldLegacy />
+        </tui-input>
+
+        <tui-input
+          [disabled]="loading_btn"
+          tuiTextfieldSize="m"
+          [readOnly]="!enable_edit"
+          formControlName="last_name"
+          [tuiTextfieldLabelOutside]="true"
+        >
+          type your last name
+          <input tuiTextfieldLegacy />
+        </tui-input>
+
+        <tui-input
+          [disabled]="loading_btn"
+          tuiTextfieldSize="m"
+          [readOnly]="!enable_edit"
+          formControlName="email"
+          [tuiTextfieldLabelOutside]="true"
+        >
+          type your email address
+          <input tuiTextfieldLegacy />
+        </tui-input>
+
+        <button
+          class="w-full"
+          tuiButton
+          [loading]="loading_btn"
+          [disabled]="this.info_form.invalid"
+          appearance="{{ enable_edit ? 'primary' : 'secondary' }}"
+          size="m"
+          (click)="editHandler()"
+        >
+          {{ enable_edit ? "Save" : "Edit" }}
+        </button>
+      </form>
+
+      <div id="quotes" class="w-full rounded-2xl p-4">
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Modi illo
+        quidem laudantium iste quibusdam eius officia perspiciatis fuga odit
+        unde consequuntur a sequi eaque facere ratione aliquam, quo, dolorum
+        iure.
+      </div>
+    </div>
   </div>
 </div>
