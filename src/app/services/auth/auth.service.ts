@@ -70,6 +70,7 @@ export class AuthService {
           break;
         default:
           errorMessage = `Unexpected Error: ${error.status}. Please try again later.`;
+          console.log(error);
       }
     }
 
