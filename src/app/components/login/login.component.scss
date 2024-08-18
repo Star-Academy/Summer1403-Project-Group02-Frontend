@@ -1,0 +1,55 @@
+$padding: 1rem;
+$padding-large: 1.25rem;
+
+.tui-island {
+  position: relative;
+  display: block;
+  border-radius: var(--tui-radius-xl);
+  background-color: var(--tui-background-base);
+  word-wrap: break-word;
+  text-decoration: none;
+  color: var(--tui-text-primary);
+  outline: none;
+  box-sizing: content-box;
+  --t-padding: 1rem !important;
+
+  &:not(&--hoverable)::before {
+    // @include fullsize();
+
+    content: '';
+    box-sizing: border-box;
+    border: 1px solid var(--tui-border-normal);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  &:focus,
+  &:hover:focus {
+    &::before {
+      border-color: var(--tui-border-focus);
+    }
+  }
+
+  &__title {
+    font: var(--tui-font-heading-6);
+    margin: 0 0 0.75rem;
+  }
+
+  &__paragraph {
+    margin: 0 0 1rem 0;
+    color: var(--tui-text-secondary);
+  }
+
+  .tui-island &__footer-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: unset;
+    width: calc(100% + 1.875rem);
+    margin: $padding calc(-1rem + 1px) calc(-1rem + 1px);
+    border-top: 1px solid var(--tui-border-normal);
+    border-radius: 0 0 var(--tui-radius-xl) var(--tui-radius-xl);
+    text-align: center;
+    margin-top: 16px !important;
+  }
+}
