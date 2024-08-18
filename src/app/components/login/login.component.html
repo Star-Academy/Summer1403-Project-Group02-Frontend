@@ -1,6 +1,6 @@
 <div class="flex justify-around items-center h-screen">
   <div class="sm:w-50 md:w-50 lg:w-1/3">
-    <form [formGroup]="form">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="tui-col_12">
         <div tuiCardLarge class="tui-island">
           <h3 class="tui-island__title">Sign in</h3>
@@ -8,32 +8,36 @@
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
+
+          @if (errorMessage) {
+          <p *ngIf="errorMessage" class="tui-text_error tui-island__paragraph">
+            {{ errorMessage }}
+          </p>
+          }
+
           <div class="tui-island__paragraph tui-island__paragraph_link">
             <div class="tui-form__row">
-              <p>
-                <tui-input formControlName="email"> Type an email </tui-input>
-              </p>
+              <tui-input formControlName="username">Type a username</tui-input>
             </div>
 
             <div class="tui-form__row">
-              <p>
-                <tui-input-password formControlName="password">
-                  Type a password
-                </tui-input-password>
-              </p>
+              <tui-input-password formControlName="password">
+                Type a password
+              </tui-input-password>
             </div>
           </div>
 
           <div class="tui-island_text-align_right">
-            <a
+            <button
               tuiButton
-              type="button"
+              [disabled]="form.invalid || loading"
               class="tui-form__buttons_align_end"
               appearance="accent"
               size="m"
+              type="submit"
             >
-              Login
-            </a>
+              {{ loading ? 'Logging in...' : 'Login' }}
+            </button>
           </div>
 
           <a
@@ -42,6 +46,7 @@
             size="m"
             class="tui-island__footer-button"
             appearance="accent"
+            routerLink="/register"
           >
             Register
           </a>
