@@ -1,0 +1,63 @@
+<div id="user-container" tuiCardLarge tuiSurface="elevated">
+  <nav id="user-nav" tuiHeader class="px-6 pt-6">
+    <h3 [style.gap]="0" tuiTitle>
+      Users
+      <div tuiSubtitle>Here, you can manage users' info.</div>
+    </h3>
+
+    <div tuiAccessories>
+      <button tuiButton iconStart="@tui.plus">Add new User</button>
+    </div>
+  </nav>
+
+  <table class="tui-table">
+    <thead>
+      <tr id="table_header" class="tui-table__tr bg-neutral-100 text-black">
+        <th class="tui-table__th">Nnme</th>
+        <th class="tui-table__th">Username</th>
+        <th class="tui-table__th">Role</th>
+        <th class="tui-table__th">Email</th>
+        <th class="tui-table__th" [style.width.rem]="7">Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (i of users; track i.username) {
+      <tr class="tui-table__tr tui-table__tr_border_none">
+        <td class="tui-table__td">
+          {{ i.name + " " + i.last_name | titlecase }}
+        </td>
+        <td class="tui-table__td">{{ i.username | username}}</td>
+        <td class="tui-table__td">
+          <tui-chip
+            *ngFor="let r of i.roles"
+            appearance="{{ r | roleAppearance }}"
+            size="s"
+            class="tui-space_right-1"
+          >
+            {{ r }}
+          </tui-chip>
+        </td>
+        <td class="tui-table__td">
+          <a href="mailto:{{ i.email }}">{{ i.email }}</a>
+        </td>
+
+        <td class="tui-table__td">
+          <button tuiIconButton size="s" appearance="flat" iconStart="@tui.pen">
+            edit user
+          </button>
+          <button
+            size="s"
+            tuiIconButton
+            appearance="flat"
+            [style.color]="'red'"
+            iconStart="@tui.trash"
+          >
+            delete user
+          </button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

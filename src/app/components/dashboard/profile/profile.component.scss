@@ -1,0 +1,38 @@
+#profile-card {
+  padding: 0;
+  border: 1px solid #a5a5a5;
+
+  #bg-user {
+    background: url("/user-bg.jpeg") no-repeat center / cover;
+    height: 14rem;
+    border-end-end-radius: 0;
+    border-end-start-radius: 0;
+    border: 0;
+
+    &:before {
+      background: rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  #card-up {
+    transform: translateY(calc(-1 * var(--t-gap)));
+    margin-inline: 2rem;
+
+    #avatar {      
+      transform: translateY(calc(-50%));
+      border: 1px solid #858585;
+      background-color: var(--tui-background-base-alt);
+      color: var(--tui-text-primary);
+    }
+
+    #prof-header {
+      transform: translateY(-2rem);
+    }
+
+    #quotes {
+      border: 1px dashed #c2c2c2;
+      background-color: var(--tui-background-base-alt);
+      color: var(--tui-text-primary);
+    }
+  }
+}

@@ -1,0 +1,20 @@
+#user-container {
+  padding: 0;
+  border: 1px solid #a5a5a5;
+
+  #user-nav {
+    align-items: center;
+  }
+
+  table {
+    #table_header {
+      background-color: #ebebeb;
+      border-block-end: 1px solid #c5c5c5;
+
+      th {
+        color: black;
+        font-weight: bold;
+      }
+    }
+  }
+}
