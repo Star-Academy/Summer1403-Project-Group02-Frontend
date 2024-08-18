@@ -8,7 +8,7 @@ export const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'register',
+    path: 'admin/register',
     component: RegisterComponent,
   },
 ];

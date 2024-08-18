@@ -10,25 +10,31 @@
           <div class="tui-island__paragraph tui-island__paragraph_link">
             <div class="tui-form__row">
               <p>
-                <tui-input formControlName="firstName"> First Name </tui-input>
+                <tui-input id="firstName" formControlName="firstName">
+                  First Name
+                </tui-input>
               </p>
             </div>
 
             <div class="tui-form__row">
               <p>
-                <tui-input formControlName="lastName"> Last Name </tui-input>
+                <tui-input id="lastName" formControlName="lastName">
+                  Last Name
+                </tui-input>
               </p>
             </div>
 
             <div class="tui-form__row">
               <p>
-                <tui-input formControlName="email"> Type an email </tui-input>
+                <tui-input id="email" formControlName="email">
+                  Type an email
+                </tui-input>
               </p>
             </div>
 
             <div class="tui-form__row">
               <p>
-                <tui-input-password formControlName="password">
+                <tui-input-password id="password" formControlName="password">
                   Type a password
                 </tui-input-password>
               </p>
@@ -36,6 +42,7 @@
 
             <div class="tui-form__row">
               <tui-multi-select
+                id="roles"
                 placeholder="Ignored text"
                 [editable]="false"
                 [formControl]="control"
@@ -43,7 +50,7 @@
                 [tuiTextfieldLabelOutside]="true"
                 [(search)]="search"
               >
-                Star Wars persons
+                Select Roles
                 <tui-data-list-wrapper
                   *tuiDataList
                   tuiMultiSelectGroup
