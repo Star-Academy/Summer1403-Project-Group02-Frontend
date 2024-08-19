@@ -1,6 +1,6 @@
 import { CurrentUser } from '../current-user';
 
-export interface LoginAPIResponse {
+export interface LoginResponse {
   data: CurrentUser;
   type: number;
   message: string;

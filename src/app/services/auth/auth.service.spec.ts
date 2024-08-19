@@ -5,9 +5,9 @@ import {
 } from '@angular/common/http/testing';
 import { AuthService } from './auth.service';
 import { environment } from '../../../environments/environment';
-import { LoginAPI } from '../../models/api/loginAPI';
+import { LoginBody } from '../../models/api/loginBody';
 import { CurrentUser } from '../../models/current-user';
-import { LoginAPIResponse } from '../../models/api/login-apiresponse';
+import { LoginResponse } from '../../models/api/loginResponse';
 import { of } from 'rxjs';
 
 describe('AuthService', () => {
@@ -50,11 +50,11 @@ describe('AuthService', () => {
   // });
 
   it('should log in a user and store the user data', () => {
-    const mockCredentials: LoginAPI = {
+    const mockCredentials: LoginBody = {
       username: 'testuser',
       password: 'password',
     };
-    const mockResponse: LoginAPIResponse = {
+    const mockResponse: LoginResponse = {
       data: {
         username: 'testuser',
         firstName: 'Test',
@@ -83,7 +83,7 @@ describe('AuthService', () => {
   });
 
   it('should handle errors properly when logging in', () => {
-    const mockCredentials: LoginAPI = {
+    const mockCredentials: LoginBody = {
       username: 'testuser',
       password: 'wrongpassword',
     };

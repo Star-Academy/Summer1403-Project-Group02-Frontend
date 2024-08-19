@@ -10,7 +10,7 @@ import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { DebugElement } from '@angular/core';
-import { LoginAPIResponse } from '../../models/api/login-apiresponse';
+import { LoginResponse } from '../../models/api/loginResponse';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -104,7 +104,7 @@ describe('LoginComponent', () => {
   it('should call AuthService.loginUser on form submit', () => {
     const credentials = { username: 'admin', password: 'admin' };
 
-    const mockResponse: LoginAPIResponse = {
+    const mockResponse: LoginResponse = {
       data: {
         username: 'admin',
         firstName: '',

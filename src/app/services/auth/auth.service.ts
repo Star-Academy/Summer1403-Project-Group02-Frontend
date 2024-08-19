@@ -2,9 +2,9 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { type LoginAPI } from '../../models/api/loginAPI';
+import { type LoginBody } from '../../models/api/loginBody';
 import { CurrentUser } from '../../models/current-user';
-import { LoginAPIResponse } from '../../models/api/login-apiresponse';
+import { LoginResponse } from '../../models/api/loginResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -30,9 +30,9 @@ export class AuthService {
     }
   }
 
-  loginUser(credentials: LoginAPI): Observable<LoginAPIResponse> {
+  loginUser(credentials: LoginBody): Observable<LoginResponse> {
     return this.http
-      .post<LoginAPIResponse>(
+      .post<LoginResponse>(
         `${environment.apiBaseUrl}/Authentication/login`,
         credentials
       )
