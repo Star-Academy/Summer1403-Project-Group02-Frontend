@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { type LoginAPI } from '../../models/api/loginAPI';
 import { CurrentUser } from '../../models/current-user';
+import { LoginAPIResponse } from '../../models/api/login-apiresponse';
 
 @Injectable({
   providedIn: 'root',
@@ -29,12 +30,17 @@ export class AuthService {
     }
   }
 
-  loginUser(credentials: LoginAPI): Observable<string> {
+  loginUser(credentials: LoginAPI): Observable<LoginAPIResponse> {
     return this.http
-      .post<any>(`${environment.apiBaseUrl}/Authentication/login`, credentials)
+      .post<LoginAPIResponse>(
+        `${environment.apiBaseUrl}/Authentication/login`,
+        credentials
+      )
       .pipe(
         tap((response) => {
           if (response) {
+            console.log(response);
+
             const stringifyResponse = JSON.stringify(response.data);
             localStorage.setItem('savedCurrentUser', stringifyResponse);
             this.currentUserSubject.next(response.data);
@@ -44,9 +50,16 @@ export class AuthService {
       );
   }
 
-  logOut(): void {
-    localStorage.removeItem('currentUser');
-    this.currentUserSubject.next(undefined);
+  logOutUser(): Observable<void> {
+    return this.http
+      .post<void>(`${environment.apiBaseUrl}/Authentication/logout`, {})
+      .pipe(
+        tap(() => {
+          localStorage.removeItem('savedCurrentUser');
+          this.currentUserSubject.next(undefined);
+        }),
+        catchError(this.handleError)
+      );
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {
