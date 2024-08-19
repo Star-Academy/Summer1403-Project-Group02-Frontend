@@ -16,15 +16,17 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard',
-    title: "Dashboard",
+    title: 'Dashboard',
     component: DashboardComponent,
     children: [
       {
-        path: "users", component: UsersComponent
+        path: 'users',
+        component: UsersComponent,
       },
       {
-        path: "profile", component: ProfileComponent
-      }
+        path: 'profile',
+        component: ProfileComponent,
+      },
     ],
   },
 ];
