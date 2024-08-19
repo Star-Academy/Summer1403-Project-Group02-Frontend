@@ -2,13 +2,14 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { LoginAPI } from '../../models/api/loginAPI';
+import { type LoginAPI } from '../../models/api/loginAPI';
+import { CurrentUser } from '../../models/current-user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private currentUserSubject = new BehaviorSubject<string | undefined>(
+  private currentUserSubject = new BehaviorSubject<CurrentUser | undefined>(
     undefined
   );
 
@@ -16,14 +17,15 @@ export class AuthService {
     this.checkIfUserIsLoggedIn();
   }
 
-  getCurrentUser(): Observable<string | undefined> {
+  getCurrentUser(): Observable<CurrentUser | undefined> {
     return this.currentUserSubject.asObservable();
   }
 
   private checkIfUserIsLoggedIn(): void {
-    const savedUsername = localStorage.getItem('currentUser');
-    if (savedUsername) {
-      this.currentUserSubject.next(savedUsername);
+    const savedCurrentUser = localStorage.getItem('savedCurrentUser');
+    if (savedCurrentUser) {
+      const parsedUser: CurrentUser = JSON.parse(savedCurrentUser);
+      this.currentUserSubject.next(parsedUser);
     }
   }
 
@@ -33,9 +35,9 @@ export class AuthService {
       .pipe(
         tap((response) => {
           if (response) {
-            console.log(response);
-            localStorage.setItem('currentUser', credentials.username);
-            this.currentUserSubject.next(credentials.username);
+            const stringifyResponse = JSON.stringify(response.data);
+            localStorage.setItem('savedCurrentUser', stringifyResponse);
+            this.currentUserSubject.next(response.data);
           }
         }),
         catchError(this.handleError)
