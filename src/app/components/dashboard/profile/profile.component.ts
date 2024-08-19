@@ -1,13 +1,16 @@
 import { UpperCasePipe, TitleCasePipe, NgForOf } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, INJECTOR, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
-import { TuiButton, TuiIcon, TuiTitle, TuiSurface, TuiTextfield } from '@taiga-ui/core';
+import { TuiButton, TuiIcon, TuiTitle, TuiSurface, TuiTextfield, TuiDialogService } from '@taiga-ui/core';
 import { TuiAvatar, TuiButtonLoading, TuiChip, TuiFade } from '@taiga-ui/kit';
 import { TuiCardLarge } from '@taiga-ui/layout';
 import { AvatarTextPipe } from '../../../pipes/avatar-text.pipe';
 import { UsernamePipe } from '../../../pipes/username.pipe';
 import { RoleAppearancePipe } from '../../../pipes/role-appearance.pipe';
 import { TuiInputModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
+import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
+import { ChangePassDialogComponent } from './change-pass-dialog/change-pass-dialog.component';
+
 
 @Component({
   selector: 'app-profile',
@@ -23,6 +26,12 @@ export class ProfileComponent implements OnInit {
   protected enable_edit = false;
   protected loading_btn = false;
   protected info_form!: FormGroup;
+
+  private readonly dialogs = inject(TuiDialogService);
+  private readonly injector = inject(INJECTOR);
+
+  private readonly changePassDialog = this.dialogs.open(
+    new PolymorpheusComponent(ChangePassDialogComponent, this.injector));
 
   ngOnInit() {
     this.info_form = new FormGroup({
@@ -50,4 +59,13 @@ export class ProfileComponent implements OnInit {
       this.enable_edit = true;
     }
   }
+
+  protected showChangePassDialog(): void {
+    this.changePassDialog.subscribe({
+      complete: () => {
+        console.info('Dialog closed');
+      },
+    });
+  }
 }
+
