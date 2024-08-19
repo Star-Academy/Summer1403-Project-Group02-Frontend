@@ -8,8 +8,17 @@ export class UsernamePipe implements PipeTransform {
 
   transform(value: string): string {
 
-    if (value) return '@' + value;
-    return "";
+    if (value) {
 
+      if (value[0] != '@') {
+        return '@' + value;
+      }
+
+      else
+        return value;
+
+    }
+
+    return "";
   }
 }

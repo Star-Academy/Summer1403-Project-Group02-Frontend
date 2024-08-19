@@ -15,9 +15,7 @@ import {
 } from '@taiga-ui/kit';
 import { TuiCardLarge, TuiNavigation } from '@taiga-ui/layout';
 
-
 @Component({
-    exportAs: "Example1",
     imports: [
         TuiNavigation,
         TuiScrollbar,
@@ -32,7 +30,6 @@ import { TuiCardLarge, TuiNavigation } from '@taiga-ui/layout';
         RouterLinkActive,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
-
     standalone: true,
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',

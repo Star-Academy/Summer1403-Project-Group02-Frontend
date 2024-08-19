@@ -9,7 +9,7 @@ export class AvatarTextPipe implements PipeTransform {
   transform(value: string): string {
 
     const s = value.split(" ");
-    if (s.length >= 1) {
+    if (s.length >= 1 && s[0]) {
       if (s.length >= 2) {
         return s[0][0].toUpperCase() + s[1][0].toUpperCase();
       }
