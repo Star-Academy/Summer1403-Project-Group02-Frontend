@@ -91,7 +91,7 @@ describe('LoginComponent', () => {
     component.form.get('password')?.setValue('');
     fixture.detectChanges();
 
-    let loginButton = fixture.debugElement.query(
+    const loginButton = fixture.debugElement.query(
       By.css('button[appearance="accent"]')
     ).nativeElement;
     expect(loginButton.disabled).toBeTrue();

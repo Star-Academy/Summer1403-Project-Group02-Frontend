@@ -66,7 +66,7 @@ describe('AuthService', () => {
       message: 'Login Successful',
     };
 
-    service.loginUser(mockCredentials).subscribe((response) => {
+    service.loginUser(mockCredentials).subscribe(() => {
       expect(localStorage.getItem('savedCurrentUser')).toEqual(
         JSON.stringify(mockResponse.data)
       );
