@@ -1,5 +1,11 @@
 import { UpperCasePipe, TitleCasePipe, NgForOf } from '@angular/common';
-import { Component, inject, INJECTOR, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  INJECTOR,
+  OnInit,
+} from '@angular/core';
 import {
   ReactiveFormsModule,
   FormControl,
@@ -14,7 +20,13 @@ import {
   TuiTextfield,
   TuiDialogService,
 } from '@taiga-ui/core';
-import { TuiAvatar, TuiButtonLoading, TuiChip, TuiFade } from '@taiga-ui/kit';
+import {
+  TuiAvatar,
+  TuiButtonLoading,
+  TuiChip,
+  TuiFade,
+  TUI_CONFIRM,
+} from '@taiga-ui/kit';
 import { TuiCardLarge } from '@taiga-ui/layout';
 import { AvatarTextPipe } from '../../../pipes/avatar-text.pipe';
 import { UsernamePipe } from '../../../pipes/username.pipe';
@@ -22,8 +34,7 @@ import { RoleAppearancePipe } from '../../../pipes/role-appearance.pipe';
 import { TuiInputModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { ChangePassDialogComponent } from './change-pass-dialog/change-pass-dialog.component';
-import { AuthService } from '../../../services/auth/auth.service';
-import { Router } from '@angular/router';
+import type { TuiConfirmData } from '@taiga-ui/kit';
 
 @Component({
   selector: 'app-profile',
@@ -52,6 +63,7 @@ import { Router } from '@angular/router';
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileComponent implements OnInit {
   protected name = 'name family';
@@ -67,8 +79,6 @@ export class ProfileComponent implements OnInit {
   private readonly changePassDialog = this.dialogs.open(
     new PolymorpheusComponent(ChangePassDialogComponent, this.injector)
   );
-
-  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.info_form = new FormGroup({
@@ -106,11 +116,28 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  onLogoutBtnClick() {
-    this.authService.logOutUser().subscribe({
-      next: () => {
-        this.router.navigate(['/login']);
-      },
-    });
+  protected showLogoutDialog(): void {
+    const data: TuiConfirmData = {
+      content: 'Are you sure you want to logout?',
+      yes: 'Yes',
+      no: 'No',
+    };
+
+    this.dialogs
+      .open<boolean>(TUI_CONFIRM, {
+        label: 'Logout',
+        size: 's',
+        data,
+      })
+      .subscribe({
+        next: (result) => {
+          if (result) {
+            // logout service here
+            console.info('Logout');
+
+            // also redirect to home page
+          }
+        },
+      });
   }
 }
