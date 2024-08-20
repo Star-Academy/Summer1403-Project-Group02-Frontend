@@ -43,7 +43,6 @@ export class AuthService {
       .pipe(
         tap((response) => {
           if (response) {
-            console.log(response);
             const stringifyResponse = JSON.stringify(response.data);
             localStorage.setItem('savedCurrentUser', stringifyResponse);
             this.currentUserSubject.next(response.data);

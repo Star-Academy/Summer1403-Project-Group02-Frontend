@@ -113,11 +113,7 @@ export class ProfileComponent implements OnInit {
   }
 
   protected showChangePassDialog(): void {
-    this.changePassDialog.subscribe({
-      complete: () => {
-        console.info('Dialog closed');
-      },
-    });
+    this.changePassDialog.subscribe();
   }
 
   protected showLogoutDialog(): void {

@@ -53,8 +53,7 @@ export class ChangePassDialogComponent {
       this.loading = true;
 
       this.changePasswordService.changePassword(oldPass, newPass).subscribe({
-        next: (response) => {
-          console.log('Password changed successfully:', response.message);
+        next: () => {
           this.context.completeWith();
         },
         complete: () => {
