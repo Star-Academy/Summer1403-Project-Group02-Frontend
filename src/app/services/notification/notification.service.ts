@@ -43,7 +43,7 @@ export class NotificationService {
    * @param message The message to display.
    * @param label Optional label for the notification.
    */
-  showInfo(message: string, label = 'Warning'): void {
+  showInfo(message: string, label = 'info'): void {
     this.alertService.open(message, { label, appearance: 'info' }).subscribe();
   }
 
