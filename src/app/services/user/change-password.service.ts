@@ -16,7 +16,7 @@ export class ChangePasswordService {
     previousPassword: string,
     newPassword: string
   ): Observable<ChangepassResponse> {
-    const url = `${environment.apiBaseUrl}/users/password`;
+    const url = `${environment.apiBaseUrl}/user/password`;
     const body = {
       previousPassword: previousPassword,
       newPassword: newPassword,
