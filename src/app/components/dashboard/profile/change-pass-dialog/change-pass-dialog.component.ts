@@ -1,6 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import type { TuiDialogContext } from '@taiga-ui/core';
+import {
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { TuiDialogContext } from '@taiga-ui/core';
 import { TuiButton, TuiTextfield, TuiTitle } from '@taiga-ui/core';
 import { TuiButtonLoading } from '@taiga-ui/kit';
 import {
@@ -16,7 +21,7 @@ import { ChangePasswordService } from '../../../../services/user/change-password
     TuiTitle,
     TuiInputPasswordModule,
     TuiTextfield,
-    FormsModule,
+    ReactiveFormsModule,
     TuiTextfieldControllerModule,
     TuiButton,
     TuiButtonLoading,
@@ -29,29 +34,33 @@ import { ChangePasswordService } from '../../../../services/user/change-password
 export class ChangePassDialogComponent {
   private readonly context = inject<TuiDialogContext>(POLYMORPHEUS_CONTEXT);
 
-  protected old_pass = '';
-  protected new_pass = '';
+  protected form: FormGroup;
   protected loading = false;
 
-  constructor(private changePasswordService: ChangePasswordService) {}
-
-  protected hasValid(): boolean {
-    return this.old_pass !== '' && this.new_pass !== '';
+  constructor(
+    private fb: FormBuilder,
+    private changePasswordService: ChangePasswordService
+  ) {
+    this.form = this.fb.group({
+      oldPass: ['', Validators.required],
+      newPass: ['', Validators.required],
+    });
   }
 
   protected submit(): void {
-    if (this.hasValid()) {
-      this.changePasswordService
-        .changePassword(this.old_pass, this.new_pass)
-        .subscribe({
-          next: (response) => {
-            console.log('Password changed successfully:', response.message);
-            this.context.completeWith();
-          },
-          complete: () => {
-            this.loading = false;
-          },
-        });
+    if (this.form.valid) {
+      const { oldPass, newPass } = this.form.value;
+      this.loading = true;
+
+      this.changePasswordService.changePassword(oldPass, newPass).subscribe({
+        next: (response) => {
+          console.log('Password changed successfully:', response.message);
+          this.context.completeWith();
+        },
+        complete: () => {
+          this.loading = false;
+        },
+      });
     }
   }
 }

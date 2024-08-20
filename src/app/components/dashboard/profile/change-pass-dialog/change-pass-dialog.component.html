@@ -5,9 +5,7 @@
 
 <tui-input-password
   tuiTextfieldSize="m"
-  [disabled]="loading"
   class="tui-space_top-5"
-  [(ngModel)]="old_pass"
   [tuiTextfieldLabelOutside]="true"
 >
   old password
@@ -15,21 +13,12 @@
 
 <tui-input-password
   tuiTextfieldSize="m"
-  [disabled]="loading"
   class="tui-space_top-3 tui-space_bottom-5"
-  [(ngModel)]="new_pass"
   [tuiTextfieldLabelOutside]="true"
 >
   new password
 </tui-input-password>
 
-<button
-  size="m"
-  tuiButton
-  [loading]="loading"
-  type="button"
-  [disabled]="!hasValid()"
-  (click)="submit()"
->
+<button size="m" tuiButton [loading]="loading" type="button" (click)="submit()">
   Submit
 </button>
