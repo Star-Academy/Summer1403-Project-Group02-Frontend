@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment';
 import { type LoginBody } from '../../models/api/loginBody';
 import { CurrentUser } from '../../models/current-user';
 import { LoginResponse } from '../../models/api/loginResponse';
+import { LogoutResponse } from '../../models/api/logoutResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -34,13 +35,15 @@ export class AuthService {
     return this.http
       .post<LoginResponse>(
         `${environment.apiBaseUrl}/Authentication/login`,
-        credentials
+        credentials,
+        {
+          withCredentials: true,
+        }
       )
       .pipe(
         tap((response) => {
           if (response) {
             console.log(response);
-
             const stringifyResponse = JSON.stringify(response.data);
             localStorage.setItem('savedCurrentUser', stringifyResponse);
             this.currentUserSubject.next(response.data);
@@ -50,9 +53,11 @@ export class AuthService {
       );
   }
 
-  logOutUser(): Observable<void> {
+  logOutUser(): Observable<LogoutResponse> {
     return this.http
-      .post<void>(`${environment.apiBaseUrl}/Authentication/logout`, {})
+      .post<LogoutResponse>(`${environment.apiBaseUrl}/Authentication/logout`, {
+        withCredentials: true,
+      })
       .pipe(
         tap(() => {
           localStorage.removeItem('savedCurrentUser');
@@ -75,7 +80,7 @@ export class AuthService {
           errorMessage = 'Bad Request. Please check your input.';
           break;
         case 401:
-          errorMessage = 'Unauthorized. Incorrect username or password.';
+          errorMessage = 'Unauthorized.';
           break;
         case 404:
           errorMessage = 'Not Found. The requested resource does not exist.';

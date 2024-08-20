@@ -42,7 +42,7 @@ export class ChangePassDialogComponent {
   protected submit(): void {
     if (this.hasValid()) {
       this.changePasswordService
-        .changePassword('test2', this.old_pass, this.new_pass)
+        .changePassword(this.old_pass, this.new_pass)
         .subscribe({
           next: (response) => {
             console.log('Password changed successfully:', response.message);

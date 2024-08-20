@@ -12,7 +12,6 @@ export class ChangePasswordService {
   constructor(private http: HttpClient) {}
 
   changePassword(
-    username: string,
     previousPassword: string,
     newPassword: string
   ): Observable<ChangepassResponse> {
@@ -23,7 +22,9 @@ export class ChangePasswordService {
     };
 
     return this.http
-      .patch<ChangepassResponse>(url, body)
+      .patch<ChangepassResponse>(url, body, {
+        withCredentials: true,
+      })
       .pipe(catchError(this.handleError));
   }
 
@@ -40,7 +41,7 @@ export class ChangePasswordService {
           errorMessage = 'Bad Request. Please check your input.';
           break;
         case 401:
-          errorMessage = 'Unauthorized. Incorrect previous password.';
+          errorMessage = 'Unauthorized.';
           break;
         case 404:
           errorMessage = 'Not Found. The user does not exist.';
