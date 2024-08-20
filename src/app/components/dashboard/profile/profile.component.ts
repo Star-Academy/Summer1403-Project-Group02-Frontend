@@ -35,6 +35,8 @@ import { TuiInputModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { ChangePassDialogComponent } from './change-pass-dialog/change-pass-dialog.component';
 import type { TuiConfirmData } from '@taiga-ui/kit';
+import { AuthService } from '../../../services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -79,6 +81,8 @@ export class ProfileComponent implements OnInit {
   private readonly changePassDialog = this.dialogs.open(
     new PolymorpheusComponent(ChangePassDialogComponent, this.injector)
   );
+
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.info_form = new FormGroup({
@@ -132,10 +136,11 @@ export class ProfileComponent implements OnInit {
       .subscribe({
         next: (result) => {
           if (result) {
-            // logout service here
-            console.info('Logout');
-
-            // also redirect to home page
+            this.authService.logOutUser().subscribe({
+              next: () => {
+                this.router.navigate(['/login']);
+              },
+            });
           }
         },
       });
