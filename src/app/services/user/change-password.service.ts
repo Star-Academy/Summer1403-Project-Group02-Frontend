@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { ChangepassResponse } from '../../models/api/changepassResponse';
 
@@ -21,11 +20,9 @@ export class ChangePasswordService {
       newPassword: newPassword,
     };
 
-    return this.http
-      .patch<ChangepassResponse>(url, body, {
-        withCredentials: true,
-      })
-      .pipe(catchError(this.handleError));
+    return this.http.patch<ChangepassResponse>(url, body, {
+      withCredentials: true,
+    });
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {

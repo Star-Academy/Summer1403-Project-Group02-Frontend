@@ -48,9 +48,6 @@ export class ChangePassDialogComponent {
             console.log('Password changed successfully:', response.message);
             this.context.completeWith();
           },
-          error: (error) => {
-            console.error('Failed to change password:', error.message);
-          },
           complete: () => {
             this.loading = false;
           },
