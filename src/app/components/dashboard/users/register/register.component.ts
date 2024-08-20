@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { TuiButton, TuiLink } from '@taiga-ui/core';
+import { TuiButton, TuiDialogContext, TuiLink } from '@taiga-ui/core';
 import { TuiCheckbox } from '@taiga-ui/kit';
 import {
   TuiInputDateModule,
@@ -22,6 +22,7 @@ import {
   TuiMultiSelectModule,
   TuiTextfieldControllerModule,
 } from '@taiga-ui/legacy';
+import { POLYMORPHEUS_CONTEXT } from '@taiga-ui/polymorpheus';
 
 const ITEMS: readonly string[] = ['Data Anaylist', 'Owner', 'Developer'];
 
@@ -44,9 +45,11 @@ const ITEMS: readonly string[] = ['Data Anaylist', 'Owner', 'Developer'];
     TuiDataList,
   ],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss',
+  styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
+  private readonly context = inject<TuiDialogContext>(POLYMORPHEUS_CONTEXT);
+
   form!: FormGroup;
 
   protected search: string | null = '';
@@ -79,5 +82,13 @@ export class RegisterComponent implements OnInit {
       email: new FormControl(null, [Validators.required, Validators.email]),
       dob: new FormControl(null, [Validators.required]),
     });
+  }
+
+  protected submit() {
+    if (!this.form.invalid) {
+      this.context.completeWith();
+    } else {
+      // show errorr
+    }
   }
 }
