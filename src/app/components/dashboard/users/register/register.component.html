@@ -3,10 +3,10 @@
 <form [formGroup]="form">
   <div class="tui-col_12">
     <tui-island>
-      <h3 class="tui-island__title">Register</h3>
-      <p class="tui-island__paragraph">
+      <h3 class="tui-island__title">Create New User</h3>
+      <!-- <p class="tui-island__paragraph">
         Do you already have an account ? Login
-      </p>
+      </p> -->
       <div class="tui-island__paragraph tui-island__paragraph_link">
         <div class="tui-form__row">
           <p>
@@ -60,7 +60,7 @@
         </div>
       </div>
 
-      <div class="tui-island_text-align_right">
+      <!-- <div class="tui-island_text-align_right">
         <a
           (click)="submit()"
           tuiButton
@@ -71,16 +71,17 @@
         >
           Register
         </a>
-      </div>
+      </div> -->
 
       <button
         tuiButton
+        (click)="submit()"
         type="button"
         size="m"
         class="tui-island__footer-button"
         appearance="accent"
       >
-        Sign in
+        Register
       </button>
     </tui-island>
   </div>
