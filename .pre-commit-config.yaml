@@ -1,0 +1,11 @@
+repos:
+  - repo: local
+    hooks:
+      - id: lint
+        name: lint
+        pass_filenames: false
+        entry: npm run lint
+        language: system
+        types_or:
+          - ts
+          - javascript
