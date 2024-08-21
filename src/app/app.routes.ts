@@ -11,4 +11,8 @@ export const routes: Routes = [
     path: 'admin/register',
     component: RegisterComponent,
   },
+  {
+    path: 'dashboard',
+    component: RegisterComponent,
+  },
 ];
