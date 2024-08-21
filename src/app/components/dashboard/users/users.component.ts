@@ -112,6 +112,8 @@ export class UsersComponent implements OnInit {
       .subscribe({
         next: (result) => {
           if (result) {
+            console.log(username);
+
             this.deleteUser(username);
           }
         },

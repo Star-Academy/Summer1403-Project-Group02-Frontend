@@ -26,8 +26,7 @@ export class AdminUserService {
     const url = `${environment.apiBaseUrl}/Admin/users`;
     return this.http.get<UserResponse>(url, { withCredentials: true }).pipe(
       tap((response) => {
-        this.usersSubject.next(response.data); // Update the users subject
-        this.showSuccessNotification('Users Retrieved Successfully');
+        this.usersSubject.next(response.data);
       })
     );
   }
@@ -56,16 +55,24 @@ export class AdminUserService {
   // Delete a user by username
   deleteUser(username: string): Observable<void> {
     const url = `${environment.apiBaseUrl}/Admin/users/${username}`;
-    return this.http.delete<void>(url, { withCredentials: true }).pipe(
-      tap(() => {
-        this.usersSubject.next(
-          this.usersSubject
-            .getValue()
-            .filter((user) => user.username !== username)
-        );
-        this.showSuccessNotification('User Deleted Successfully');
+    const body = { username };
+
+    return this.http
+      .request<void>('delete', url, {
+        body,
+        withCredentials: true,
       })
-    );
+      .pipe(
+        tap(() => {
+          // Update the users list after successful deletion
+          this.usersSubject.next(
+            this.usersSubject
+              .getValue()
+              .filter((user) => user.username !== username)
+          );
+          this.showSuccessNotification('User Deleted Successfully');
+        })
+      );
   }
 
   // Get all roles

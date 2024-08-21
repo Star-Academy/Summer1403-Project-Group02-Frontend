@@ -21,9 +21,15 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     req: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    return next.handle(req).pipe(
+    const clonedRequest = req.clone({
+      withCredentials: true,
+    });
+
+    return next.handle(clonedRequest).pipe(
       catchError((error: HttpErrorResponse) => {
         const backendErrorMessage = error.error?.message;
+        console.log(error);
+
         this.showNotification(backendErrorMessage);
         return throwError(() => new Error(backendErrorMessage));
       })
