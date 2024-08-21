@@ -1,5 +1,6 @@
 #header {
   height: calc(var(--tui-height-m) + 0.25rem);
+  background-color: var(--tui-background-accent-1);
 }
 
 #container {
@@ -11,7 +12,10 @@
   overflow-y: auto;
   margin: 2.5rem;
 }
+.aside {
+  background-color: var(--tui-background-accent-1);
+}
 
 :host {
-  --tui-shadow-small: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  --tui-shadow-small: 0 0.125rem 0.25rem rgba--tui-background-accent-1;
 }
