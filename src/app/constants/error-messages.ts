@@ -18,7 +18,10 @@ export const ERROR_MESSAGES_MAP = new Map<
   ],
   [
     'User Not Found',
-    { label: 'User Error', message: 'The user was not found in the system.' },
+    {
+      label: 'Authentication Error',
+      message: 'The password or username you entered is incorrect.',
+    },
   ],
   [
     'Access Denied',
@@ -31,7 +34,7 @@ export const ERROR_MESSAGES_MAP = new Map<
     'Wrong Password',
     {
       label: 'Authentication Error',
-      message: 'The password you entered is incorrect.',
+      message: 'The password or username you entered is incorrect.',
     },
   ],
   [
