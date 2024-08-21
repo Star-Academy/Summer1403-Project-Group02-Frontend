@@ -6,7 +6,9 @@
     </h3>
 
     <div tuiAccessories>
-      <button tuiButton iconStart="@tui.plus">Add new User</button>
+      <button tuiButton iconStart="@tui.plus" (click)="showRejDialog()">
+        Add new User
+      </button>
     </div>
   </nav>
 
@@ -27,9 +29,14 @@
         <td class="tui-table__td">
           {{ i.name + " " + i.last_name | titlecase }}
         </td>
-        <td class="tui-table__td">{{ i.username | username}}</td>
+        <td class="tui-table__td">{{ i.username | username }}</td>
         <td class="tui-table__td">
-          <tui-chip *ngFor="let r of i.roles" appearance="{{ r | roleAppearance }}" size="s" class="tui-space_right-1">
+          <tui-chip
+            *ngFor="let r of i.roles"
+            appearance="{{ r | roleAppearance }}"
+            size="s"
+            class="tui-space_right-1"
+          >
             {{ r }}
           </tui-chip>
         </td>
@@ -41,8 +48,14 @@
           <button tuiIconButton size="s" appearance="flat" iconStart="@tui.pen">
             edit user
           </button>
-          <button size="s" (click)="showDeleteDialog()" tuiIconButton appearance="flat" [style.color]="'red'"
-            iconStart="@tui.trash">
+          <button
+            size="s"
+            (click)="showDeleteDialog()"
+            tuiIconButton
+            appearance="flat"
+            [style.color]="'red'"
+            iconStart="@tui.trash"
+          >
             delete user
           </button>
         </td>
