@@ -15,7 +15,7 @@
   <table class="tui-table">
     <thead>
       <tr id="table_header" class="tui-table__tr bg-neutral-100 text-black">
-        <th class="tui-table__th">Nnme</th>
+        <th class="tui-table__th">Name</th>
         <th class="tui-table__th">Username</th>
         <th class="tui-table__th">Role</th>
         <th class="tui-table__th">Email</th>
@@ -24,20 +24,23 @@
     </thead>
 
     <tbody>
-      @for (i of users; track i.username) {
-      <tr class="tui-table__tr tui-table__tr_border_none">
+      <!-- Use *ngFor with the signal value using users() -->
+      <tr
+        *ngFor="let i of users()"
+        class="tui-table__tr tui-table__tr_border_none"
+      >
         <td class="tui-table__td">
-          {{ i.name + " " + i.last_name | titlecase }}
+          {{ i.firstName + ' ' + i.lastName | titlecase }}
         </td>
         <td class="tui-table__td">{{ i.username | username }}</td>
         <td class="tui-table__td">
           <tui-chip
             *ngFor="let r of i.roles"
-            appearance="{{ r | roleAppearance }}"
+            appearance="{{ r.roleType | roleAppearance }}"
             size="s"
             class="tui-space_right-1"
           >
-            {{ r }}
+            {{ r.roleType }}
           </tui-chip>
         </td>
         <td class="tui-table__td">
@@ -50,7 +53,7 @@
           </button>
           <button
             size="s"
-            (click)="showDeleteDialog()"
+            (click)="showDeleteDialog(i.username)"
             tuiIconButton
             appearance="flat"
             [style.color]="'red'"
@@ -60,7 +63,6 @@
           </button>
         </td>
       </tr>
-      }
     </tbody>
   </table>
 </div>

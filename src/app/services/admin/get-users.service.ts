@@ -19,7 +19,7 @@ export class GetUsersService {
   getUsers(): Observable<UserResponse> {
     const url = `${environment.apiBaseUrl}/Admin/users`;
 
-    return this.http.get<UserResponse>(url).pipe(
+    return this.http.get<UserResponse>(url, { withCredentials: true }).pipe(
       tap({
         next: () => {
           const message = SUCCESS_MESSAGES_MAP.get(

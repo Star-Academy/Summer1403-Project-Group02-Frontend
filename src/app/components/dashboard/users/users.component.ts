@@ -1,9 +1,11 @@
 import { NgForOf, TitleCasePipe } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   Component,
   inject,
+  OnInit,
   INJECTOR,
+  ChangeDetectionStrategy,
+  signal,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TuiItem } from '@taiga-ui/cdk';
@@ -28,13 +30,8 @@ import type { TuiConfirmData } from '@taiga-ui/kit';
 import { TUI_CONFIRM } from '@taiga-ui/kit';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { RegisterComponent } from './register/register.component';
-interface Users {
-  name: string;
-  last_name: string;
-  username: string;
-  email: string;
-  roles: string[];
-}
+import { AdminUserService } from '../../../services/admin/admin.service';
+import { User } from '../../../models/user';
 
 @Component({
   selector: 'app-users',
@@ -59,43 +56,47 @@ interface Users {
     NgForOf,
   ],
   templateUrl: './users.component.html',
-  styleUrl: './users.component.scss',
+  styleUrls: ['./users.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UsersComponent {
+export class UsersComponent implements OnInit {
   private readonly dialogs = inject(TuiDialogService);
-  protected users: Users[] = [
-    {
-      name: 'name',
-      last_name: 'family',
-      username: 'name123',
-      email: '123@123.com',
-      roles: ['Admin', 'Developer'],
-    },
-    {
-      name: 'name',
-      last_name: 'family',
-      username: 'name123',
-      email: '123@123.com',
-      roles: ['Admin', 'Developer'],
-    },
-  ];
-
   private readonly injector = inject(INJECTOR);
+  private readonly adminUserService = inject(AdminUserService);
 
-  private readonly rej_dialog = this.dialogs.open(
+  // Use the signal API to store the users
+  protected users = signal<User[]>([]);
+
+  private readonly rejDialog = this.dialogs.open(
     new PolymorpheusComponent(RegisterComponent, this.injector)
   );
 
-  protected showRejDialog(): void {
-    this.rej_dialog.subscribe({
-      complete: () => {
-        //dialog closed
+  ngOnInit(): void {
+    this.loadUsers();
+  }
+
+  private loadUsers(): void {
+    this.adminUserService.fetchUsers().subscribe({
+      next: (response) => {
+        this.users.set(response.data); // Update the signal with the fetched data
+        console.log(this.users());
+      },
+      error: (err) => {
+        console.error('Failed to load users:', err);
       },
     });
   }
 
-  protected showDeleteDialog(): void {
+  protected showRejDialog(): void {
+    this.rejDialog.subscribe({
+      complete: () => {
+        // dialog closed
+        this.loadUsers(); // Reload users after the dialog closes in case a new user was added
+      },
+    });
+  }
+
+  protected showDeleteDialog(username: string): void {
     const data: TuiConfirmData = {
       content: 'Are you sure you want to delete this user?',
       yes: 'Yes',
@@ -111,9 +112,21 @@ export class UsersComponent {
       .subscribe({
         next: (result) => {
           if (result) {
-            // call api here
+            this.deleteUser(username);
           }
         },
       });
+  }
+
+  private deleteUser(username: string): void {
+    this.adminUserService.deleteUser(username).subscribe({
+      next: () => {
+        // On successful delete, update the users signal by removing the deleted user
+        this.users.set(
+          this.users().filter((user) => user.username !== username)
+        );
+        console.log(`User ${username} deleted successfully`);
+      },
+    });
   }
 }
