@@ -32,7 +32,6 @@ export class ChangePasswordService {
       .pipe(
         tap({
           next: () => {
-            console.log('yes');
             const message = SUCCESS_MESSAGES_MAP.get(
               'Password Changed Successfully'
             );

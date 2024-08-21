@@ -90,7 +90,7 @@ export class UsersComponent {
   protected showRejDialog(): void {
     this.rej_dialog.subscribe({
       complete: () => {
-        console.info('Dialog closed');
+        //dialog closed
       },
     });
   }
