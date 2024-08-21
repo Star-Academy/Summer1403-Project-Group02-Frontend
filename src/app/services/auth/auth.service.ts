@@ -67,14 +67,16 @@ export class AuthService {
         withCredentials: true,
       })
       .pipe(
-        tap(() => {
-          localStorage.removeItem('savedCurrentUser');
-          this.currentUserSubject.next(undefined);
-          const message = SUCCESS_MESSAGES_MAP.get('Logout Successfully');
-          this.notificationService.showSuccess(
-            message?.message ?? '',
-            message?.label ?? ''
-          );
+        tap({
+          next: () => {
+            localStorage.removeItem('savedCurrentUser');
+            this.currentUserSubject.next(undefined);
+            const message = SUCCESS_MESSAGES_MAP.get('Logout Successfully');
+            this.notificationService.showSuccess(
+              message?.message ?? '',
+              message?.label ?? ''
+            );
+          },
         })
       );
   }
