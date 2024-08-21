@@ -6,7 +6,7 @@ import {
 import { AuthService } from './auth.service';
 import { environment } from '../../../environments/environment';
 import { LoginBody } from '../../models/api/loginBody';
-import { CurrentUser } from '../../models/current-user';
+import { User } from '../../models/user';
 import { LoginResponse } from '../../models/api/loginResponse';
 import { of } from 'rxjs';
 
@@ -104,7 +104,7 @@ describe('AuthService', () => {
   });
 
   it('should log out the user and clear the currentUserSubject', () => {
-    const mockUser: CurrentUser = {
+    const mockUser: User = {
       username: 'testuser',
       firstName: 'Test',
       lastName: 'User',

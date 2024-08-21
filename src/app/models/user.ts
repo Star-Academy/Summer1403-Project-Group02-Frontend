@@ -1,6 +1,6 @@
 import { Role } from './role';
 
-export interface CurrentUser {
+export interface User {
   username: string;
   firstName: string;
   lastName: string;

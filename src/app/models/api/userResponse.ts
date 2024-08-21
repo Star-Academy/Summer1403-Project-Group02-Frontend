@@ -1,7 +1,7 @@
 import { User } from '../user';
 
-export interface LoginResponse {
-  data: User;
+export interface UserResponse {
+  data: User[];
   type: number;
   message: string;
 }

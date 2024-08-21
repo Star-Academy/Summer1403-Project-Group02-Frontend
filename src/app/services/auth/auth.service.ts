@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { type LoginBody } from '../../models/api/loginBody';
-import { CurrentUser } from '../../models/current-user';
+import { User } from '../../models/user';
 import { LoginResponse } from '../../models/api/loginResponse';
 import { LogoutResponse } from '../../models/api/logoutResponse';
 import { NotificationService } from '../notif/notification.service';
@@ -13,9 +13,7 @@ import { SUCCESS_MESSAGES_MAP } from '../../constants/success-messages';
   providedIn: 'root',
 })
 export class AuthService {
-  private currentUserSubject = new BehaviorSubject<CurrentUser | undefined>(
-    undefined
-  );
+  private currentUserSubject = new BehaviorSubject<User | undefined>(undefined);
 
   constructor(
     private http: HttpClient,
@@ -24,14 +22,14 @@ export class AuthService {
     this.checkIfUserIsLoggedIn();
   }
 
-  getCurrentUser(): Observable<CurrentUser | undefined> {
+  getCurrentUser(): Observable<User | undefined> {
     return this.currentUserSubject.asObservable();
   }
 
   private checkIfUserIsLoggedIn(): void {
     const savedCurrentUser = localStorage.getItem('savedCurrentUser');
     if (savedCurrentUser) {
-      const parsedUser: CurrentUser = JSON.parse(savedCurrentUser);
+      const parsedUser: User = JSON.parse(savedCurrentUser);
       this.currentUserSubject.next(parsedUser);
     }
   }
