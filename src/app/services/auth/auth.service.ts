@@ -6,6 +6,8 @@ import { type LoginBody } from '../../models/api/loginBody';
 import { CurrentUser } from '../../models/current-user';
 import { LoginResponse } from '../../models/api/loginResponse';
 import { LogoutResponse } from '../../models/api/logoutResponse';
+import { NotificationService } from '../notif/notification.service';
+import { SUCCESS_MESSAGES_MAP } from '../../constants/success-messages';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +17,10 @@ export class AuthService {
     undefined
   );
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private notificationService: NotificationService
+  ) {
     this.checkIfUserIsLoggedIn();
   }
 
@@ -46,6 +51,11 @@ export class AuthService {
             const stringifyResponse = JSON.stringify(response.data);
             localStorage.setItem('savedCurrentUser', stringifyResponse);
             this.currentUserSubject.next(response.data);
+            const message = SUCCESS_MESSAGES_MAP.get('Login Successfully');
+            this.notificationService.showSuccess(
+              message?.message ?? '',
+              message?.label ?? ''
+            );
           }
         })
       );
@@ -60,6 +70,11 @@ export class AuthService {
         tap(() => {
           localStorage.removeItem('savedCurrentUser');
           this.currentUserSubject.next(undefined);
+          const message = SUCCESS_MESSAGES_MAP.get('Logout Successfully');
+          this.notificationService.showSuccess(
+            message?.message ?? '',
+            message?.label ?? ''
+          );
         })
       );
   }
