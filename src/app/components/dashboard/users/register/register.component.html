@@ -10,6 +10,14 @@
       <div class="tui-island__paragraph tui-island__paragraph_link">
         <div class="tui-form__row">
           <p>
+            <tui-input id="userName" formControlName="userName">
+              User Name
+            </tui-input>
+          </p>
+        </div>
+
+        <div class="tui-form__row">
+          <p>
             <tui-input id="firstName" formControlName="firstName">
               First Name
             </tui-input>
@@ -38,25 +46,6 @@
               Type a password
             </tui-input-password>
           </p>
-        </div>
-
-        <div class="tui-form__row">
-          <tui-multi-select
-            id="roles"
-            placeholder="Ignored text"
-            [editable]="false"
-            [formControl]="control"
-            [tagValidator]="tagValidator"
-            [tuiTextfieldLabelOutside]="true"
-            [(search)]="search"
-          >
-            Select Roles
-            <tui-data-list-wrapper
-              *tuiDataList
-              tuiMultiSelectGroup
-              [items]="filter(search)"
-            />
-          </tui-multi-select>
         </div>
       </div>
 

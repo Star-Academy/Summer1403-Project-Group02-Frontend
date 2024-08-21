@@ -15,7 +15,6 @@ import {
   TuiIslandDirective,
 } from '@taiga-ui/legacy';
 import type { TuiBooleanHandler } from '@taiga-ui/cdk';
-import { TUI_DEFAULT_MATCHER, tuiPure } from '@taiga-ui/cdk';
 import { TuiDataList } from '@taiga-ui/core';
 import { TuiDataListWrapper } from '@taiga-ui/kit';
 import {
@@ -23,8 +22,8 @@ import {
   TuiTextfieldControllerModule,
 } from '@taiga-ui/legacy';
 import { POLYMORPHEUS_CONTEXT } from '@taiga-ui/polymorpheus';
-
-const ITEMS: readonly string[] = ['Data Anaylist', 'Owner', 'Developer'];
+import { AdminUserService } from '../../../../services/admin/admin.service';
+import { UserBody } from '../../../../models/api/userBody';
 
 @Component({
   selector: 'app-register',
@@ -49,23 +48,21 @@ const ITEMS: readonly string[] = ['Data Anaylist', 'Owner', 'Developer'];
 })
 export class RegisterComponent implements OnInit {
   private readonly context = inject<TuiDialogContext>(POLYMORPHEUS_CONTEXT);
+  private readonly adminUserService = inject(AdminUserService);
 
   form!: FormGroup;
 
   protected search: string | null = '';
-
-  protected readonly control = new FormControl([ITEMS[0]]);
-
-  @tuiPure
-  protected filter(search: string | null): readonly string[] {
-    return ITEMS.filter((item) => TUI_DEFAULT_MATCHER(item, search || ''));
-  }
 
   protected tagValidator: TuiBooleanHandler<string> = (tag) =>
     !tag.startsWith('Han');
 
   ngOnInit(): void {
     this.form = new FormGroup({
+      userName: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(2),
+      ]),
       firstName: new FormControl(null, [
         Validators.required,
         Validators.minLength(2),
@@ -80,15 +77,31 @@ export class RegisterComponent implements OnInit {
         Validators.maxLength(30),
       ]),
       email: new FormControl(null, [Validators.required, Validators.email]),
-      dob: new FormControl(null, [Validators.required]),
     });
   }
 
   protected submit() {
     if (!this.form.invalid) {
-      this.context.completeWith();
+      // Construct the user data from the form
+      const userRequest: UserBody = {
+        username: this.form.value.userName,
+        firstName: this.form.value.firstName,
+        lastName: this.form.value.lastName,
+        password: this.form.value.password,
+        email: this.form.value.email,
+      };
+
+      // Call the service to create the user
+      this.adminUserService.createUser(userRequest).subscribe({
+        next: () => {
+          console.log('success');
+
+          this.context.completeWith();
+        },
+      });
     } else {
-      // show errorr
+      // Optionally, show a validation error message
+      console.error('Form is invalid');
     }
   }
 }
