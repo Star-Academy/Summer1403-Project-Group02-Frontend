@@ -33,8 +33,8 @@ export const ERROR_MESSAGES_MAP = new Map<
   [
     'Wrong Password',
     {
-      label: 'Authentication Error',
-      message: 'The password or username you entered is incorrect.',
+      label: 'Password incorrect',
+      message: 'The password you entered is incorrect.',
     },
   ],
   [

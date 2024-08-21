@@ -68,8 +68,8 @@ import { OnInit } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileComponent implements OnInit {
-  protected name = 'name family';
-  protected username = 'name_family';
+  protected name = 'test2';
+  protected username = 'test2';
   protected roles = ['Admin', 'Developer'];
 
   private readonly dialogs = inject(TuiDialogService);
@@ -80,9 +80,9 @@ export class ProfileComponent implements OnInit {
   );
 
   protected form = new FormGroup({
-    first_name: new FormControl<string>('name', Validators.required),
-    last_name: new FormControl<string>('family', Validators.required),
-    email: new FormControl<string>('mail@mail.com', [
+    first_name: new FormControl<string>('test2', Validators.required),
+    last_name: new FormControl<string>('test2', Validators.required),
+    email: new FormControl<string>('test@gmail.com', [
       Validators.required,
       Validators.email,
     ]),
