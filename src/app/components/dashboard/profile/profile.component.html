@@ -11,9 +11,7 @@
       <div class="gap-4 md:gap-8 flex flex-col md:flex-row items-center">
         <h2 tuiTitle="m" class="flex flex-col items-center md:items-start">
           {{ name | titlecase }}
-          <div tuiSubtitle>
-            {{ username | username }}
-          </div>
+          <div tuiSubtitle>{{ username | username }}</div>
         </h2>
         <div class="flex gap-1 md:gap-2">
           <tui-chip
@@ -50,55 +48,46 @@
     <div
       class="flex flex-col md:flex-row w-full h-full gap-4 items-stretch justify-center"
     >
-      <form [formGroup]="info_form" class="flex w-full flex-col gap-2">
+      <form [formGroup]="form" class="flex w-full flex-col gap-2">
         <tui-input
-          [disabled]="loading_btn"
           tuiTextfieldSize="m"
-          [readOnly]="!enable_edit"
           formControlName="first_name"
           [tuiTextfieldLabelOutside]="true"
         >
           type your first name
-          <input tuiTextfieldLegacy />
         </tui-input>
 
         <tui-input
-          [disabled]="loading_btn"
           tuiTextfieldSize="m"
-          [readOnly]="!enable_edit"
           formControlName="last_name"
           [tuiTextfieldLabelOutside]="true"
         >
           type your last name
-          <input tuiTextfieldLegacy />
         </tui-input>
 
         <tui-input
-          [disabled]="loading_btn"
           tuiTextfieldSize="m"
-          [readOnly]="!enable_edit"
           formControlName="email"
           [tuiTextfieldLabelOutside]="true"
         >
           type your email address
-          <input tuiTextfieldLegacy />
         </tui-input>
 
         <button
           class="w-full"
           tuiButton
-          [loading]="loading_btn"
-          [disabled]="this.info_form.invalid"
-          appearance="{{ enable_edit ? 'primary' : 'secondary' }}"
+          [loading]="form.pending"
+          [disabled]="form.invalid"
+          appearance="{{ form.enabled ? 'primary' : 'secondary' }}"
           size="m"
           (click)="editHandler()"
         >
-          {{ enable_edit ? 'Save' : 'Edit' }}
+          {{ form.enabled ? 'Save' : 'Edit' }}
         </button>
       </form>
 
       <div id="quotes" class="w-full rounded-2xl p-4">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Modi illo
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi illo
         quidem laudantium iste quibusdam eius officia perspiciatis fuga odit
         unde consequuntur a sequi eaque facere ratione aliquam, quo, dolorum
         iure.

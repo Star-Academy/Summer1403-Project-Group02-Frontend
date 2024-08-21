@@ -4,7 +4,6 @@ import {
   Component,
   inject,
   INJECTOR,
-  OnInit,
 } from '@angular/core';
 import {
   ReactiveFormsModule,
@@ -37,6 +36,7 @@ import { ChangePassDialogComponent } from './change-pass-dialog/change-pass-dial
 import type { TuiConfirmData } from '@taiga-ui/kit';
 import { AuthService } from '../../../services/auth/auth.service';
 import { Router } from '@angular/router';
+import { OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-profile',
@@ -71,9 +71,6 @@ export class ProfileComponent implements OnInit {
   protected name = 'name family';
   protected username = 'name_family';
   protected roles = ['Admin', 'Developer'];
-  protected enable_edit = false;
-  protected loading_btn = false;
-  protected info_form!: FormGroup;
 
   private readonly dialogs = inject(TuiDialogService);
   private readonly injector = inject(INJECTOR);
@@ -82,33 +79,32 @@ export class ProfileComponent implements OnInit {
     new PolymorpheusComponent(ChangePassDialogComponent, this.injector)
   );
 
-  constructor(private authService: AuthService, private router: Router) {}
+  protected form = new FormGroup({
+    first_name: new FormControl<string>('name', Validators.required),
+    last_name: new FormControl<string>('family', Validators.required),
+    email: new FormControl<string>('mail@mail.com', [
+      Validators.required,
+      Validators.email,
+    ]),
+  });
 
-  ngOnInit() {
-    this.info_form = new FormGroup({
-      first_name: new FormControl<string>('name', Validators.required),
-      last_name: new FormControl<string>('family', Validators.required),
-      email: new FormControl<string>('mail@mail.com', [
-        Validators.required,
-        Validators.email,
-      ]),
-    });
+  constructor(private authService: AuthService, private router: Router) {}
+  ngOnInit(): void {
+    this.form.disable();
   }
 
   editHandler() {
-    if (this.enable_edit) {
-      if (this.info_form.valid) {
-        this.loading_btn = true;
-        // send to api
+    if (this.form.enabled) {
+      if (this.form.valid) {
+        // api call here
 
-        // if ok
-        this.loading_btn = false;
-        this.enable_edit = false;
+        // after success
+        this.form.disable();
       } else {
-        this.info_form.markAllAsTouched();
+        this.form.markAllAsTouched();
       }
     } else {
-      this.enable_edit = true;
+      this.form.enable();
     }
   }
 
