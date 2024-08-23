@@ -1,1 +1,10 @@
-<p>charts works!</p>
+<div class="test">
+  <cytoscapejs
+    [autoFit]="autoFit"
+    [cytoscapeOptions]="cytoscapeOptions"
+    [autoFit]="autoFit"
+    (coreChanged)="coreChanged($event)"
+    [cxData]="cxData"
+    (cxAttributeNameMapChanged)="cxAttributeNameMapChanged($event)"
+  ></cytoscapejs>
+</div>
