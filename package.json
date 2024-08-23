@@ -33,6 +33,7 @@
     "@taiga-ui/legacy": "^4.1.0",
     "@taiga-ui/styles": "^4.1.0",
     "cytoscape": "^3.30.2",
+    "cytoscape-cxtmenu": "^3.5.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
@@ -41,6 +42,8 @@
     "@angular-devkit/build-angular": "^18.1.2",
     "@angular/cli": "^18.1.2",
     "@angular/compiler-cli": "^18.1.0",
+    "@types/cytoscape": "^3.21.6",
+    "@types/cytoscape-cxtmenu": "^3.4.4",
     "@types/jasmine": "~5.1.0",
     "angular-eslint": "18.3.0",
     "autoprefixer": "^10.4.20",
