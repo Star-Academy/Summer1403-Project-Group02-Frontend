@@ -32,6 +32,7 @@
     "@taiga-ui/layout": "^4.1.0",
     "@taiga-ui/legacy": "^4.1.0",
     "@taiga-ui/styles": "^4.1.0",
+    "cytoscape": "^3.30.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
