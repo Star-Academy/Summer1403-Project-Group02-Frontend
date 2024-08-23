@@ -3,6 +3,7 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { UsersComponent } from './components/dashboard/users/users.component';
 import { ProfileComponent } from './components/dashboard/profile/profile.component';
+import { GraphComponent } from './components/dashboard/graph/graph.component';
 
 export const routes: Routes = [
   {
@@ -25,6 +26,10 @@ export const routes: Routes = [
       {
         path: 'profile',
         component: ProfileComponent,
+      },
+      {
+        path: 'graph',
+        component: GraphComponent,
       },
     ],
   },
