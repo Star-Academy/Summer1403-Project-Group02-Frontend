@@ -1,0 +1,52 @@
+<div tuiCardLarge id="import-card" tuiSurface="elevated">
+  <section class="flex flex-col md:flex-row">
+    <!-- aside -->
+    <section id="import-aside" class="w-full md:w-1/5" id="import-aside">
+      <button size="s" tuiButton (click)="add()">Add</button>
+      <tui-elastic-container class="tui-space_top-4">
+        <div *ngFor="let item of items; let index = index" class="wrapper">
+          <button
+          appearance="flat"
+          tuiButton
+          (click)="item.expanded = !item.expanded"
+          class="my-1"
+          >
+            <button
+            aria-readonly="true"
+            appearance="flat"
+              size="s"
+              tuiIconButton
+              class="tui-space_right-2"
+              [tuiChevron]="item.expanded"
+              (click)="item.expanded = !item.expanded"
+            >
+              Expand
+            </button>
+            <p>
+              {{item.title}}
+            </p>
+            <button
+              appearance="flat"
+              iconStart="@tui.trash"
+              size="s"
+              tuiIconButton
+              class="remove"
+              [style.border-radius.%]="100"
+              (click)="remove(index)"
+            >
+              Remove
+            </button>
+          </button>
+          <tui-expand [expanded]="item.expanded">
+            <tui-expand [expanded]="item.expanded">
+              <p *ngFor="let i of item.value">{{ i.key }}: {{ i.value }}</p>
+            </tui-expand>
+          </tui-expand>
+        </div>
+      </tui-elastic-container>
+    </section>
+
+    <!-- main -->
+    <section></section>
+  </section>
+</div>
