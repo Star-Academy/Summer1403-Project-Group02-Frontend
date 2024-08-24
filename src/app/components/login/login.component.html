@@ -41,13 +41,11 @@
             tuiButton
             type="submit"
             [disabled]="form.invalid || loading"
-            type="button"
             size="m"
             class="tui-island__footer-button"
             appearance="primary"
-            routerLink="/register"
           >
-            {{ loading ? "Logging in..." : "Login" }}
+            {{ loading ? 'Logging in...' : 'Login' }}
           </button>
         </div>
       </div>
