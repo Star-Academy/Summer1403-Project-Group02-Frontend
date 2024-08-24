@@ -28,6 +28,7 @@ import type { TuiConfirmData } from '@taiga-ui/kit';
 import { TUI_CONFIRM } from '@taiga-ui/kit';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { RegisterComponent } from './register/register.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
 interface Users {
   name: string;
   last_name: string;
@@ -86,9 +87,21 @@ export class UsersComponent {
   private readonly rej_dialog = this.dialogs.open(
     new PolymorpheusComponent(RegisterComponent, this.injector)
   );
+  
+  private readonly edit_user_dialog = this.dialogs.open(
+    new PolymorpheusComponent(EditUserComponent, this.injector)
+  );
 
   protected showRejDialog(): void {
     this.rej_dialog.subscribe({
+      complete: () => {
+        console.info('Dialog closed');
+      },
+    });
+  }
+  
+  protected showEditUserDialog(): void {
+    this.edit_user_dialog.subscribe({
       complete: () => {
         console.info('Dialog closed');
       },
