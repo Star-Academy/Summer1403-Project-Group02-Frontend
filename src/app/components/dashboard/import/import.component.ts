@@ -64,7 +64,7 @@ export class ImportComponent implements OnInit {
         {
           expanded: false,
           title: "file sdsdd dsdsds here",
-          value: { aaaa: "ffff", rrr: "wwww" },
+          value: { aaaaaaaaaaaaaaaaa: "faaaaaaaaaaaaaazzzzzzzfff", rrr: "wwww" },
           dropdown: false,
         });
     }

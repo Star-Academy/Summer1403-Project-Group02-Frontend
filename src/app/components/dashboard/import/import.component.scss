@@ -2,15 +2,8 @@
   height: 100%;
   padding: 0;
 
-  tui-expand {
-    margin-inline-start: 3rem;
-  }
-
   #import-aside {
+    height: 100%;
     overflow-y: auto;
-  }
-
-  li::marker {
-    color: green;
   }
 }

@@ -2,7 +2,7 @@
   <section class="h-full flex flex-col md:flex-row divide-y md:divide-x">
     <!-- aside -->
     <tui-scrollbar class="h-full w-full md:w-1/4">
-      <section id="import-aside" class="p-6" id="import-aside">
+      <section id="import-aside" class="h-full p-6" id="import-aside">
         <label
           class="flex flex-col items-center justify-center"
           *ngIf="!control.value"
@@ -61,7 +61,6 @@
                   tuiIconButton
                   class="tui-space_right-2"
                   [tuiChevron]="item.expanded"
-                  (click)="item.expanded = !item.expanded"
                 >
                   Expand
                 </button>
@@ -97,12 +96,13 @@
               </ng-template>
             </div>
             <tui-expand [expanded]="item.expanded">
-              <ul class="list-outside list-disc">
+              <ul class="w-full list-disc">
                 <li
-                  class="text-neutral-500"
+                  class="px-8 w-full flex flex-row gap-4"
                   *ngFor="let i of item.value | keyvalue"
                 >
-                  {{ i.key }}: {{ i.value }}
+                  <p tuiFade class="w-2/5">{{ i.key }}</p>
+                  <p tuiFade class="w-3/5 text-neutral-500">{{ i.value }}</p>
                 </li>
               </ul>
             </tui-expand>
