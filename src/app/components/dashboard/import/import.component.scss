@@ -1,13 +1,11 @@
 #import-card {
   padding: 0;
-  border: 1px solid #a5a5a5;
-
-  #import-aside {
-    padding: 1.2rem; 
-    border-right: 1px dotted #a5a5a5;
-  }
 
   tui-expand {
-    padding-inline-start: 1.2rem;
+    margin-inline-start: 3rem;
+  }
+
+  li::marker {
+    color: green;
   }
 }
