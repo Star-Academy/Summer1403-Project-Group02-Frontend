@@ -137,25 +137,59 @@ export class GraphComponent implements AfterViewInit {
           },
         }, // Transaction from 4727992815 to 3084026274
       ],
-
+      minZoom: 0.3,
+      maxZoom: 3,
+      wheelSensitivity: 0.2,
       style: [
         {
           selector: 'node',
           style: {
-            'background-color': '#526ed3',
             label: 'data(label)',
+            'background-color': '#FFE081',
+            'text-valign': 'center',
+            'text-halign': 'center',
+            width: 70,
+            height: 70,
+            'font-family': 'Roboto, Arial',
+            'text-overflow-wrap': 'whitespace',
+            'padding-top': '12px',
+            'padding-left': '12px',
+            'padding-right': '12px',
+            'padding-bottom': '12px',
+            'text-background-padding': '1px',
+            'font-size': '12px',
+            'text-wrap': 'wrap',
+            'text-max-width': '10ch',
+            'text-justification': 'center',
+            'line-height': 1.2,
+            color: '#202020',
+            shape: 'ellipse',
           },
         },
         {
           selector: 'edge',
           style: {
-            width: 3,
-            'line-color': '#4056a5',
-            'target-arrow-color': '#4056a5',
-            color: '#2d3c73',
-            'target-arrow-shape': 'triangle',
-            'curve-style': 'bezier',
+            width: 2.5,
             label: 'data(label)',
+            'line-color': '#909090',
+            'target-arrow-color': '#909090',
+            'target-arrow-shape': 'triangle-backcurve',
+            'arrow-scale': 1.8,
+            'curve-style': 'bezier',
+            'font-size': '11',
+            'text-background-color': '#eeeeee',
+            'text-background-opacity': 0.9,
+            'text-background-padding': '2px',
+            'text-halign': 'center',
+            'text-valign': 'center',
+            'text-rotation': 'autorotate',
+            'source-distance-from-node': 5,
+            'target-distance-from-node': 5,
+            'text-background-shape': 'roundrectangle',
+            opacity: 50,
+            'font-family': 'cursive',
+            'font-weight': 'lighter',
+            color: '#303030',
           },
         },
       ],
@@ -174,9 +208,9 @@ export class GraphComponent implements AfterViewInit {
         // Whether to enable incremental mode
         randomize: true,
         // Node repulsion (non overlapping) multiplier
-        nodeRepulsion: 8000,
+        nodeRepulsion: 10000,
         // Ideal (intra-graph) edge length
-        idealEdgeLength: 120,
+        idealEdgeLength: 150,
         // Divisor to compute edge forces
         edgeElasticity: 0.45,
         // Nesting factor (multiplier) to compute ideal edge length for inter-graph edges
@@ -217,7 +251,10 @@ export class GraphComponent implements AfterViewInit {
         {
           fillColor: 'rgba(255, 111, 97, 0.7)', // Optional: custom background color for the item
           content: 'Expand', // HTML/text content to be displayed in the menu
-          contentStyle: {}, // CSS key:value pairs to set the command's CSS in JS if you want
+          contentStyle: {
+            'font-family': 'Roboto, Arial',
+            'font-size': '10',
+          }, // CSS key:value pairs to set the command's CSS in JS if you want
           select: function (ele: Singular) {
             // A function to execute when the command is selected
             console.log(ele.id()); // `ele` holds the reference to the active element
@@ -231,7 +268,7 @@ export class GraphComponent implements AfterViewInit {
         {
           fillColor: 'rgba(107, 91, 149, 0.7)', // Optional: custom background color for the item
           content: 'Details', // HTML/text content to be displayed in the menu
-          contentStyle: {}, // CSS key:value pairs to set the command's CSS in JS if you want
+          contentStyle: { 'font-family': 'Roboto, Arial', 'font-size': '10' }, // CSS key:value pairs to set the command's CSS in JS if you want
           select: function (ele: Singular) {
             // A function to execute when the command is selected
             console.log(ele.id()); // `ele` holds the reference to the active element
@@ -245,7 +282,10 @@ export class GraphComponent implements AfterViewInit {
         {
           fillColor: 'rgba(136, 176, 75, 0.7)', // Optional: custom background color for the item
           content: 'Settings', // HTML/text content to be displayed in the menu
-          contentStyle: {}, // CSS key:value pairs to set the command's CSS in JS if you want
+          contentStyle: {
+            'font-family': 'Roboto, Arial',
+            'font-size': '10',
+          }, // CSS key:value pairs to set the command's CSS in JS if you want
           select: function (ele: Singular) {
             // A function to execute when the command is selected
             console.log(ele.id()); // `ele` holds the reference to the active element
@@ -259,23 +299,37 @@ export class GraphComponent implements AfterViewInit {
       ],
       fillColor: 'rgba(0, 0, 0, 0.75)', // The background color of the menu
       activeFillColor: 'rgba(1, 105, 217, 0.75)', // The color used to indicate the selected command
-      activePadding: 20, // Additional size in pixels for the active command
-      indicatorSize: 24, // The size in pixels of the pointer to the active command
-      separatorWidth: 3, // The empty spacing in pixels between successive commands
-      spotlightPadding: 4, // Extra spacing in pixels between the element and the spotlight
+      activePadding: 18, // Additional size in pixels for the active command
+      indicatorSize: 28, // The size in pixels of the pointer to the active command
+      separatorWidth: 4, // The empty spacing in pixels between successive commands
+      spotlightPadding: 8, // Extra spacing in pixels between the element and the spotlight
       adaptativeNodeSpotlightRadius: false, // Specify whether the spotlight radius should adapt to the node size
       minSpotlightRadius: 24, // The minimum radius in pixels of the spotlight
       maxSpotlightRadius: 38, // The maximum radius in pixels of the spotlight
       openMenuEvents: 'cxttapstart taphold', // Events that will open the menu
       itemColor: 'white', // The color of text in the command's content
-      itemTextShadowColor: 'transparent', // The text shadow color of the command's content
-      zIndex: 9999, // The z-index of the UI div
-      atMouse: false, // Draw menu at mouse position
+      itemTextShadowColor: 'transparent',
+      zIndex: 9999,
+      atMouse: false,
       outsideMenuCancel: false as number | false | undefined, // Use the correct type
     };
 
     const menu = cy.cxtmenu(defaults);
 
+    cy.style()
+      .selector('node')
+      .style({
+        'font-family': 'Roboto, Arial',
+      })
+      .update();
+
+    cy.style()
+      .selector('edge')
+      .style({
+        'font-family': 'cursive',
+        'font-weight': 'lighter',
+      })
+      .update();
     console.log(menu);
   }
 }
