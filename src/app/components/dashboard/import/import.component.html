@@ -113,6 +113,27 @@
     </tui-scrollbar>
 
     <!-- main -->
-    <section>main</section>
+    <section class="h-full w-full md:w-3/4 flex flex-col divide-y">
+      <div class="flex justify-between items-center py-2 px-4">
+        <p>Some Text or ...</p>
+        <button
+          size="s"
+          [disabled]="empty_graph"
+          iconStart="@tui.play"
+          tuiButton
+          appearance="glass"
+        >
+          Run
+        </button>
+      </div>
+
+      <tui-block-status [hidden]="!empty_graph">
+        <img alt="graph img" src="/graph-bg.png" tuiSlot="top" class="image" />
+
+        <h5>Start Sketching a Model</h5>
+
+        select source and target file to start sketching a model
+      </tui-block-status>
+    </section>
   </section>
 </div>

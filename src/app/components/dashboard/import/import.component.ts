@@ -47,7 +47,7 @@ interface aside_item {
 export class ImportComponent implements OnInit {
   protected items!: aside_item[];
   protected file_type!: string;
-
+  protected empty_graph !: boolean;
   protected readonly control = new FormControl<TuiFileLike | null>(null);
   protected readonly failedFiles$ = new Subject<TuiFileLike | null>();
   protected readonly loadingFiles$ = new Subject<TuiFileLike | null>();
@@ -56,6 +56,7 @@ export class ImportComponent implements OnInit {
   );
 
   ngOnInit() {
+    this.empty_graph = true;
     this.file_type = file_type;
     this.items = [];
 
