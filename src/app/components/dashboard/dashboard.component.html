@@ -72,14 +72,12 @@
         [iconStart]="expanded ? '@tui.chevron-left' : '@tui.chevron-right'"
         (click)="expanded = !expanded"
       >
-        <span tuiFade>{{ expanded ? 'Collapse' : 'Expand' }}</span>
+        <span tuiFade>{{ expanded ? "Collapse" : "Expand" }}</span>
       </button>
     </footer>
   </aside>
 
-  <tui-scrollbar [hidden]="false">
-    <main id="main" tuiNavigationMain>
-      <router-outlet />
-    </main>
-  </tui-scrollbar>
+  <main id="main">
+    <router-outlet [style.height]="0" />
+  </main>
 </div>

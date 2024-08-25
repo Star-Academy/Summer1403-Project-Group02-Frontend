@@ -2,7 +2,7 @@ import { AsyncPipe, KeyValuePipe, NgForOf, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TuiActiveZone, tuiArrayRemove, TuiObscured } from '@taiga-ui/cdk';
-import { TuiButton, TuiDropdown, TuiExpand, TuiHint, TuiSurface } from '@taiga-ui/core';
+import { TuiButton, TuiDropdown, TuiExpand, TuiHint, TuiScrollbar, TuiSurface } from '@taiga-ui/core';
 import { TuiChevron, TuiElasticContainer, TuiFade, TuiFileLike, TuiFiles } from '@taiga-ui/kit';
 import { TuiInputModule } from '@taiga-ui/legacy';
 import { TuiBlockStatus, TuiCardLarge } from '@taiga-ui/layout';
@@ -38,6 +38,7 @@ interface aside_item {
     TuiHint,
     TuiDropdown,
     TuiBlockStatus,
+    TuiScrollbar,
     KeyValuePipe],
   templateUrl: './import.component.html',
   styleUrl: './import.component.scss',
@@ -56,15 +57,18 @@ export class ImportComponent implements OnInit {
 
   ngOnInit() {
     this.file_type = file_type;
-    this.items = [
-      {
-        expanded: false,
-        title: "file sdsdd dsdsds here",
-        value: { aaaa: "ffff", rrr: "wwww" },
-        dropdown: false,
-      },
+    this.items = [];
 
-    ];
+    for (let i = 0; i < 10; i++) {
+      this.items.push(
+        {
+          expanded: false,
+          title: "file sdsdd dsdsds here",
+          value: { aaaa: "ffff", rrr: "wwww" },
+          dropdown: false,
+        });
+    }
+
   }
 
   protected isEmptyItems() {

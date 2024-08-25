@@ -1,8 +1,13 @@
 #import-card {
+  height: 100%;
   padding: 0;
 
   tui-expand {
     margin-inline-start: 3rem;
+  }
+
+  #import-aside {
+    overflow-y: auto;
   }
 
   li::marker {
