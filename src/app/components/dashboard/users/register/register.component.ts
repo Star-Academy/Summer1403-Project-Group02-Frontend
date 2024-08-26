@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { TuiButton, TuiDialogContext, TuiLink } from '@taiga-ui/core';
+import { TuiButton, TuiDialogContext, TuiLink, TuiTitle } from '@taiga-ui/core';
 import { TuiCheckbox } from '@taiga-ui/kit';
 import {
   TuiInputDateModule,
@@ -34,6 +34,7 @@ import { UserBody } from '../../../../models/api/userBody';
     TuiInputModule,
     TuiInputPasswordModule,
     TuiLink,
+    TuiTitle,
     TuiButton,
     TuiCheckbox,
     TuiInputDateModule,
