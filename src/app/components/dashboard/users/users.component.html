@@ -30,7 +30,7 @@
         class="tui-table__tr tui-table__tr_border_none"
       >
         <td class="tui-table__td">
-          {{ i.firstName + ' ' + i.lastName | titlecase }}
+          {{ i.firstName + " " + i.lastName | titlecase }}
         </td>
         <td class="tui-table__td">{{ i.username }}</td>
         <td class="tui-table__td">
@@ -48,7 +48,13 @@
         </td>
 
         <td class="tui-table__td">
-          <button tuiIconButton size="s" appearance="flat" iconStart="@tui.pen">
+          <button
+            tuiIconButton
+            size="s"
+            (click)="showEditUserDialog(i.username)"
+            appearance="flat"
+            iconStart="@tui.pen"
+          >
             edit user
           </button>
           <button
