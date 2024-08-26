@@ -51,6 +51,8 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
+    console.log('hellll');
+
     if (this.form.invalid) {
       return;
     }
