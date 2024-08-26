@@ -1,52 +1,142 @@
 <div tuiCardLarge id="import-card" tuiSurface="elevated">
-  <section class="flex flex-col md:flex-row">
+  <section class="h-full flex flex-col md:flex-row divide-y md:divide-x">
     <!-- aside -->
-    <section id="import-aside" class="w-full md:w-1/5" id="import-aside">
-      <button size="s" tuiButton (click)="add()">Add</button>
-      <tui-elastic-container class="tui-space_top-4">
-        <div *ngFor="let item of items; let index = index" class="wrapper">
-          <button
-          appearance="flat"
-          tuiButton
-          (click)="item.expanded = !item.expanded"
-          class="my-1"
-          >
-            <button
-            aria-readonly="true"
-            appearance="flat"
-              size="s"
-              tuiIconButton
-              class="tui-space_right-2"
-              [tuiChevron]="item.expanded"
-              (click)="item.expanded = !item.expanded"
-            >
-              Expand
-            </button>
-            <p>
-              {{item.title}}
-            </p>
-            <button
-              appearance="flat"
-              iconStart="@tui.trash"
-              size="s"
-              tuiIconButton
-              class="remove"
-              [style.border-radius.%]="100"
-              (click)="remove(index)"
-            >
-              Remove
-            </button>
-          </button>
-          <tui-expand [expanded]="item.expanded">
+    <tui-scrollbar class="h-full w-full md:w-1/4">
+      <section id="import-aside" class="h-full p-6" id="import-aside">
+        <label
+          class="flex flex-col items-center justify-center"
+          *ngIf="!control.value"
+          tuiInputFiles
+          [style.height]="isEmptyItems() ? '100%' : 'auto'"
+          [style.paddingBlock]="isEmptyItems() ? '1rem' : 'auto'"
+        >
+          <tui-block-status [hidden]="!isEmptyItems()">
+            <img
+              alt="not found"
+              src="/upload.svg"
+              tuiSlot="top"
+              class="image"
+            />
+
+            <h5>Not found</h5>
+
+            Try to upload a file
+          </tui-block-status>
+          <input [accept]="file_type" tuiInputFiles [formControl]="control" />
+        </label>
+
+        <tui-files class="tui-space_bottom-4">
+          <tui-file
+            *ngIf="loadedFiles$ | async as file"
+            [file]="file"
+            (remove)="removeFile()"
+          />
+
+          <tui-file
+            *ngIf="failedFiles$ | async as file"
+            state="error"
+            [file]="file"
+            (remove)="removeFile()"
+          />
+
+          <tui-file
+            *ngIf="loadingFiles$ | async as file"
+            state="loading"
+            [file]="file"
+            (remove)="removeFile()"
+          />
+        </tui-files>
+
+        <tui-elastic-container class="w-full">
+          @for (item of items; let index = $index; track item) {
+          <div class="w-full py-2 border-t">
+            <div class="py-1 w-full flex flex-row items-center justify-between">
+              <button
+                class="flex flex-row items-center"
+                (click)="item.expanded = !item.expanded"
+              >
+                <button
+                  appearance="flat"
+                  size="s"
+                  tuiIconButton
+                  class="tui-space_right-2"
+                  [tuiChevron]="item.expanded"
+                >
+                  Expand
+                </button>
+                <p tuiFade tuiHint="{{ item.title }}" tuiHintAppearance="dark">
+                  {{ item.title }}
+                </p>
+              </button>
+              <button
+                appearance="flat"
+                iconStart="@tui.menu"
+                size="s"
+                type="button"
+                tuiIconButton
+                [tuiDropdown]="dropdownOption"
+                [tuiDropdownManual]="item.dropdown"
+                [tuiObscuredEnabled]="item.dropdown"
+                (click)="item.dropdown = !item.dropdown"
+                (tuiActiveZoneChange)="onActiveZone($event, index)"
+                (tuiObscured)="onObscured($event, index)"
+              >
+                more
+              </button>
+              <ng-template #dropdownOption>
+                <button
+                  appearance="flat"
+                  iconStart="@tui.trash"
+                  size="s"
+                  tuiButton
+                  (click)="remove(index)"
+                >
+                  Remove
+                </button>
+              </ng-template>
+            </div>
             <tui-expand [expanded]="item.expanded">
-              <p *ngFor="let i of item.value">{{ i.key }}: {{ i.value }}</p>
+              <ul class="w-full list-disc">
+                <li
+                  class="px-8 w-full flex flex-row gap-4"
+                  *ngFor="let i of item.value | keyvalue"
+                >
+                  <p tuiFade class="w-2/5">{{ i.key }}</p>
+                  <p tuiFade class="w-3/5 text-neutral-500">{{ i.value }}</p>
+                </li>
+              </ul>
             </tui-expand>
-          </tui-expand>
-        </div>
-      </tui-elastic-container>
-    </section>
+          </div>
+          }
+        </tui-elastic-container>
+      </section>
+    </tui-scrollbar>
 
     <!-- main -->
-    <section></section>
+    <section
+      id="import-main"
+      class="h-full w-full md:w-3/4 flex flex-col divide-y"
+    >
+      <div class="flex justify-between items-center py-2 px-4">
+        <p>Some Text or ...</p>
+        <button
+          size="s"
+          [disabled]="empty_graph"
+          iconStart="@tui.play"
+          tuiButton
+          appearance="glass"
+        >
+          Run
+        </button>
+      </div>
+
+      <tui-block-status [hidden]="!empty_graph">
+        <img alt="graph img" src="/graph-bg.png" tuiSlot="top" class="image" />
+
+        <h5>Start Sketching a Model</h5>
+
+        select source and target file to start sketching a model
+      </tui-block-status>
+    </section>
   </section>
 </div>

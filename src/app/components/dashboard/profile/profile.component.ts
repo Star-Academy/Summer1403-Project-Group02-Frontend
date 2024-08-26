@@ -88,7 +88,7 @@ export class ProfileComponent implements OnInit {
     ]),
   });
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
   ngOnInit(): void {
     this.form.disable();
   }

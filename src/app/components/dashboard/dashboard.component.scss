@@ -9,10 +9,18 @@
 }
 
 #main {
+  height: 100%;
+  width: 100%;
+
   padding: 0;
+  margin: 0;
   overflow-y: auto;
-  margin: 2.5rem;
 }
+
+#main::-webkit-scrollbar {
+  width: 0;
+}
+
 .aside {
   background-color: var(--tui-background-accent-1);
 }

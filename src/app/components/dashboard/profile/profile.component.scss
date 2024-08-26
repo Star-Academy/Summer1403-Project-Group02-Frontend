@@ -1,5 +1,6 @@
 #profile-card {
   padding: 0;
+  margin: 2.5rem;
   border: 1px solid #a5a5a5;
 
   #bg-user {
@@ -18,7 +19,7 @@
     transform: translateY(calc(-1 * var(--t-gap)));
     margin-inline: 2rem;
 
-    #avatar {      
+    #avatar {
       transform: translateY(calc(-50%));
       border: 1px solid #858585;
       background-color: var(--tui-background-base-alt);

@@ -1,13 +1,14 @@
 #import-card {
+  height: 100%;
   padding: 0;
-  border: 1px solid #a5a5a5;
 
   #import-aside {
-    padding: 1.2rem; 
-    border-right: 1px dotted #a5a5a5;
+    height: 100%;
+    overflow-y: auto;
   }
+}
 
-  tui-expand {
-    padding-inline-start: 1.2rem;
-  }
+.image {
+  width: 15rem;
+  height: 15rem;
 }
