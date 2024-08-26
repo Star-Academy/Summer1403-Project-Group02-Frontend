@@ -164,6 +164,7 @@ export class GraphComponent implements AfterViewInit {
             'line-height': 1.2,
             color: '#202020',
             shape: 'ellipse',
+            'overlay-opacity': 0,
           },
         },
         {
@@ -186,7 +187,6 @@ export class GraphComponent implements AfterViewInit {
             'source-distance-from-node': 5,
             'target-distance-from-node': 5,
             'text-background-shape': 'roundrectangle',
-            opacity: 50,
             'font-family': 'cursive',
             'font-weight': 'lighter',
             color: '#303030',
@@ -242,18 +242,17 @@ export class GraphComponent implements AfterViewInit {
 
     // The default values of each option are outlined below:
     const defaults = {
-      menuRadius: function (ele: Singular) {
-        console.log(ele);
-        return 100;
-      }, // Updated to use the more generic Singular type
       selector: 'node', // Elements matching this Cytoscape.js selector will trigger cxtmenus
       commands: [
         {
           fillColor: 'rgba(255, 111, 97, 0.7)', // Optional: custom background color for the item
-          content: 'Expand', // HTML/text content to be displayed in the menu
+          content: `<div style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>`, // HTML/text content to be displayed in the menu
           contentStyle: {
             'font-family': 'Roboto, Arial',
             'font-size': '10',
+            'text-align': 'center',
           }, // CSS key:value pairs to set the command's CSS in JS if you want
           select: function (ele: Singular) {
             // A function to execute when the command is selected
@@ -267,7 +266,9 @@ export class GraphComponent implements AfterViewInit {
         },
         {
           fillColor: 'rgba(107, 91, 149, 0.7)', // Optional: custom background color for the item
-          content: 'Details', // HTML/text content to be displayed in the menu
+          content: `<div style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>`, // HTML/text content to be displayed in the menu
           contentStyle: { 'font-family': 'Roboto, Arial', 'font-size': '10' }, // CSS key:value pairs to set the command's CSS in JS if you want
           select: function (ele: Singular) {
             // A function to execute when the command is selected
@@ -281,7 +282,9 @@ export class GraphComponent implements AfterViewInit {
         },
         {
           fillColor: 'rgba(136, 176, 75, 0.7)', // Optional: custom background color for the item
-          content: 'Settings', // HTML/text content to be displayed in the menu
+          content: `<div style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-expand"><path d="m21 21-6-6m6 6v-4.8m0 4.8h-4.8"/><path d="M3 16.2V21m0 0h4.8M3 21l6-6"/><path d="M21 7.8V3m0 0h-4.8M21 3l-6 6"/><path d="M3 7.8V3m0 0h4.8M3 3l6 6"/></svg>
+                </div>`, // HTML/text content to be displayed in the menu
           contentStyle: {
             'font-family': 'Roboto, Arial',
             'font-size': '10',
@@ -297,12 +300,13 @@ export class GraphComponent implements AfterViewInit {
           enabled: true, // Whether the command is selectable
         },
       ],
+      menuRadius: 60,
       fillColor: 'rgba(0, 0, 0, 0.75)', // The background color of the menu
       activeFillColor: 'rgba(1, 105, 217, 0.75)', // The color used to indicate the selected command
-      activePadding: 18, // Additional size in pixels for the active command
-      indicatorSize: 28, // The size in pixels of the pointer to the active command
+      activePadding: 12, // Additional size in pixels for the active command
+      indicatorSize: 16, // The size in pixels of the pointer to the active command
       separatorWidth: 4, // The empty spacing in pixels between successive commands
-      spotlightPadding: 8, // Extra spacing in pixels between the element and the spotlight
+      spotlightPadding: 10, // Extra spacing in pixels between the element and the spotlight
       adaptativeNodeSpotlightRadius: false, // Specify whether the spotlight radius should adapt to the node size
       minSpotlightRadius: 24, // The minimum radius in pixels of the spotlight
       maxSpotlightRadius: 38, // The maximum radius in pixels of the spotlight
