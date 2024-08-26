@@ -33,6 +33,7 @@ import { RegisterComponent } from './register/register.component';
 import { AdminUserService } from '../../../services/admin/admin.service';
 import { User } from '../../../models/user';
 import { EditUserComponent } from './edit-user/edit-user.component';
+import { AdminEditUserService } from '../../../services/user/admin-edit-user.service';
 
 @Component({
   selector: 'app-users',
@@ -64,9 +65,20 @@ export class UsersComponent implements OnInit {
   private readonly dialogs = inject(TuiDialogService);
   private readonly injector = inject(INJECTOR);
   private readonly adminUserService = inject(AdminUserService);
+  private readonly adminEditUserService = inject(AdminEditUserService);
 
   // Use the signal API to store the users
   protected users = signal<User[]>([]);
+
+  //? default users to tests and etc
+  // protected users = signal<User[]>([{
+  //   username: "Admin",
+  //   firstName: "Name",
+  //   lastName: "Family",
+  //   email: "admin@admin.admin",
+  //   roles: [{ roleType: "Admin" }],
+  // };
+  // ]);
 
   private readonly rejDialog = this.dialogs.open(
     new PolymorpheusComponent(RegisterComponent, this.injector)
@@ -92,12 +104,21 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  protected showEditUserDialog(): void {
-    this.edit_user_dialog.subscribe({
-      complete: () => {
-        console.info('Dialog closed');
-      },
-    });
+  protected showEditUserDialog(username: string): void {
+    const user = this.users().find((user) => user.username === username);
+    if (user) {
+      this.adminEditUserService.setUser(user);
+
+      this.edit_user_dialog.subscribe({
+        complete: () => {
+          console.info('Dialog closed');
+        },
+      });
+    }
+
+    else {
+      console.error(`User ${username} not found`);
+    }
   }
 
   protected showRejDialog(): void {
