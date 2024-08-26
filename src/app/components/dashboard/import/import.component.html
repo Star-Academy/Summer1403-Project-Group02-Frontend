@@ -1,124 +1,138 @@
 <div tuiCardLarge id="import-card" tuiSurface="elevated">
-  <section class="h-full flex flex-col md:flex-row divide-y md:divide-x">
+  <section class="h-full flex flex-col md:flex-row md:divide-x">
     <!-- aside -->
-    <tui-scrollbar class="h-full w-full md:w-1/4">
-      <section id="import-aside" class="h-full p-6" id="import-aside">
-        <label
-          class="flex flex-col items-center justify-center"
-          *ngIf="!control.value"
-          tuiInputFiles
-          [style.height]="isEmptyItems() ? '100%' : 'auto'"
-          [style.paddingBlock]="isEmptyItems() ? '1rem' : 'auto'"
-        >
-          <tui-block-status [hidden]="!isEmptyItems()">
-            <img
-              alt="not found"
-              src="/upload.svg"
-              tuiSlot="top"
-              class="image"
-            />
 
-            <h5>Not found</h5>
-
-            Try to upload a file
-          </tui-block-status>
-          <input [accept]="file_type" tuiInputFiles [formControl]="control" />
-        </label>
-
-        <tui-files class="tui-space_bottom-4">
-          <tui-file
-            *ngIf="loadedFiles$ | async as file"
-            [file]="file"
-            (remove)="removeFile()"
+    <section
+      id="import-aside"
+      class="p-6 tui-text_body-s bg-white"
+      id="import-aside"
+    >
+      <label
+        class="flex flex-col items-center justify-center"
+        *ngIf="!control.value"
+        tuiInputFiles
+        [style.height]="isEmptyItems() ? '100%' : 'auto'"
+        [style.paddingBlock]="isEmptyItems() ? '1rem' : 'auto'"
+      >
+        <tui-block-status [hidden]="!isEmptyItems()">
+          <img
+            alt="No file yet"
+            src="/upload.svg"
+            tuiSlot="top"
+            class="image"
           />
 
-          <tui-file
-            *ngIf="failedFiles$ | async as file"
-            state="error"
-            [file]="file"
-            (remove)="removeFile()"
-          />
+          <h5>No file yet</h5>
 
-          <tui-file
-            *ngIf="loadingFiles$ | async as file"
-            state="loading"
-            [file]="file"
-            (remove)="removeFile()"
-          />
-        </tui-files>
+          Try to upload a csv file
+        </tui-block-status>
+        <input [accept]="file_type" tuiInputFiles [formControl]="control" />
+      </label>
 
-        <tui-elastic-container class="w-full">
-          @for (item of items; let index = $index; track item) {
-          <div class="w-full py-2 border-t">
-            <div class="py-1 w-full flex flex-row items-center justify-between">
-              <button
-                class="flex flex-row items-center"
-                (click)="item.expanded = !item.expanded"
-              >
-                <button
-                  appearance="flat"
-                  size="s"
-                  tuiIconButton
-                  class="tui-space_right-2"
-                  [tuiChevron]="item.expanded"
-                >
-                  Expand
-                </button>
-                <p tuiFade tuiHint="{{ item.title }}" tuiHintAppearance="dark">
-                  {{ item.title }}
-                </p>
-              </button>
+      <tui-files class="tui-space_bottom-4">
+        <tui-file
+          *ngIf="loadedFiles$ | async as file"
+          [file]="file"
+          (remove)="removeFile()"
+        />
+
+        <tui-file
+          *ngIf="failedFiles$ | async as file"
+          state="error"
+          [file]="file"
+          (remove)="removeFile()"
+        />
+
+        <tui-file
+          *ngIf="loadingFiles$ | async as file"
+          state="loading"
+          [file]="file"
+          (remove)="removeFile()"
+        />
+      </tui-files>
+
+      <tui-elastic-container class="w-full">
+        @for (item of items; let index = $index; track item) {
+        <div class="w-full py-2 border-t">
+          <div class="py-1 w-full flex flex-row items-center justify-between">
+            <button
+              class="flex flex-row items-center"
+              (click)="item.expanded = !item.expanded"
+            >
               <button
                 appearance="flat"
-                iconStart="@tui.menu"
                 size="s"
-                type="button"
                 tuiIconButton
-                [tuiDropdown]="dropdownOption"
-                [tuiDropdownManual]="item.dropdown"
-                [tuiObscuredEnabled]="item.dropdown"
-                (click)="item.dropdown = !item.dropdown"
-                (tuiActiveZoneChange)="onActiveZone($event, index)"
-                (tuiObscured)="onObscured($event, index)"
+                class="tui-space_right-2"
+                [tuiChevron]="item.expanded"
               >
-                more
+                Expand
               </button>
-              <ng-template #dropdownOption>
-                <button
-                  appearance="flat"
-                  iconStart="@tui.trash"
-                  size="s"
-                  tuiButton
-                  (click)="remove(index)"
-                >
-                  Remove
-                </button>
-              </ng-template>
-            </div>
-            <tui-expand [expanded]="item.expanded">
-              <ul class="w-full list-disc">
-                <li
-                  class="px-8 w-full flex flex-row gap-4"
-                  *ngFor="let i of item.value | keyvalue"
-                >
-                  <p tuiFade class="w-2/5">{{ i.key }}</p>
-                  <p tuiFade class="w-3/5 text-neutral-500">{{ i.value }}</p>
-                </li>
-              </ul>
-            </tui-expand>
+              <p
+                tuiFade
+                class="font-bold"
+                tuiHint="{{ item.title }}"
+                tuiHintAppearance="dark"
+              >
+                {{ item.title }}
+              </p>
+            </button>
+            <button
+              appearance="flat"
+              iconStart="@tui.menu"
+              size="s"
+              type="button"
+              tuiIconButton
+              [tuiDropdown]="dropdownOption"
+              [tuiDropdownManual]="item.dropdown"
+              [tuiObscuredEnabled]="item.dropdown"
+              (click)="item.dropdown = !item.dropdown"
+              (tuiActiveZoneChange)="onActiveZone($event, index)"
+              (tuiObscured)="onObscured($event, index)"
+            >
+              more
+            </button>
+            <ng-template #dropdownOption>
+              <button
+                appearance="flat"
+                iconStart="@tui.trash"
+                size="s"
+                tuiButton
+                (click)="remove(index)"
+              >
+                Remove
+              </button>
+            </ng-template>
           </div>
-          }
-        </tui-elastic-container>
-      </section>
-    </tui-scrollbar>
+          <tui-expand [expanded]="item.expanded">
+            <ul class="w-full list-disc mt-2 ml-2 mb-4">
+              <li
+                class="px-8 w-full flex flex-row gap-4 mb-2"
+                *ngFor="let i of item.value | keyvalue"
+              >
+                <p tuiFade class="w-1/2 key text-nowrap font-semibold">
+                  {{ i.key }}
+                </p>
+                <p tuiFade class="w-1/2 text-neutral-500 font-semibold">
+                  {{ i.value }}
+                </p>
+              </li>
+            </ul>
+          </tui-expand>
+        </div>
+        }
+      </tui-elastic-container>
+    </section>
 
     <!-- main -->
     <section
       id="import-main"
-      class="h-full w-full md:w-3/4 flex flex-col divide-y"
+      class="h-full w-full md:w-3/4 flex flex-col bg-[#f1f2f4]"
     >
-      <div class="flex justify-between items-center py-2 px-4">
-        <p>Some Text or ...</p>
+      <div
+        class="flex justify-between items-center py-2 px-4 bg-slate-700 text-slate-50"
+      >
+        <p>Property graph model</p>
         <button
           size="s"
           [disabled]="empty_graph"
@@ -126,7 +140,7 @@
           tuiButton
           appearance="glass"
         >
-          Run
+          Convert
         </button>
       </div>
 
@@ -134,8 +148,7 @@
         <img alt="graph img" src="/graph-bg.png" tuiSlot="top" class="image" />
 
         <h5>Start Sketching a Model</h5>
-
-        select source and target file to start sketching a model
+        Select source and target to start sketching a model
       </tui-block-status>
     </section>
   </section>
