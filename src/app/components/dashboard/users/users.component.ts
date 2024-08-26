@@ -32,6 +32,7 @@ import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { RegisterComponent } from './register/register.component';
 import { AdminUserService } from '../../../services/admin/admin.service';
 import { User } from '../../../models/user';
+import { EditUserComponent } from './edit-user/edit-user.component';
 
 @Component({
   selector: 'app-users',
@@ -70,7 +71,7 @@ export class UsersComponent implements OnInit {
   private readonly rejDialog = this.dialogs.open(
     new PolymorpheusComponent(RegisterComponent, this.injector)
   );
-  
+
   private readonly edit_user_dialog = this.dialogs.open(
     new PolymorpheusComponent(EditUserComponent, this.injector)
   );
@@ -90,7 +91,7 @@ export class UsersComponent implements OnInit {
       },
     });
   }
-  
+
   protected showEditUserDialog(): void {
     this.edit_user_dialog.subscribe({
       complete: () => {
