@@ -307,9 +307,9 @@ export class GraphComponent implements AfterViewInit {
       indicatorSize: 16, // The size in pixels of the pointer to the active command
       separatorWidth: 4, // The empty spacing in pixels between successive commands
       spotlightPadding: 10, // Extra spacing in pixels between the element and the spotlight
-      adaptativeNodeSpotlightRadius: false, // Specify whether the spotlight radius should adapt to the node size
-      minSpotlightRadius: 24, // The minimum radius in pixels of the spotlight
-      maxSpotlightRadius: 38, // The maximum radius in pixels of the spotlight
+      adaptativeNodeSpotlightRadius: true, // Specify whether the spotlight radius should adapt to the node size
+      minSpotlightRadius: 40, // The minimum radius in pixels of the spotlight
+      maxSpotlightRadius: 100, // The maximum radius in pixels of the spotlight
       openMenuEvents: 'cxttapstart taphold', // Events that will open the menu
       itemColor: 'white', // The color of text in the command's content
       itemTextShadowColor: 'transparent',
