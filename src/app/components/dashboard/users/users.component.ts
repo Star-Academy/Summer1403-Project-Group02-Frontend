@@ -70,6 +70,10 @@ export class UsersComponent implements OnInit {
   private readonly rejDialog = this.dialogs.open(
     new PolymorpheusComponent(RegisterComponent, this.injector)
   );
+  
+  private readonly edit_user_dialog = this.dialogs.open(
+    new PolymorpheusComponent(EditUserComponent, this.injector)
+  );
 
   ngOnInit(): void {
     this.loadUsers();
@@ -83,6 +87,14 @@ export class UsersComponent implements OnInit {
       },
       error: (err) => {
         console.error('Failed to load users:', err);
+      },
+    });
+  }
+  
+  protected showEditUserDialog(): void {
+    this.edit_user_dialog.subscribe({
+      complete: () => {
+        console.info('Dialog closed');
       },
     });
   }
