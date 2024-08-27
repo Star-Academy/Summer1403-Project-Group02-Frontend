@@ -50,19 +50,6 @@ export class GraphComponent implements AfterViewInit {
       },
       dropdown: false,
     },
-    {
-      expanded: false,
-      title: 'transaction.csv',
-      value: {
-        sourceAccount: '6534454617',
-        destinationAccount: '6039548046',
-        amount: '500,000,000',
-        date: '2020/07/13',
-        transactionId: '153348811341',
-        type: 'Paya',
-      },
-      dropdown: false,
-    },
   ];
   activeItemIndex = 0;
   onTabClick(arg0: string) {
