@@ -5,5 +5,23 @@
   top: 0px;
   left: 0px;
   font: var(--tui-font-text-ui-l);
+  background-color: #dfe5eb;
+}
+
+.leftPanel {
+  position: relative;
+  z-index: 999999;
+  width: 30rem;
+  // background: #000;
+  left: 6rem;
+  top: 2rem;
+  height: calc(100% - 4rem);
+  display: flex;
+  flex-direction: column;
+}
+
+.card {
+  margin-top: 1rem;
   background-color: #fff;
+  flex-grow: 1;
 }

@@ -7,11 +7,13 @@ import { cytoElements } from './cytoProps/cytoElements';
 import { cytoStyles } from './cytoProps/cytoStyle';
 import { cytoLayout } from './cytoProps/cytoLayout';
 import { cxtMenuDefaults } from './cytoProps/cxtMenuDefaults';
+import { SearchBarComponent } from './search-bar/search-bar.component';
+import { TuiCardLarge } from '@taiga-ui/layout';
 
 @Component({
   selector: 'app-graph',
   standalone: true,
-  imports: [],
+  imports: [SearchBarComponent, SearchBarComponent, TuiCardLarge],
   templateUrl: './graph.component.html',
   styleUrl: './graph.component.scss',
 })
