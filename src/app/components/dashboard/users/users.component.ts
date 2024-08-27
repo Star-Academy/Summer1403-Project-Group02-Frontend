@@ -33,7 +33,7 @@ import { RegisterComponent } from './register/register.component';
 import { AdminUserService } from '../../../services/admin/admin.service';
 import { User } from '../../../models/user';
 import { EditUserComponent } from './edit-user/edit-user.component';
-import { AdminEditUserService } from '../../../services/user/admin-edit-user.service';
+import { AdminEditUserService } from '../../../services/admin/admin-edit-user.service';
 
 @Component({
   selector: 'app-users',
