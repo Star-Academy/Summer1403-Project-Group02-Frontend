@@ -12,6 +12,7 @@ import { TuiCardLarge } from '@taiga-ui/layout';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -33,10 +34,11 @@ export class LoginComponent implements OnInit {
   form!: FormGroup;
   loading = false;
   errorMessage: string | null = null;
-
-  constructor(private authService: AuthService, private router: Router) {}
+  protected github_repo!: string;
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
+    this.github_repo = environment.githubRepo;
     this.form = new FormGroup({
       username: new FormControl(null, [
         Validators.required,
