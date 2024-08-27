@@ -54,7 +54,9 @@ aside[tuiNavigationAside] {
 }
 
 aside[tuiNavigationAside]:before {
-  box-shadow: -1.5rem 0 #131720;
+  box-shadow: 0 -1.5rem #131720;
+  width: 0;
+  height: 0;
 }
 
 header[tuiNavigationHeader]:after {
