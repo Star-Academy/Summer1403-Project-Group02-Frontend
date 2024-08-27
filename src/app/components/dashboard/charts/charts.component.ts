@@ -4,11 +4,12 @@ import { TuiTabs } from '@taiga-ui/kit';
 
 import { GraphComponent } from '../graph/graph.component';
 import { ImportComponent } from '../import/import.component';
+import { TuiButton, TuiIcon } from '@taiga-ui/core';
 
 @Component({
   selector: 'app-charts',
   standalone: true,
-  imports: [GraphComponent, ImportComponent, TuiTabs, FormsModule],
+  imports: [TuiButton, TuiIcon, GraphComponent, ImportComponent, TuiTabs, FormsModule],
   templateUrl: './charts.component.html',
   styleUrl: './charts.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
