@@ -38,5 +38,15 @@ import { TuiCardLarge, TuiNavigation } from '@taiga-ui/layout';
 export class DashboardComponent {
     protected title = "FrontEnd App";
     protected full_name = "name family";
-    protected expanded = false;
+    protected expanded = true;
+
+
+    isPcMode(): boolean {
+        const pcModeThreshold = 768;
+        return window.innerWidth >= pcModeThreshold;
+    }
+
+    buttonSize(): TuiButton["size"] {
+        return this.isPcMode() ? 'm' : 's';
+    }
 }

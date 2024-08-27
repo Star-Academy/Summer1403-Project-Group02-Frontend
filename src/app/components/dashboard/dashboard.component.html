@@ -1,5 +1,6 @@
 <header id="header" tuiNavigationHeader>
   <button
+    [size]="buttonSize()"
     iconStart="@tui.layout-grid"
     (click)="expanded = !expanded"
     tuiIconButton
@@ -13,13 +14,16 @@
 
   <hr />
 
-  <button iconStart="@tui.sun" tuiIconButton>Change Theme</button>
-  <button iconStart="@tui.bell" tuiIconButton>
+  <button [size]="buttonSize()" iconStart="@tui.sun" tuiIconButton>
+    Change Theme
+  </button>
+  <button [size]="buttonSize()" iconStart="@tui.bell" tuiIconButton>
     Notifications
     <!-- <tui-badge-notification>1
   </tui-badge-notification> -->
   </button>
   <button
+    [size]="buttonSize()"
     routerLink="profile"
     appearance="secondary"
     iconStart="@tui.user"

@@ -18,7 +18,7 @@ import {
   TuiTextfieldControllerModule,
 } from '@taiga-ui/legacy';
 import { POLYMORPHEUS_CONTEXT } from '@taiga-ui/polymorpheus';
-import { AdminEditUserService } from '../../../../services/user/admin-edit-user.service';
+import { AdminEditUserService } from '../../../../services/admin/admin-edit-user.service';
 import { User } from '../../../../models/user';
 
 @Component({
