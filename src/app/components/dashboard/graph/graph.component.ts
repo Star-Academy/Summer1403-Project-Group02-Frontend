@@ -9,15 +9,31 @@ import { cytoLayout } from './cytoProps/cytoLayout';
 import { cxtMenuDefaults } from './cytoProps/cxtMenuDefaults';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { TuiCardLarge } from '@taiga-ui/layout';
-
+import { TuiChip } from '@taiga-ui/kit';
+import { TuiButton } from '@taiga-ui/core';
+import { TuiButtonClose } from '@taiga-ui/kit';
+import { TuiTabs } from '@taiga-ui/kit';
 @Component({
   selector: 'app-graph',
   standalone: true,
-  imports: [SearchBarComponent, SearchBarComponent, TuiCardLarge],
+  imports: [
+    SearchBarComponent,
+    SearchBarComponent,
+    TuiCardLarge,
+    TuiChip,
+    TuiButton,
+    TuiButtonClose,
+    TuiTabs,
+  ],
   templateUrl: './graph.component.html',
   styleUrl: './graph.component.scss',
 })
 export class GraphComponent implements AfterViewInit {
+  activeItemIndex = 0;
+  onTabClick(arg0: string) {
+    throw new Error('Method not implemented.');
+    console.log(arg0);
+  }
   ngAfterViewInit(): void {
     cytoscape.use(cxtmenu);
     cytoscape.use(coseBilkent);

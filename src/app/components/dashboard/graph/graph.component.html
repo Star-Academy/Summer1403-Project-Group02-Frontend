@@ -2,15 +2,78 @@
   <app-search-bar />
   <div class="card" tuiCardLarge="compact" tuiSurface="elevated">
     <div tuiHeader>
-      <h2 tuiTitle>Header</h2>
-    </div>
-    <section>Replace me</section>
+      <div class="flex w-full justify-between mt-1 items-center">
+        <tui-chip class="font-semibold" appearance="primary">Account</tui-chip>
 
-    <footer>
+        <span class="absolute left-1/2 transform -translate-x-1/2 font-semibold"
+          >Nagar Ahmadi</span
+        >
+
+        <button tuiButtonClose tuiIconButton>Close</button>
+      </div>
+    </div>
+    <div class="mt-6 border-t-2"></div>
+    <tui-tabs class="tabs" [(activeItemIndex)]="activeItemIndex">
+      <button
+        class="!font-semibold"
+        iconStart="@tui.info"
+        tuiTab
+        (click)="onTabClick('Properties')"
+      >
+        Properties
+      </button>
+
+      <button
+        class="!font-semibold"
+        iconStart="@tui.plus"
+        tuiTab
+        (click)="onTabClick('Neighbors')"
+      >
+        Neighbors
+      </button>
+
+      <button
+        class="!font-semibold"
+        iconStart="@tui.link"
+        tuiTab
+        (click)="onTabClick('Relationships')"
+      >
+        Relationships
+      </button>
+    </tui-tabs>
+    <button
+      class="mt-4"
+      appearance="secondary"
+      size="m"
+      tuiButton
+      type="button"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-pencil"
+      >
+        <path
+          d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"
+        />
+        <path d="m15 5 4 4" />
+      </svg>
+      Edit
+    </button>
+    <section class="text-red-900">Replace me</section>
+
+    <!-- <footer>
       <button appearance="secondary" size="m" tuiButton type="button">
         Label
       </button>
-    </footer>
+    </footer> -->
   </div>
 </div>
 <div id="cy"></div>

@@ -24,4 +24,9 @@
   margin-top: 1rem;
   background-color: #fff;
   flex-grow: 1;
+  display: block !important;
+}
+
+.tabs button {
+  font-weight: 400;
 }
