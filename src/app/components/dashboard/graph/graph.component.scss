@@ -20,6 +20,28 @@
   flex-direction: column;
 }
 
+.tools {
+  right: calc(-1 * 100% + calc(var(--tui-height-s) + 0.6rem));
+  transform: translateY(-80%);
+  padding: 0.3rem;
+  position: relative;
+  width: calc(var(--tui-height-s));
+  border-radius: var(--tui-radius-s);
+  z-index: 999999;
+  background-color: #fff;
+
+  button {
+    // --t-size: calc(var(--tui-height-s) + 0.5rem);
+
+    &[tuiIconButton][data-size="s"]:not(
+        [tuiIconButton][data-appearance="icon"]
+      ):not([tuiIconButton][data-appearance="link"]):before {
+      // font-size: 1.2rem;
+      color: black;
+    }
+  }
+}
+
 .card {
   margin-top: 1rem;
   background-color: #fff;
