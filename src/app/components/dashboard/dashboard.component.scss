@@ -1,6 +1,6 @@
 #header {
   height: calc(var(--tui-height-m) + 0.25rem);
-  background-color: var(--tui-background-accent-1);
+  background-color: #131720;
 }
 
 #container {
@@ -22,9 +22,25 @@
 }
 
 .aside {
-  background-color: var(--tui-background-accent-1);
+  background-color: #131720;
 }
 
 :host {
-  --tui-shadow-small: 0 0.125rem 0.25rem rgba--tui-background-accent-1;
+  --tui-shadow-small: 0 0.125rem 0.25rem rgba#131720;
+}
+
+header[tuiNavigationHeader]:before {
+  box-shadow: 0 -1.5rem #131720;
+}
+
+aside[tuiNavigationAside] {
+  background: #131720;
+}
+
+aside[tuiNavigationAside]:before {
+  box-shadow: -1.5rem 0 #131720;
+}
+
+header[tuiNavigationHeader]:after {
+  box-shadow: 0 -1.5rem #131720;
 }

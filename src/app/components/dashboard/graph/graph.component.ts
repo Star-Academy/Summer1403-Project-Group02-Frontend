@@ -1,5 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
-import cytoscape, { Singular } from 'cytoscape';
+import cytoscape, { CytoscapeOptions, Singular } from 'cytoscape';
 import cxtmenu from 'cytoscape-cxtmenu';
 // @ts-expect-error: library doesn't support ts
 import coseBilkent from 'cytoscape-cose-bilkent';
@@ -16,8 +16,7 @@ export class GraphComponent implements AfterViewInit {
     cytoscape.use(cxtmenu);
     cytoscape.use(coseBilkent);
 
-    // Initialize Cytoscape graph
-    const cy = cytoscape({
+    const cytoDefaults = {
       container: document.getElementById('cy'),
       elements: [
         { data: { id: '6534454617', label: 'Afsar Tabatabaei' } }, // Node for SourceAccount 6534454617
@@ -140,12 +139,13 @@ export class GraphComponent implements AfterViewInit {
       minZoom: 0.3,
       maxZoom: 3,
       wheelSensitivity: 0.2,
+      // #116DFF
       style: [
         {
           selector: 'node',
           style: {
             label: 'data(label)',
-            'background-color': '#FFE081',
+            'background-color': '#116DFF',
             'text-valign': 'center',
             'text-halign': 'center',
             width: 70,
@@ -162,7 +162,7 @@ export class GraphComponent implements AfterViewInit {
             'text-max-width': '10ch',
             'text-justification': 'center',
             'line-height': 1.2,
-            color: '#202020',
+            color: '#fff',
             shape: 'ellipse',
             'overlay-opacity': 0,
           },
@@ -178,8 +178,6 @@ export class GraphComponent implements AfterViewInit {
             'arrow-scale': 1.8,
             'curve-style': 'bezier',
             'font-size': '11',
-            'text-background-color': '#eeeeee',
-            'text-background-opacity': 0.9,
             'text-background-padding': '2px',
             'text-halign': 'center',
             'text-valign': 'center',
@@ -237,8 +235,11 @@ export class GraphComponent implements AfterViewInit {
         gravityRange: 3.8,
         // Initial cooling factor for incremental layout
         initialEnergyOnIncremental: 0.5,
-      } as never,
-    });
+      },
+    } as CytoscapeOptions;
+
+    // Initialize Cytoscape graph
+    const cy = cytoscape(cytoDefaults);
 
     // The default values of each option are outlined below:
     const defaults = {
@@ -334,6 +335,37 @@ export class GraphComponent implements AfterViewInit {
         'font-weight': 'lighter',
       })
       .update();
+
+    // Function to calculate the edge angle in radians
+    function calculateEdgeAngle(edge: cytoscape.EdgeSingular) {
+      const src = edge.source().position();
+      const tgt = edge.target().position();
+      const dx = tgt.x - src.x;
+      const dy = tgt.y - src.y;
+      return Math.atan2(dy, dx); // Returns the angle in radians
+    }
+
+    // Function to calculate the vertical margin based on the edge angle
+    function calculateVerticalMargin(angle: number) {
+      // Adjust the multiplier as needed; this example uses a factor of 10
+      return Math.cos(2 * angle) * 40;
+    }
+
+    // Apply dynamic vertical margin adjustment based on the edge angle
+    cy.on('zoom pan', function () {
+      cy.edges().forEach((edge) => {
+        const angle = calculateEdgeAngle(edge);
+        const verticalMargin = calculateVerticalMargin(angle);
+        edge.style('text-margin-y', verticalMargin);
+      });
+    });
+
+    // Initial application of vertical margin adjustment
+    cy.edges().forEach((edge) => {
+      const angle = calculateEdgeAngle(edge);
+      const verticalMargin = calculateVerticalMargin(angle);
+      edge.style('text-margin-y', verticalMargin);
+    });
     console.log(menu);
   }
 }
