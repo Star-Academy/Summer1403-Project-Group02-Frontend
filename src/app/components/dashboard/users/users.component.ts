@@ -77,7 +77,7 @@ export class UsersComponent implements OnInit {
   //   lastName: "Family",
   //   email: "admin@admin.admin",
   //   roles: [{ roleType: "Admin" }],
-  // };
+  // }
   // ]);
 
   private readonly rejDialog = this.dialogs.open(
