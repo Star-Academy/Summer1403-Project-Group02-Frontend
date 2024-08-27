@@ -1,6 +1,10 @@
 #header {
   height: calc(var(--tui-height-m) + 0.25rem);
   background-color: var(--tui-background-accent-1);
+
+  & button {
+    max-width: none;
+  }
 }
 
 #container {
@@ -27,4 +31,30 @@
 
 :host {
   --tui-shadow-small: 0 0.125rem 0.25rem rgba--tui-background-accent-1;
+}
+
+@media (min-width: 768px) {
+  #header {
+    font: var(--tui-font-text-m);
+    height: calc(var(--tui-height-l) + 0.25rem);
+  }
+
+  #container {
+    font: var(--tui-font-text-m);
+    height: calc(100vh - var(--tui-height-l) - 0.25rem);
+  }
+
+  aside {
+    [tuiButton][data-size="s"]:not([tuiIconButton][data-appearance="icon"]):not(
+        [tuiIconButton][data-appearance="link"]
+      ):before {
+      font-size: 1.2rem;
+    }
+
+    button {
+      font: var(--tui-font-text-m);
+      --t-size: var(--tui-height-m);
+      --t-radius: var(--tui-radius-m);
+    }
+  }
 }
