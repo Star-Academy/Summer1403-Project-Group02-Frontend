@@ -1,5 +1,6 @@
 <div class="leftPanel flex flex-col h-full">
   <app-search-bar></app-search-bar>
+  @if (isPanelVisible) {
   <div
     class="card flex flex-col flex-grow"
     tuiCardLarge="compact"
@@ -13,7 +14,9 @@
         >
           Nagar Ahmadi
         </span>
-        <button tuiButtonClose tuiIconButton>Close</button>
+        <button tuiButtonClose tuiIconButton (click)="closePanel()">
+          Close
+        </button>
       </div>
     </div>
     <div class="mt-6 border-t-2"></div>
@@ -94,5 +97,6 @@
       }
     </ul>
   </div>
+  }
 </div>
 <div id="cy"></div>

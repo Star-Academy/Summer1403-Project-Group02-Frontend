@@ -3,19 +3,20 @@
     id="chart-header"
     class="flex flex-row gap-4 items-center justify-between px-6"
   >
-    <div>
-      <h1 class="text-xl font-bold">Charts</h1>
+    <div class="inline flex flex-row items-center">
+      <div>
+        <h1 class="text-xl font-bold">Charts</h1>
+      </div>
+
+      <tui-tabs class="ml-36" [(activeItemIndex)]="activeItemIndex">
+        <button iconStart="@tui.import" tuiTab (click)="tabHandler('import')">
+          Import
+        </button>
+        <button iconStart="@tui.pie-chart" tuiTab (click)="tabHandler('graph')">
+          Graph
+        </button>
+      </tui-tabs>
     </div>
-
-    <tui-tabs [(activeItemIndex)]="activeItemIndex">
-      <button iconStart="@tui.import" tuiTab (click)="tabHandler('import')">
-        Import
-      </button>
-      <button iconStart="@tui.pie-chart" tuiTab (click)="tabHandler('graph')">
-        Graph
-      </button>
-    </tui-tabs>
-
     <div class="flex gap-2 px-2">
       <button size="s" appearance="outline" tuiButton>Send Feedback</button>
       <button
@@ -23,22 +24,28 @@
         appearance="Opposite"
         iconStart="@tui.info"
         tuiIconButton
-      ></button>
+      >
+        info
+      </button>
       <button
         size="s"
         iconStart="@tui.settings"
         tuiIconButton
         appearance="Opposite"
-      ></button>
+      >
+        settings
+      </button>
       <button
         size="s"
         iconStart="@tui.users"
         tuiIconButton
         appearance="Opposite"
-      ></button>
+      >
+        users
+      </button>
     </div>
   </div>
 
-  <app-import class="h-full" [hidden]="activeItemIndex != 0"></app-import>
-  <app-graph class="h-full" [hidden]="activeItemIndex != 1"></app-graph>
+  <app-import class="h-full" [hidden]="activeItemIndex !== 0"></app-import>
+  <app-graph class="h-full" [hidden]="activeItemIndex !== 1"></app-graph>
 </section>

@@ -32,6 +32,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './graph.component.scss',
 })
 export class GraphComponent implements AfterViewInit {
+  isPanelVisible = true;
+
   protected items = [
     {
       expanded: false,
@@ -80,5 +82,9 @@ export class GraphComponent implements AfterViewInit {
         'font-family': 'Roboto, Arial',
       })
       .update();
+  }
+
+  closePanel() {
+    this.isPanelVisible = false;
   }
 }

@@ -66,7 +66,7 @@
               </button>
               <p
                 tuiFade
-                class="font-bold"
+                class="font-bold text-base"
                 tuiHint="{{ item.title }}"
                 tuiHintAppearance="dark"
               >
@@ -106,10 +106,10 @@
                 class="px-8 w-full flex flex-row gap-4 mb-2"
                 *ngFor="let i of item.value | keyvalue"
               >
-                <p tuiFade class="w-1/2 key text-nowrap font-semibold">
+                <p tuiFade class="w-1/2 key text-nowrap font-semibold text-sm">
                   {{ i.key }}
                 </p>
-                <p tuiFade class="w-1/2 text-neutral-500 font-semibold">
+                <p tuiFade class="w-1/2 text-neutral-500 font-semibold text-sm">
                   {{ i.value }}
                 </p>
               </li>
