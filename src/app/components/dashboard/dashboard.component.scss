@@ -8,8 +8,15 @@
 }
 
 #container {
-  height: calc(100vh - var(--tui-height-m) - 0.25rem);
+  height: 100vh;
   background-color: #f5f6f6;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
 }
 
 #main {
@@ -27,6 +34,7 @@
 
 .aside {
   background-color: #131720;
+  height: 100vh;
 }
 
 :host {
@@ -73,4 +81,8 @@ header[tuiNavigationHeader]:after {
       --t-radius: var(--tui-radius-m);
     }
   }
+}
+
+aside[tuiNavigationAside][_ngcontent-ng-c2979599704]:before {
+  box-shadow: none !important;
 }
