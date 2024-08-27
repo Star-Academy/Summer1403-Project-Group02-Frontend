@@ -11,7 +11,8 @@
       Graph
     </button>
   </tui-tabs>
-
-  <app-import [hidden]="activeItemIndex != 0"></app-import>
-  <app-graph [hidden]="activeItemIndex != 1"></app-graph>
+  <div class="grow">
+    <app-import [hidden]="activeItemIndex !== 0"></app-import>
+    <app-graph [hidden]="activeItemIndex !== 1"></app-graph>
+  </div>
 </section>
