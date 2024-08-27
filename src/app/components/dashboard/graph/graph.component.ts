@@ -14,6 +14,10 @@ import { TuiButton, TuiIcon, TuiSurface } from '@taiga-ui/core';
 import { TuiButtonClose } from '@taiga-ui/kit';
 import { TuiTabs } from '@taiga-ui/kit';
 import { CommonModule } from '@angular/common';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { TuiDataList } from '@taiga-ui/core';
+import { TuiDataListWrapper } from '@taiga-ui/kit';
+import { TuiSelectModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
 
 @Component({
   selector: 'app-graph',
@@ -29,11 +33,26 @@ import { CommonModule } from '@angular/common';
     TuiButtonClose,
     TuiTabs,
     CommonModule,
+    TuiSelectModule,
+    TuiTextfieldControllerModule,
+    ReactiveFormsModule,
+    TuiDataListWrapper,
+    TuiDataList,
   ],
   templateUrl: './graph.component.html',
   styleUrl: './graph.component.scss',
 })
 export class GraphComponent implements AfterViewInit {
+
+  protected select_items = [
+    "node 1",
+    "node 2",
+    "node 3",
+  ];
+
+  protected select_form = new FormControl<string | null>(null);
+
+
   protected items = [
     {
       expanded: false,

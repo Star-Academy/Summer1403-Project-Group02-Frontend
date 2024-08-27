@@ -21,23 +21,42 @@
 }
 
 .tools {
-  right: calc(-1 * 100% + calc(var(--tui-height-s) + 0.6rem));
-  transform: translateY(-80%);
-  padding: 0.3rem;
+  $tool-width: 15rem;
+
   position: relative;
-  width: calc(var(--tui-height-s));
-  border-radius: var(--tui-radius-s);
+  right: calc(-1 * 100% + calc($tool-width + 0.7rem));
+  transform: translateY(-80%);
   z-index: 999999;
-  background-color: #fff;
+  width: $tool-width;
 
-  button {
-    // --t-size: calc(var(--tui-height-s) + 0.5rem);
+  .bar {
+    padding: 0.3rem;
+    width: calc(var(--tui-height-s));
+    border-radius: var(--tui-radius-s);
+    background-color: #fff;
 
-    &[tuiIconButton][data-size="s"]:not(
-        [tuiIconButton][data-appearance="icon"]
-      ):not([tuiIconButton][data-appearance="link"]):before {
-      // font-size: 1.2rem;
+    button {
+      // --t-size: calc(var(--tui-height-s) + 0.5rem);
+
+      &[tuiIconButton][data-size="s"]:not(
+          [tuiIconButton][data-appearance="icon"]
+        ):not([tuiIconButton][data-appearance="link"]):before {
+        // font-size: 1.2rem;
+        color: black;
+      }
+    }
+  }
+
+  .select-edit {
+    border-radius: var(--tui-radius-s);
+    background-color: #fff;
+
+    button:before {
       color: black;
+    }
+
+    tui-select {
+      width: calc($tool-width - var(--tui-height-s));
     }
   }
 }

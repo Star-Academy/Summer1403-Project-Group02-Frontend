@@ -95,29 +95,56 @@
     </ul>
   </div>
 </div>
-<div class="tools flex flex-col">
-  <button tuiIconButton size="s" appearance="flat" iconStart="@tui.map">
-    map
-  </button>
-  <button
-    tuiIconButton
-    size="s"
-    appearance="flat"
-    iconStart="@tui.presentation"
-  >
-    presentation
-  </button>
-  <button tuiIconButton size="s" appearance="flat" iconStart="@tui.fullscreen">
-    full screen
-  </button>
-  <button tuiIconButton size="s" appearance="flat" iconStart="@tui.zoom-in">
-    zoom in
-  </button>
-  <button tuiIconButton size="s" appearance="flat" iconStart="@tui.zoom-out">
-    zoom out
-  </button>
-  <button tuiIconButton size="s" appearance="flat" iconStart="@tui.percent">
-    percent
-  </button>
+
+<div class="tools flex flex-col items-end gap-4">
+  <div class="bar flex flex-col">
+    <button tuiIconButton size="s" appearance="flat" iconStart="@tui.map">
+      map
+    </button>
+    <button
+      tuiIconButton
+      size="s"
+      appearance="flat"
+      iconStart="@tui.presentation"
+    >
+      presentation
+    </button>
+    <button
+      tuiIconButton
+      size="s"
+      appearance="flat"
+      iconStart="@tui.fullscreen"
+    >
+      full screen
+    </button>
+    <button tuiIconButton size="s" appearance="flat" iconStart="@tui.zoom-in">
+      zoom in
+    </button>
+    <button tuiIconButton size="s" appearance="flat" iconStart="@tui.zoom-out">
+      zoom out
+    </button>
+    <button tuiIconButton size="s" appearance="flat" iconStart="@tui.percent">
+      percent
+    </button>
+  </div>
+  <div class="select-edit flex flex-row items-center justify-cneter p-1">
+    <tui-select
+      tuiTextfieldSize="s"
+      class="w-full"
+      [formControl]="select_form"
+      [tuiTextfieldLabelOutside]="true"
+    >
+      Force-based layout
+      <input tuiTextfieldSize="s" tuiTextfieldLegacy />
+      <tui-data-list-wrapper *tuiDataList [items]="select_items" />
+    </tui-select>
+
+    <button>
+      <button tuiIconButton size="s" appearance="flat" iconStart="@tui.pen">
+        edit
+      </button>
+    </button>
+  </div>
 </div>
+
 <div id="cy"></div>
