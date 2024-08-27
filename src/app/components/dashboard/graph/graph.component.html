@@ -1,14 +1,18 @@
-<div class="leftPanel">
-  <app-search-bar />
-  <div class="card" tuiCardLarge="compact" tuiSurface="elevated">
+<div class="leftPanel flex flex-col h-full">
+  <app-search-bar></app-search-bar>
+  <div
+    class="card flex flex-col flex-grow"
+    tuiCardLarge="compact"
+    tuiSurface="elevated"
+  >
     <div tuiHeader>
-      <div class="flex w-full justify-between mt-1 items-center">
+      <div class="flex w-full justify-between mt-1 items-center relative">
         <tui-chip class="font-semibold" appearance="primary">Account</tui-chip>
-
-        <span class="absolute left-1/2 transform -translate-x-1/2 font-semibold"
-          >Nagar Ahmadi</span
+        <span
+          class="absolute left-1/2 transform -translate-x-1/2 font-semibold"
         >
-
+          Nagar Ahmadi
+        </span>
         <button tuiButtonClose tuiIconButton>Close</button>
       </div>
     </div>
@@ -22,7 +26,6 @@
       >
         Properties
       </button>
-
       <button
         class="!font-semibold"
         iconStart="@tui.plus"
@@ -31,7 +34,6 @@
       >
         Neighbors
       </button>
-
       <button
         class="!font-semibold"
         iconStart="@tui.link"
@@ -67,13 +69,30 @@
       </svg>
       Edit
     </button>
-    <section class="text-red-900">Replace me</section>
-
-    <!-- <footer>
-      <button appearance="secondary" size="m" tuiButton type="button">
-        Label
-      </button>
-    </footer> -->
+    <div class="mb-7">
+      <tui-chip
+        class="font-semibold !rounded-full mt-6"
+        appearance="whiteblock"
+        size="xs"
+        >Account</tui-chip
+      >
+    </div>
+    <!-- The list with remaining height -->
+    <ul class="w-full mt-2 mb-4 flex-grow overflow-y-auto">
+      @for (item of items; track $index) {
+      <li
+        class="w-full flex flex-row gap-4 mb-2"
+        *ngFor="let i of item.value | keyvalue"
+      >
+        <p tuiFade class="w-1/2 key text-nowrap font-semibold">
+          {{ i.key }}
+        </p>
+        <p tuiFade class="w-1/2 text-neutral-500 font-semibold">
+          {{ i.value }}
+        </p>
+      </li>
+      }
+    </ul>
   </div>
 </div>
 <div id="cy"></div>
