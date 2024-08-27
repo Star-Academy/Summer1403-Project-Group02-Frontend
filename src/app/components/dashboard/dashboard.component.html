@@ -58,6 +58,10 @@
     </button>
 
     <button routerLink="graph" iconStart="@tui.pie-chart" tuiAsideItem>
+      <span tuiFade>Graph</span>
+    </button>
+
+    <button routerLink="charts" iconStart="@tui.pie-chart" tuiAsideItem>
       <span tuiFade>Charts</span>
     </button>
 
@@ -75,7 +79,7 @@
         [iconStart]="expanded ? '@tui.chevron-left' : '@tui.chevron-right'"
         (click)="expanded = !expanded"
       >
-        <span tuiFade>{{ expanded ? 'Collapse' : 'Expand' }}</span>
+        <span tuiFade>{{ expanded ? "Collapse" : "Expand" }}</span>
       </button>
     </footer>
   </aside>
