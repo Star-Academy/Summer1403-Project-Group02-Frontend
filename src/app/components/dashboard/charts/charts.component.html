@@ -1,1 +1,17 @@
-<p>charts works!</p>
+<section class="flex flex-col w-full h-full">
+  <tui-tabs
+    [(activeItemIndex)]="activeItemIndex"
+    class="flex flex-row justify-center"
+  >
+    <button iconStart="@tui.import" tuiTab (click)="tabHandler('import')">
+      Import
+    </button>
+
+    <button iconStart="@tui.pie-chart" tuiTab (click)="tabHandler('graph')">
+      Graph
+    </button>
+  </tui-tabs>
+
+  <app-import [hidden]="activeItemIndex != 0"></app-import>
+  <app-graph [hidden]="activeItemIndex != 1"></app-graph>
+</section>
