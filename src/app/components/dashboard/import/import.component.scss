@@ -1,6 +1,7 @@
 #import-card {
   height: 100%;
   padding: 0;
+  border-radius: 0;
   // font: var(tui-text_body-s);
 
   #import-aside {
@@ -19,7 +20,7 @@ div:has(> #import-aside) {
 }
 
 .key::before {
-  content: '';
+  content: "";
   display: inline-block;
   width: 6px;
   height: 6px;

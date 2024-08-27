@@ -5,6 +5,7 @@ import { UsersComponent } from './components/dashboard/users/users.component';
 import { ProfileComponent } from './components/dashboard/profile/profile.component';
 import { GraphComponent } from './components/dashboard/graph/graph.component';
 import { ImportComponent } from './components/dashboard/import/import.component';
+import { ChartsComponent } from './components/dashboard/charts/charts.component';
 
 export const routes: Routes = [
   {
@@ -35,6 +36,10 @@ export const routes: Routes = [
       {
         path: 'import',
         component: ImportComponent,
+      },
+      {
+        path: 'charts',
+        component: ChartsComponent,
       },
     ],
   },
