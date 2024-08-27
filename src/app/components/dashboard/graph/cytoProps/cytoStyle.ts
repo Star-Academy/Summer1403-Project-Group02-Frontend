@@ -62,6 +62,8 @@ export const cytoStyles = [
 
       // Positioning & Layout
       'curve-style': 'bezier',
+      'source-distance-from-node': '4px',
+      'target-distance-from-node': '4px',
     },
   },
 ] as cytoscape.Stylesheet[];
