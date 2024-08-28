@@ -1,0 +1,20 @@
+repos:
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v3.4.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
+        always_run: true
+        args: []
+
+  - repo: local
+    hooks:
+      - id: lint
+        name: lint
+        pass_filenames: false
+        entry: npm run lint
+        stages: [commit]
+        language: system
+        types_or:
+          - ts
+          - javascript
