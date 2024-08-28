@@ -88,7 +88,7 @@ export class ProfileComponent implements OnInit {
     ]),
   });
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) {}
   ngOnInit(): void {
     this.form.disable();
   }
@@ -128,11 +128,7 @@ export class ProfileComponent implements OnInit {
       .subscribe({
         next: (result) => {
           if (result) {
-            this.authService.logOutUser().subscribe({
-              next: () => {
-                this.router.navigate(['/login']);
-              },
-            });
+            this.authService.logOutUser().subscribe();
           }
         },
       });

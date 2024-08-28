@@ -1,37 +1,62 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { type LoginBody } from '../../models/api/loginBody';
+import { LoginBody } from '../../models/api/loginBody';
 import { User } from '../../models/user';
 import { LoginResponse } from '../../models/api/loginResponse';
 import { LogoutResponse } from '../../models/api/logoutResponse';
 import { NotificationService } from '../notif/notification.service';
 import { SUCCESS_MESSAGES_MAP } from '../../constants/success-messages';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private currentUserSubject = new BehaviorSubject<User | undefined>(undefined);
+  private currentUserSubject = new BehaviorSubject<User | undefined>(undefined); // Use BehaviorSubject
 
   constructor(
     private http: HttpClient,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private router: Router
   ) {
     this.checkIfUserIsLoggedIn();
+    console.log('checked');
   }
 
   getCurrentUser(): Observable<User | undefined> {
     return this.currentUserSubject.asObservable();
   }
 
-  private checkIfUserIsLoggedIn(): void {
-    const savedCurrentUser = localStorage.getItem('savedCurrentUser');
-    if (savedCurrentUser) {
-      const parsedUser: User = JSON.parse(savedCurrentUser);
-      this.currentUserSubject.next(parsedUser);
-    }
+  checkIfUserIsLoggedIn(): Promise<void> {
+    return new Promise((resolve) => {
+      const savedCurrentUser = localStorage.getItem('savedCurrentUser');
+      if (savedCurrentUser) {
+        this.http
+          .get<{ data: string; type: number; message: string }>(
+            `${environment.apiBaseUrl}/Authentication`,
+            { withCredentials: true }
+          )
+          .subscribe({
+            next: (response) => {
+              if (response.data) {
+                this.currentUserSubject.next(JSON.parse(savedCurrentUser));
+              } else {
+                this.logOutUser();
+              }
+              resolve();
+            },
+            error: () => {
+              this.logOutUser();
+              resolve();
+            },
+          });
+      } else {
+        resolve();
+      }
+    });
   }
 
   loginUser(credentials: LoginBody): Observable<LoginResponse> {
@@ -39,9 +64,7 @@ export class AuthService {
       .post<LoginResponse>(
         `${environment.apiBaseUrl}/Authentication/login`,
         credentials,
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       )
       .pipe(
         tap((response) => {
@@ -74,6 +97,7 @@ export class AuthService {
               message?.message ?? '',
               message?.label ?? ''
             );
+            this.router.navigate(['/login']);
           },
         })
       );

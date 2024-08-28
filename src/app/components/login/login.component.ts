@@ -37,6 +37,8 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
+    console.log('helll');
+
     this.form = new FormGroup({
       username: new FormControl(null, [
         Validators.required,
@@ -68,7 +70,7 @@ export class LoginComponent implements OnInit {
     this.authService.loginUser(credentials).subscribe({
       next: () => {
         this.loading = false;
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/']);
       },
       error: (error) => {
         this.loading = false;
