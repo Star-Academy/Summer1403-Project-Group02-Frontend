@@ -4,7 +4,7 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { AuthService } from './auth.service';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments/environment.prod';
 import { LoginBody } from '../../models/api/loginBody';
 import { User } from '../../models/user';
 import { LoginResponse } from '../../models/api/loginResponse';

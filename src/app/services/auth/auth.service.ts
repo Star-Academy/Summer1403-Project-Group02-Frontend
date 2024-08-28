@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments/environment.prod';
 import { type LoginBody } from '../../models/api/loginBody';
 import { User } from '../../models/user';
 import { LoginResponse } from '../../models/api/loginResponse';

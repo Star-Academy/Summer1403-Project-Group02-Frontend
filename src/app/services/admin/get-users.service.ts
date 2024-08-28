@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments/environment.prod';
 import { UserResponse } from '../../models/api/userResponse';
 import { NotificationService } from '../notif/notification.service';
 import { SUCCESS_MESSAGES_MAP } from '../../constants/success-messages';
