@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'https://api.myapp.com',
+  apiBaseUrl: 'https://codestar-g2-api.abriment.com',
 };
