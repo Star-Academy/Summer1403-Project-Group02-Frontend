@@ -19,13 +19,14 @@ import {
 } from '@taiga-ui/kit';
 import { TuiInputModule } from '@taiga-ui/legacy';
 import { TuiBlockStatus, TuiCardLarge } from '@taiga-ui/layout';
-import { finalize, map, Observable, of, Subject, switchMap, timer } from 'rxjs';
+import { finalize, Observable, of, Subject, switchMap } from 'rxjs';
 import { file_type } from '../../../models/file';
+import { Papa } from 'ngx-papaparse';
 
 interface aside_item {
   expanded: boolean;
   title: string;
-  value: {};
+  value: Record<string, unknown>;
   dropdown: boolean;
 }
 
@@ -70,42 +71,12 @@ export class ImportComponent implements OnInit {
     switchMap((file) => this.processFile(file))
   );
 
+  constructor(private papa: Papa) {}
+
   ngOnInit() {
     this.empty_graph = true;
     this.file_type = file_type;
     this.items = [];
-
-    this.items.push({
-      expanded: false,
-      title: 'account.csv',
-      value: {
-        accountId: '6534454617',
-        cardId: '6104335000000190',
-        iban: 'IR120778801496000000198',
-        accountType: 'Savings',
-        branchTelephone: '55638667',
-        branchAddress: 'Tehran - Khayam Street - Above Golbandak Intersection',
-        branchName: 'Golbandak',
-        ownerFirstName: 'Afsar',
-        ownerLastName: 'Tabatabaei',
-        ownerId: '1227114110',
-      },
-      dropdown: false,
-    });
-
-    this.items.push({
-      expanded: false,
-      title: 'transaction.csv',
-      value: {
-        sourceAccount: '6534454617',
-        destinationAccount: '6039548046',
-        amount: '500,000,000',
-        date: '2020/07/13',
-        transactionId: '153348811341',
-        type: 'Paya',
-      },
-      dropdown: false,
-    });
   }
 
   protected isEmptyItems() {
@@ -127,25 +98,22 @@ export class ImportComponent implements OnInit {
 
     this.loadingFiles$.next(file);
 
-    // call api to upload file here
-    return timer(1000).pipe(
-      map(() => {
-        if (Math.random() > 0.5) {
-          this.items.push({
-            expanded: false,
-            dropdown: false,
-            title: 'new file name here',
-            value: { as: 'qqwqw', zx: 'zxx' },
-          });
-          return file;
-        }
+    return new Observable<TuiFileLike | null>((observer) => {
+      const reader = new FileReader();
+      reader.readAsText(file as File);
+      reader.onload = (event: ProgressEvent<FileReader>) => {
+        const textContent = event.target!.result as string;
+        const csvData = this.papa.parse(textContent, { header: true });
 
+        observer.next(file);
+        observer.complete();
+      };
+
+      reader.onerror = () => {
         this.failedFiles$.next(file);
-
-        return null;
-      }),
-      finalize(() => this.loadingFiles$.next(null))
-    );
+        observer.error(null);
+      };
+    }).pipe(finalize(() => this.loadingFiles$.next(null)));
   }
 
   protected onObscured(obscured: boolean, index: number): void {
