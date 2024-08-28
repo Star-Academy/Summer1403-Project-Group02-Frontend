@@ -26,7 +26,7 @@ import { Papa } from 'ngx-papaparse';
 interface aside_item {
   expanded: boolean;
   title: string;
-  value: Record<string, unknown>;
+  value: Record<string, string>;
   dropdown: boolean;
 }
 
@@ -104,7 +104,19 @@ export class ImportComponent implements OnInit {
       reader.onload = (event: ProgressEvent<FileReader>) => {
         const textContent = event.target!.result as string;
         const csvData = this.papa.parse(textContent, { header: true });
+        const firstRow = csvData.data[0];
 
+        // Ensure the file is added only once
+        if (!this.items.some((item) => item.title === (file as File).name)) {
+          this.items.push({
+            expanded: false,
+            title: (file as File).name,
+            value: firstRow,
+            dropdown: false,
+          });
+        }
+
+        // Emit the file and complete the Observable
         observer.next(file);
         observer.complete();
       };
@@ -113,7 +125,9 @@ export class ImportComponent implements OnInit {
         this.failedFiles$.next(file);
         observer.error(null);
       };
-    }).pipe(finalize(() => this.loadingFiles$.next(null)));
+    }).pipe(
+      finalize(() => this.loadingFiles$.next(null)) // Ensure finalize is in the correct place
+    );
   }
 
   protected onObscured(obscured: boolean, index: number): void {

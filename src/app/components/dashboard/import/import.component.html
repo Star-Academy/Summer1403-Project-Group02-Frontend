@@ -31,7 +31,6 @@
           [file]="file"
           (remove)="removeFile()"
         />
-
         <tui-file
           *ngIf="failedFiles$ | async as file"
           state="error"
@@ -145,6 +144,9 @@
 
         <h5>Start Sketching a Model</h5>
         Select source and target to start sketching a model
+        <button size="xl" iconStart="@tui.play" tuiButton appearance="primary">
+          start uploud
+        </button>
       </tui-block-status>
     </section>
   </section>
