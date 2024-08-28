@@ -8,12 +8,8 @@
     </div>
 
     <tui-tabs [(activeItemIndex)]="activeItemIndex">
-      <button iconStart="@tui.import" tuiTab (click)="tabHandler('import')">
-        Import
-      </button>
-      <button iconStart="@tui.pie-chart" tuiTab (click)="tabHandler('graph')">
-        Graph
-      </button>
+      <button iconStart="@tui.import" tuiTab>Import</button>
+      <button iconStart="@tui.pie-chart" tuiTab>Graph</button>
     </tui-tabs>
 
     <div class="flex gap-2 px-2">
@@ -39,6 +35,6 @@
     </div>
   </div>
 
-  <app-import class="h-full" [hidden]="activeItemIndex != 0"></app-import>
-  <app-graph class="h-full" [hidden]="activeItemIndex != 1"></app-graph>
+  <app-import class="h-full" [hidden]="activeItemIndex !== 0"></app-import>
+  <app-graph class="h-full" [hidden]="activeItemIndex !== 1"></app-graph>
 </section>

@@ -9,15 +9,15 @@ import { cytoLayout } from './cytoProps/cytoLayout';
 import { cxtMenuDefaults } from './cytoProps/cxtMenuDefaults';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { TuiCardLarge } from '@taiga-ui/layout';
-import { TuiChip } from '@taiga-ui/kit';
-import { TuiButton, TuiIcon, TuiSurface } from '@taiga-ui/core';
+import { TuiChip, TuiRadioList } from '@taiga-ui/kit';
+import { TuiButton, TuiIcon, TuiSurface, TuiTextfield } from '@taiga-ui/core';
 import { TuiButtonClose } from '@taiga-ui/kit';
 import { TuiTabs } from '@taiga-ui/kit';
 import { CommonModule } from '@angular/common';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TuiDataList } from '@taiga-ui/core';
 import { TuiDataListWrapper } from '@taiga-ui/kit';
-import { TuiSelectModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
+import { TuiInputModule, TuiSelectModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
 
 @Component({
   selector: 'app-graph',
@@ -32,12 +32,17 @@ import { TuiSelectModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy'
     TuiButton,
     TuiButtonClose,
     TuiTabs,
+    FormsModule,
     CommonModule,
     TuiSelectModule,
     TuiTextfieldControllerModule,
     ReactiveFormsModule,
     TuiDataListWrapper,
     TuiDataList,
+    TuiRadioList,
+    // ReactiveFormsModule,
+    TuiInputModule,
+    TuiTextfield,
   ],
   templateUrl: './graph.component.html',
   styleUrl: './graph.component.scss',
@@ -50,8 +55,13 @@ export class GraphComponent implements AfterViewInit {
     "node 3",
   ];
 
-  protected select_form = new FormControl<string | null>(null);
+  protected readonly radio_ops = ['All', "In Scene", 'Off Scene'];
+  protected redio_target = this.radio_ops[0];
 
+  protected select_form = new FormControl<string | null>(null);
+  protected filter_text = new FormControl<string | null>(null);
+
+  protected activeRightPanelTab = 0;
 
   protected items = [
     {
