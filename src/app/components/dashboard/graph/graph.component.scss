@@ -20,43 +20,55 @@
   flex-direction: column;
 }
 
-.tools {
-  $tool-width: 15rem;
-
+.bottom-panel {
   position: relative;
-  right: calc(-1 * 100% + calc($tool-width + 0.7rem));
   transform: translateY(-80%);
-  z-index: 999999;
-  width: $tool-width;
+  z-index: 9999990;
 
-  .bar {
-    padding: 0.3rem;
-    width: calc(var(--tui-height-s));
-    border-radius: var(--tui-radius-s);
-    background-color: #fff;
+  .tools {
+    $tool-width: 15rem;
+    width: $tool-width;
 
-    button {
-      // --t-size: calc(var(--tui-height-s) + 0.5rem);
+    .bar {
+      padding: 0.3rem;
+      width: calc(var(--tui-height-s));
+      border-radius: var(--tui-radius-s);
+      background-color: #fff;
 
-      &[tuiIconButton][data-size="s"]:not(
-          [tuiIconButton][data-appearance="icon"]
-        ):not([tuiIconButton][data-appearance="link"]):before {
-        // font-size: 1.2rem;
+      button {
+        // --t-size: calc(var(--tui-height-s) + 0.5rem);
+
+        &[tuiIconButton][data-size="s"]:not(
+            [tuiIconButton][data-appearance="icon"]
+          ):not([tuiIconButton][data-appearance="link"]):before {
+          // font-size: 1.2rem;
+          color: black;
+        }
+      }
+    }
+
+    .select-edit {
+      border-radius: var(--tui-radius-s);
+      background-color: #fff;
+
+      button:before {
         color: black;
+      }
+
+      tui-select {
+        width: calc($tool-width - var(--tui-height-s));
       }
     }
   }
 
-  .select-edit {
-    border-radius: var(--tui-radius-s);
+  .info-node {
+    width: 17rem;
+    padding: 0.3rem;
+    border-radius: var(--tui-radius-m);
     background-color: #fff;
 
     button:before {
       color: black;
-    }
-
-    tui-select {
-      width: calc($tool-width - var(--tui-height-s));
     }
   }
 }
