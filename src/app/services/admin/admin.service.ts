@@ -22,13 +22,18 @@ export class AdminUserService {
   ) {}
 
   // Fetch all users
-  fetchUsers(): Observable<UserResponse> {
+  fetchUsers(pageNumber: 1): Observable<UserResponse> {
     const url = `${environment.apiBaseUrl}/Admin/users`;
-    return this.http.get<UserResponse>(url, { withCredentials: true }).pipe(
-      tap((response) => {
-        this.usersSubject.next(response.data);
+    return this.http
+      .get<UserResponse>(url, {
+        withCredentials: true,
+        params: { pageNumber: pageNumber },
       })
-    );
+      .pipe(
+        tap((response) => {
+          this.usersSubject.next(response.data);
+        })
+      );
   }
 
   // Get a user by username
