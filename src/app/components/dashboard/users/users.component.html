@@ -1,8 +1,10 @@
 <div id="user-container" tuiCardLarge tuiSurface="elevated">
-  <nav id="user-nav" tuiHeader class="px-6 pt-6">
+  <nav id="user-nav" tuiHeader>
     <h3 [style.gap]="0" tuiTitle>
       Users
-      <div tuiSubtitle>Here, you can manage users' info.</div>
+      <div tuiSubtitle class="hidden md:block">
+        Here, you can manage users' info.
+      </div>
     </h3>
 
     <div tuiAccessories>
@@ -14,7 +16,7 @@
 
   <table class="tui-table">
     <thead>
-      <tr id="table_header" class="tui-table__tr bg-neutral-100 text-black">
+      <tr class="tui-table__tr">
         <th class="tui-table__th">Name</th>
         <th class="tui-table__th">Username</th>
         <th class="tui-table__th">Role</th>
@@ -47,7 +49,7 @@
           <a href="mailto:{{ i.email }}">{{ i.email }}</a>
         </td>
 
-        <td class="tui-table__td">
+        <td class="tui-table__td" [style.width.rem]="7">
           <button
             tuiIconButton
             size="s"
