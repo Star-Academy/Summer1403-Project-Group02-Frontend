@@ -27,10 +27,7 @@
 
     <tbody>
       <!-- Use *ngFor with the signal value using users() -->
-      <tr
-        *ngFor="let i of users()"
-        class="tui-table__tr tui-table__tr_border_none"
-      >
+      <tr *ngFor="let i of users()" class="tui-table__tr">
         <td class="tui-table__td">
           {{ i.firstName + " " + i.lastName | titlecase }}
         </td>
