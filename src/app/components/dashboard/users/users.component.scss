@@ -21,7 +21,7 @@
     tbody {
       display: block;
       height: calc(100% - #{$thead-height});
-      overflow-y: scroll;
+      overflow-y: auto;
 
       &::-webkit-scrollbar {
         width: 0.25rem;
