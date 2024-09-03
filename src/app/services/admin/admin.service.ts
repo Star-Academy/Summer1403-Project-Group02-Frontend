@@ -8,6 +8,7 @@ import { SUCCESS_MESSAGES_MAP } from '../../constants/success-messages';
 import { UserResponse } from '../../models/api/userResponse';
 import { User } from '../../models/user';
 import { RoleResponse } from '../../models/api/roleResponse';
+import { UserBody } from '../../models/api/userBody';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,7 @@ export class AdminUserService {
   constructor(
     private http: HttpClient,
     private notificationService: NotificationService
-  ) {}
+  ) { }
 
   // Fetch all users
   fetchUsers(): Observable<UserResponse> {
@@ -42,7 +43,7 @@ export class AdminUserService {
   }
 
   // Create a new user
-  createUser(user: Partial<User>): Observable<User> {
+  createUser(user: UserBody): Observable<User> {
     const url = `${environment.apiBaseUrl}/Admin/users`;
     return this.http.post<User>(url, user, { withCredentials: true }).pipe(
       tap((newUser) => {

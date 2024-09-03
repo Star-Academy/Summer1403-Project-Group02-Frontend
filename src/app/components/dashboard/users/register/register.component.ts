@@ -51,13 +51,16 @@ export class RegisterComponent implements OnInit {
   private readonly context = inject<TuiDialogContext>(POLYMORPHEUS_CONTEXT);
   private readonly adminUserService = inject(AdminUserService);
 
-  protected step !: number;
   rej_form!: FormGroup;
-  role_form!: FormGroup;
   protected roles_item !: string[];
 
   ngOnInit(): void {
-    this.step = 0;
+    this.adminUserService.fetchRoles().subscribe({
+      next: (response: RoleResponse) => {
+        this.roles_item = response.data.map((role) => role.roleType);
+      },
+    })
+
     this.rej_form = new FormGroup({
       userName: new FormControl(null, [
         Validators.required,
@@ -77,11 +80,9 @@ export class RegisterComponent implements OnInit {
         Validators.maxLength(30),
       ]),
       email: new FormControl(null, [Validators.required, Validators.email]),
-    });
-
-    this.role_form = new FormGroup({
       roles: new FormControl([], [Validators.required]),
     });
+
   }
 
   protected rejSubmit() {
@@ -89,22 +90,18 @@ export class RegisterComponent implements OnInit {
       // Construct the user data from the form
       const userRequest: UserBody = {
         username: this.rej_form.value.userName,
+        password: this.rej_form.value.password,
         firstName: this.rej_form.value.firstName,
         lastName: this.rej_form.value.lastName,
-        password: this.rej_form.value.password,
         email: this.rej_form.value.email,
+        roles: this.rej_form.value.roles,
       };
 
       // Call the service to create the user
       this.adminUserService.createUser(userRequest).subscribe({
         next: () => {
-          // fetch roles after creted user
-          this.adminUserService.fetchRoles().subscribe({
-            next: (response: RoleResponse) => {
-              this.roles_item = response.data.map((role) => role.roleType);
-              this.step = 1;
-            },
-          })
+          // close dialog
+          this.context.completeWith();
         },
       });
     }
@@ -113,23 +110,6 @@ export class RegisterComponent implements OnInit {
       // Optionally, show a validation error message
       console.error('Form is invalid');
       this.rej_form.markAsDirty();
-    }
-  }
-
-  protected roleSubmit() {
-    if (this.role_form.valid) {
-
-      // submit new roles
-      for (const r of this.role_form.value.roles) {
-        this.adminUserService.addRoleToUser(this.rej_form.value.userName, r).subscribe();
-      }
-
-      this.context.completeWith();
-    }
-
-    else {
-      // Optionally, show a validation error message
-      console.error('Form is invalid');
     }
   }
 

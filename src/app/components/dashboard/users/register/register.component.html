@@ -1,4 +1,4 @@
-<form [formGroup]="rej_form" [style.display]="step !== 0 ? 'none' : 'block'">
+<form [formGroup]="rej_form">
   <h3 tuiTitle="m">
     Create New User
     <p tuiSubtitle>create a new user to gain access to the data</p>
@@ -27,6 +27,22 @@
     </div>
 
     <div class="tui-form__row">
+      <tui-multi-select
+        [rows]="1"
+        [editable]="false"
+        formControlName="roles"
+        [tuiTextfieldLabelOutside]="true"
+      >
+        Select User Roles
+        <tui-data-list-wrapper
+          *tuiDataList
+          tuiMultiSelectGroup
+          [items]="roles_item"
+        />
+      </tui-multi-select>
+    </div>
+
+    <div class="tui-form__row">
       <tui-input-password id="password" formControlName="password">
         Password
       </tui-input-password>
@@ -42,47 +58,6 @@
       appearance="primary"
     >
       Register
-    </button>
-
-    <button tuiButton (click)="cancel()" size="m" appearance="secondary">
-      Cancel
-    </button>
-  </div>
-</form>
-
-<form [formGroup]="role_form" [style.display]="step !== 1 ? 'none' : 'block'">
-  <h3 tuiTitle="m">
-    Set Roles
-    <p tuiSubtitle>Set user roles to determine access levels</p>
-  </h3>
-
-  <div class="tui-space_top-5 tui-space_bottom-5">
-    <div class="tui-form__row">
-      <tui-multi-select
-        [rows]="1"
-        [editable]="false"
-        formControlName="roles"
-        [tuiTextfieldLabelOutside]="true"
-      >
-        Select User Roles
-        <tui-data-list-wrapper
-          *tuiDataList
-          tuiMultiSelectGroup
-          [items]="roles_item"
-        />
-      </tui-multi-select>
-    </div>
-  </div>
-
-  <div class="flex flex-row gap-4">
-    <button
-      tuiButton
-      (click)="roleSubmit()"
-      type="submit"
-      size="m"
-      appearance="primary"
-    >
-      Ok
     </button>
 
     <button tuiButton (click)="cancel()" size="m" appearance="secondary">
