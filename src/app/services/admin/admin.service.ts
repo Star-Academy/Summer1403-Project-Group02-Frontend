@@ -9,6 +9,7 @@ import { UserResponse } from '../../models/api/userResponse';
 import { User } from '../../models/user';
 import { RoleResponse } from '../../models/api/roleResponse';
 import { UserBody } from '../../models/api/userBody';
+import { EditUserBody } from '../../models/api/editUser';
 
 @Injectable({
   providedIn: 'root',
@@ -103,6 +104,14 @@ export class AdminUserService {
       .pipe(
         tap(() => this.showSuccessNotification('Role Removed Successfully'))
       );
+  }
+
+  // update user :/
+  updateUser(username: string, user: EditUserBody): Observable<UserResponse> {
+    const url = `${environment.apiBaseUrl}/Admin/users/update/${username}`;
+    return this.http.put<UserResponse>(url, user, { withCredentials: true }).pipe(
+      tap(() => this.showSuccessNotification('User Updated Successfully'))
+    );
   }
 
   // Helper method to show success notifications
