@@ -112,6 +112,17 @@ export class UsersComponent implements OnInit {
       this.edit_user_dialog.subscribe({
         complete: () => {
           console.info('Dialog closed');
+
+          this.adminUserService.getUser(username).subscribe({
+            next: (response) => {
+              const updatedUser = response.data;
+              const users = this.users();
+              const index = users.findIndex((user) => user.username === username);
+              users[index] = updatedUser;
+              this.users.set(users);
+            },
+          });
+
         },
       });
     }

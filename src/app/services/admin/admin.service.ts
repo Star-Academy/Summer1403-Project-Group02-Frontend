@@ -5,7 +5,7 @@ import { tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { NotificationService } from '../notif/notification.service';
 import { SUCCESS_MESSAGES_MAP } from '../../constants/success-messages';
-import { UserResponse } from '../../models/api/userResponse';
+import { AllUserResponse, UserResponse } from '../../models/api/userResponse';
 import { User } from '../../models/user';
 import { RoleResponse } from '../../models/api/roleResponse';
 import { UserBody } from '../../models/api/userBody';
@@ -24,9 +24,9 @@ export class AdminUserService {
   ) { }
 
   // Fetch all users
-  fetchUsers(): Observable<UserResponse> {
+  fetchUsers(): Observable<AllUserResponse> {
     const url = `${environment.apiBaseUrl}/Admin/users`;
-    return this.http.get<UserResponse>(url, { withCredentials: true }).pipe(
+    return this.http.get<AllUserResponse>(url, { withCredentials: true }).pipe(
       tap((response) => {
         this.usersSubject.next(response.data);
       })
@@ -34,10 +34,10 @@ export class AdminUserService {
   }
 
   // Get a user by username
-  getUser(username: string): Observable<User> {
+  getUser(username: string): Observable<UserResponse> {
     const url = `${environment.apiBaseUrl}/Admin/users/${username}`;
     return this.http
-      .get<User>(url, { withCredentials: true })
+      .get<UserResponse>(url, { withCredentials: true })
       .pipe(
         tap(() => this.showSuccessNotification('User Retrieved Successfully'))
       );
