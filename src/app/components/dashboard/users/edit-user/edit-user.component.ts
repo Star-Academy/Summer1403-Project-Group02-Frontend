@@ -20,6 +20,8 @@ import {
 import { POLYMORPHEUS_CONTEXT } from '@taiga-ui/polymorpheus';
 import { AdminEditUserService } from '../../../../services/admin/admin-edit-user.service';
 import { User } from '../../../../models/user';
+import { AdminUserService } from '../../../../services/admin/admin.service';
+import { EditUserBody } from '../../../../models/api/editUser';
 
 @Component({
   selector: 'app-register',
@@ -43,28 +45,25 @@ import { User } from '../../../../models/user';
 export class EditUserComponent implements OnInit {
   private readonly context = inject<TuiDialogContext>(POLYMORPHEUS_CONTEXT);
   private readonly adminEditUserService = inject(AdminEditUserService);
+  private readonly adminService = inject(AdminUserService);
 
   form!: FormGroup;
+  protected user!: User;
 
   ngOnInit(): void {
 
-    const user: User = this.adminEditUserService.getUser();
+    this.user = this.adminEditUserService.getUser();
 
     this.form = new FormGroup({
-      firstName: new FormControl(user.firstName, [
+      firstName: new FormControl(this.user.firstName, [
         Validators.required,
         Validators.minLength(2),
       ]),
-      lastName: new FormControl(user.lastName, [
+      lastName: new FormControl(this.user.lastName, [
         Validators.required,
         Validators.minLength(2),
       ]),
-      password: new FormControl(null, [
-        // Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(30),
-      ]),
-      email: new FormControl(user.email, [Validators.required, Validators.email]),
+      email: new FormControl(this.user.email, [Validators.required, Validators.email]),
     });
   }
 
@@ -72,8 +71,20 @@ export class EditUserComponent implements OnInit {
     if (!this.form.invalid) {
       // call api here to edit user
 
-      // if OK compelete this 
-      this.context.completeWith();
+      const editBody: EditUserBody = {
+        firstName: this.form.value.firstName,
+        lastName: this.form.value.lastName,
+        email: this.form.value.email,
+      }
+
+      this.adminService.updateUser(this.user.username, editBody).subscribe({
+        next: () => {
+          // close dialog
+          this.context.completeWith();
+        },
+      }
+      );
+
     } else {
       // show errorr
     }
