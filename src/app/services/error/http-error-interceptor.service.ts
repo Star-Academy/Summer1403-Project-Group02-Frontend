@@ -28,8 +28,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     return next.handle(clonedRequest).pipe(
       catchError((error: HttpErrorResponse) => {
         const backendErrorMessage = error.error?.message;
-
-        this.showNotification(backendErrorMessage);
+        if (backendErrorMessage !== 'Unauthorized') {
+          this.showNotification(backendErrorMessage);
+        }
         return throwError(() => new Error(backendErrorMessage));
       })
     );
