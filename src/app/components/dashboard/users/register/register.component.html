@@ -1,57 +1,67 @@
-<form [formGroup]="form">
-  <div class="tui-col_12">
-    <h3 tuiTitle="m">
-      Create New User
-      <p tuiSubtitle>create a new user to gain access to the data</p>
-    </h3>
-    <div class="tui-space_top-5 tui-space_bottom-5">
-      <div class="tui-form__row">
-        <p>
-          <tui-input id="userName" formControlName="userName">
-            User Name
-          </tui-input>
-        </p>
-      </div>
-
-      <div class="tui-form__row">
-        <p>
-          <tui-input id="firstName" formControlName="firstName">
-            First Name
-          </tui-input>
-        </p>
-      </div>
-
-      <div class="tui-form__row">
-        <p>
-          <tui-input id="lastName" formControlName="lastName">
-            Last Name
-          </tui-input>
-        </p>
-      </div>
-
-      <div class="tui-form__row">
-        <p>
-          <tui-input id="email" formControlName="email"> Email </tui-input>
-        </p>
-      </div>
-
-      <div class="tui-form__row">
-        <p>
-          <tui-input-password id="password" formControlName="password">
-            Password
-          </tui-input-password>
-        </p>
-      </div>
+<form [formGroup]="rej_form">
+  <h3 tuiTitle="m">
+    Create New User
+    <p tuiSubtitle>create a new user to gain access to the data</p>
+  </h3>
+  <div class="tui-space_top-5 tui-space_bottom-5">
+    <div class="tui-form__row">
+      <tui-input id="userName" formControlName="userName">
+        User Name
+      </tui-input>
     </div>
 
+    <div class="tui-form__row">
+      <tui-input id="firstName" formControlName="firstName">
+        First Name
+      </tui-input>
+    </div>
+
+    <div class="tui-form__row">
+      <tui-input id="lastName" formControlName="lastName">
+        Last Name
+      </tui-input>
+    </div>
+
+    <div class="tui-form__row">
+      <tui-input id="email" formControlName="email"> Email </tui-input>
+    </div>
+
+    <div class="tui-form__row">
+      <tui-multi-select
+        [rows]="1"
+        [editable]="false"
+        formControlName="roles"
+        [tuiTextfieldLabelOutside]="true"
+      >
+        Select User Roles
+        <tui-data-list-wrapper
+          *tuiDataList
+          tuiMultiSelectGroup
+          [items]="roles_item"
+        />
+      </tui-multi-select>
+    </div>
+
+    <div class="tui-form__row">
+      <tui-input-password id="password" formControlName="password">
+        Password
+      </tui-input-password>
+    </div>
+  </div>
+
+  <div class="flex flex-row gap-4">
     <button
       tuiButton
-      (click)="submit()"
-      type="button"
+      (click)="rejSubmit()"
+      type="submit"
       size="m"
       appearance="primary"
     >
       Register
+    </button>
+
+    <button tuiButton (click)="cancel()" size="m" appearance="secondary">
+      Cancel
     </button>
   </div>
 </form>

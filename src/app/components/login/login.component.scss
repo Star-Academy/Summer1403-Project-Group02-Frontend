@@ -7,6 +7,21 @@ $padding-large: 1.25rem;
   background-position: center;
   background-repeat: no-repeat;
 
+  .main-card {
+    border-radius: var(--tui-radius-xl);
+    background-color: var(--tui-background-base);
+    color: var(--tui-text-primary);
+  }
+
+  .Rimg {
+    height: 100%;
+    border-radius: var(--tui-radius-xl);
+    background-image: url("/user-bg.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
   .tui-island {
     position: relative;
     display: block;
@@ -24,7 +39,7 @@ $padding-large: 1.25rem;
 
       content: "";
       box-sizing: border-box;
-      border: 1px solid var(--tui-border-normal);
+      // border: 1px solid var(--tui-border-normal);
       border-radius: inherit;
       pointer-events: none;
     }
@@ -37,11 +52,14 @@ $padding-large: 1.25rem;
     }
 
     &__title {
-      font: var(--tui-font-heading-6);
-      margin: 0 0 0.75rem;
+      // text-align: center;
+      font-weight: bold;
+      font: var(--tui-font-heading-3);
+      margin: 0 0 0.5rem;
     }
 
     &__paragraph {
+      // text-align: center;
       margin: 0 0 1rem 0;
       color: var(--tui-text-secondary);
     }
@@ -58,4 +76,8 @@ $padding-large: 1.25rem;
       text-align: center;
     }
   }
+}
+
+.tui-island:not(.tui-island_hoverable)::before {
+  border: 0;
 }

@@ -68,17 +68,17 @@ export class UsersComponent implements OnInit {
   private readonly adminEditUserService = inject(AdminEditUserService);
 
   // Use the signal API to store the users
-  protected users = signal<User[]>([]);
+  // protected users = signal<User[]>([]);
 
   //? default users to tests and etc
-  // protected users = signal<User[]>([{
-  //   username: "Admin",
-  //   firstName: "Name",
-  //   lastName: "Family",
-  //   email: "admin@admin.admin",
-  //   roles: [{ roleType: "Admin" }],
-  // };
-  // ]);
+  protected users = signal<User[]>([{
+    username: "Admin",
+    firstName: "Name",
+    lastName: "Family",
+    email: "admin@admin.admin",
+    roles: [{ roleType: "Admin" }],
+  }
+  ]);
 
   private readonly rejDialog = this.dialogs.open(
     new PolymorpheusComponent(RegisterComponent, this.injector)
@@ -112,6 +112,17 @@ export class UsersComponent implements OnInit {
       this.edit_user_dialog.subscribe({
         complete: () => {
           console.info('Dialog closed');
+
+          this.adminUserService.getUser(username).subscribe({
+            next: (response) => {
+              const updatedUser = response.data;
+              const users = this.users();
+              const index = users.findIndex((user) => user.username === username);
+              users[index] = updatedUser;
+              this.users.set(users);
+            },
+          });
+
         },
       });
     }

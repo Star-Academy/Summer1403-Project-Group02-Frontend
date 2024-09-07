@@ -20,6 +20,68 @@
   flex-direction: column;
 }
 
+.panel {
+  position: relative;
+  transform: translateY(-98%);
+  z-index: 9999990;
+
+  .bottom-panel {
+    .tools {
+      $tool-width: 15rem;
+      width: $tool-width;
+
+      .bar {
+        padding: 0.3rem;
+        width: calc(var(--tui-height-s));
+        border-radius: var(--tui-radius-s);
+        background-color: #fff;
+
+        button {
+          // --t-size: calc(var(--tui-height-s) + 0.5rem);
+
+          &[tuiIconButton][data-size="s"]:not(
+              [tuiIconButton][data-appearance="icon"]
+            ):not([tuiIconButton][data-appearance="link"]):before {
+            // font-size: 1.2rem;
+            color: black;
+          }
+        }
+      }
+
+      .select-edit {
+        border-radius: var(--tui-radius-s);
+        background-color: #fff;
+
+        button:before {
+          color: black;
+        }
+
+        tui-select {
+          width: calc($tool-width - var(--tui-height-s));
+        }
+      }
+    }
+
+    .info-node {
+      width: 17rem;
+      padding: 0.3rem;
+      border-radius: var(--tui-radius-m);
+      background-color: #fff;
+
+      button:before {
+        color: black;
+      }
+    }
+  }
+
+  .right-panel {
+    height: calc(100% - 3rem);
+    width: 18rem;
+    position: relative;
+    background-color: #fff;
+  }
+}
+
 .card {
   margin-top: 1rem;
   background-color: #fff;

@@ -3,7 +3,7 @@
     id="chart-header"
     class="flex flex-row gap-4 items-center justify-between px-6"
   >
-    <div class="inline flex flex-row items-center">
+    <div class="flex flex-row items-center">
       <div>
         <h1 class="text-xl font-bold">Charts</h1>
       </div>
@@ -46,6 +46,8 @@
     </div>
   </div>
 
+  <app-import class="h-full" [hidden]="activeItemIndex !== 0"></app-import>
+  <app-graph class="h-full" [hidden]="activeItemIndex !== 1"></app-graph>
   <app-import class="h-full" [hidden]="activeItemIndex !== 0"></app-import>
   <app-graph class="h-full" [hidden]="activeItemIndex !== 1"></app-graph>
 </section>

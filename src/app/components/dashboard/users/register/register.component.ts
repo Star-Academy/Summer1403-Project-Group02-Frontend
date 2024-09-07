@@ -14,7 +14,6 @@ import {
   TuiInputPasswordModule,
   TuiIslandDirective,
 } from '@taiga-ui/legacy';
-import type { TuiBooleanHandler } from '@taiga-ui/cdk';
 import { TuiDataList } from '@taiga-ui/core';
 import { TuiDataListWrapper } from '@taiga-ui/kit';
 import {
@@ -24,6 +23,7 @@ import {
 import { POLYMORPHEUS_CONTEXT } from '@taiga-ui/polymorpheus';
 import { AdminUserService } from '../../../../services/admin/admin.service';
 import { UserBody } from '../../../../models/api/userBody';
+import { RoleResponse } from '../../../../models/api/roleResponse';
 
 @Component({
   selector: 'app-register',
@@ -51,15 +51,17 @@ export class RegisterComponent implements OnInit {
   private readonly context = inject<TuiDialogContext>(POLYMORPHEUS_CONTEXT);
   private readonly adminUserService = inject(AdminUserService);
 
-  form!: FormGroup;
-
-  protected search: string | null = '';
-
-  protected tagValidator: TuiBooleanHandler<string> = (tag) =>
-    !tag.startsWith('Han');
+  rej_form!: FormGroup;
+  protected roles_item !: string[];
 
   ngOnInit(): void {
-    this.form = new FormGroup({
+    this.adminUserService.fetchRoles().subscribe({
+      next: (response: RoleResponse) => {
+        this.roles_item = response.data.map((role) => role.roleType);
+      },
+    })
+
+    this.rej_form = new FormGroup({
       userName: new FormControl(null, [
         Validators.required,
         Validators.minLength(2),
@@ -78,31 +80,40 @@ export class RegisterComponent implements OnInit {
         Validators.maxLength(30),
       ]),
       email: new FormControl(null, [Validators.required, Validators.email]),
+      roles: new FormControl([], [Validators.required]),
     });
+
   }
 
-  protected submit() {
-    if (!this.form.invalid) {
+  protected rejSubmit() {
+    if (this.rej_form.valid) {
       // Construct the user data from the form
       const userRequest: UserBody = {
-        username: this.form.value.userName,
-        firstName: this.form.value.firstName,
-        lastName: this.form.value.lastName,
-        password: this.form.value.password,
-        email: this.form.value.email,
+        username: this.rej_form.value.userName,
+        password: this.rej_form.value.password,
+        firstName: this.rej_form.value.firstName,
+        lastName: this.rej_form.value.lastName,
+        email: this.rej_form.value.email,
+        roles: this.rej_form.value.roles,
       };
 
       // Call the service to create the user
       this.adminUserService.createUser(userRequest).subscribe({
         next: () => {
-          console.log('success');
-
+          // close dialog
           this.context.completeWith();
         },
       });
-    } else {
+    }
+
+    else {
       // Optionally, show a validation error message
       console.error('Form is invalid');
+      this.rej_form.markAsDirty();
     }
+  }
+
+  protected cancel() {
+    this.context.completeWith();
   }
 }
