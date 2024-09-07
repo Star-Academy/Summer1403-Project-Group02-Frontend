@@ -38,3 +38,32 @@
     </button>
   </div>
 </form>
+
+<form class="tui-space_top-9" [formGroup]="role_form">
+  <div class="tui-col_12">
+    <h3 tuiTitle="m">
+      Edit Roles
+      <p tuiSubtitle>Edit user roles</p>
+      <p tuiSubtitle *ngIf="!roles || roles.length === 0" [style.color]="'red'">
+        Error on fetch roles
+        <button
+          tuiButton
+          size="s"
+          appearance="destructive"
+          iconStart="@tui.rotate-ccw"
+          (click)="fetchRoles()"
+        >
+          Try Again
+        </button>
+      </p>
+    </h3>
+    <div class="tui-space_top-5 tui-space_bottom-5">
+      <tui-filter
+        formControlName="roles"
+        [items]="roles"
+        size="m"
+        (toggledItem)="onToggledRoleItemChange($event)"
+      ></tui-filter>
+    </div>
+  </div>
+</form>

@@ -6,8 +6,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { TuiAlertService, TuiButton, TuiDialogContext, TuiLink, TuiTitle } from '@taiga-ui/core';
-import { TuiCheckbox } from '@taiga-ui/kit';
+import { TuiAlertService, TuiButton, TuiDialogContext, TuiIcon, TuiLink, TuiTitle } from '@taiga-ui/core';
+import { TuiCheckbox, TuiFilter } from '@taiga-ui/kit';
 import {
   TuiInputModule,
   TuiInputPasswordModule,
@@ -33,11 +33,13 @@ import { EditUserBody } from '../../../../models/api/editUser';
     TuiInputModule,
     TuiInputPasswordModule,
     TuiLink,
+    TuiIcon,
     TuiButton,
     TuiCheckbox,
     TuiTextfieldControllerModule,
     TuiDataListWrapper,
     TuiDataList,
+    TuiFilter,
   ],
   templateUrl: './edit-user.component.html',
   styleUrls: ['./edit-user.component.scss'],
@@ -48,12 +50,15 @@ export class EditUserComponent implements OnInit {
   private readonly adminService = inject(AdminUserService);
   private readonly alerts = inject(TuiAlertService);
 
-  edit_form!: FormGroup;
+  protected edit_form!: FormGroup;
+  protected role_form!: FormGroup;
   protected user!: User;
+  protected roles!: string[];
 
   ngOnInit(): void {
-
     this.user = this.adminEditUserService.getUser();
+
+    this.fetchRoles();
 
     this.edit_form = new FormGroup({
       firstName: new FormControl(this.user.firstName, [
@@ -66,11 +71,48 @@ export class EditUserComponent implements OnInit {
       ]),
       email: new FormControl(this.user.email, [Validators.required, Validators.email]),
     });
+
+    this.role_form = new FormGroup({
+      roles: new FormControl(this.user.roles.map(role => role.roleType) as string[]),
+    });
+  }
+
+  protected fetchRoles() {
+    this.adminService.fetchRoles().subscribe({
+      next: (roles) => {
+        this.roles = roles.data.map(role => role.roleType);
+      }
+    });
+  }
+
+  protected onToggledRoleItemChange(role: string) {
+    const roles = this.role_form.controls['roles'].value as string[];
+
+    if (roles.includes(role)) {
+      this.adminService.removeRoleFromUser(this.user.username, role).subscribe({
+        next: () => {
+          this.alerts.open('Role Removed', { label: 'Success!', appearance: 'success' }).subscribe();
+        },
+        error: () => {
+          const roles = this.role_form.controls['roles'].value as string[];
+          roles.push(role);
+          this.role_form.controls['roles'].setValue(roles);
+        }
+      });
+    } else {
+      this.adminService.addRoleToUser(this.user.username, role).subscribe({
+        next: () => {
+          this.alerts.open('Role Added', { label: 'Success!', appearance: 'success' }).subscribe();
+        },
+        error: () => {
+          this.role_form.controls['roles'].setValue(this.role_form.controls['roles'].value.filter((r: string) => r !== role));
+        }
+      });
+    }
   }
 
   protected submit() {
     if (!this.edit_form.invalid) {
-      // call api here to edit user
 
       const editBody: EditUserBody = {
         firstName: this.edit_form.value.firstName,

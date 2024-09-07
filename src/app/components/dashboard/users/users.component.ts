@@ -126,10 +126,6 @@ export class UsersComponent implements OnInit {
         },
       });
     }
-
-    else {
-      console.error(`User ${username} not found`);
-    }
   }
 
   protected showRejDialog(): void {
