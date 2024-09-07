@@ -12,14 +12,16 @@ export const routes: Routes = [
     path: 'login',
     component: LoginComponent,
   },
-  // {
-  //   path: 'admin/register',
-  //   component: RegisterComponent,
-  // },
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'dashboard/users',
+  },
   {
     path: 'dashboard',
     title: 'Dashboard',
     component: DashboardComponent,
+    canActivateChild: [authGuard],
     children: [
       {
         path: 'users',

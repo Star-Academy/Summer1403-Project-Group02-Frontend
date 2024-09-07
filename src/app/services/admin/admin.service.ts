@@ -21,16 +21,15 @@ export class AdminUserService {
   constructor(
     private http: HttpClient,
     private notificationService: NotificationService
-  ) { }
+  ) {}
 
   // Fetch all users
-  fetchUsers(page_index: number): Observable<AllUserResponse> {
-    const url = `${environment.apiBaseUrl}/Admin/users?pageNumber=${page_index}`;
-    return this.http.get<AllUserResponse>(url, { withCredentials: true }).pipe(
-      tap((response) => {
-        this.usersSubject.next(response.data);
-      })
-    );
+  fetchUsers(pageNumber = 1): Observable<UserResponse> {
+    const url = `${environment.apiBaseUrl}/Admin/users`;
+    return this.http.get<UserResponse>(url, {
+      withCredentials: true,
+      params: { pageNumber: pageNumber },
+    });
   }
 
   // Get a user by username
@@ -109,9 +108,11 @@ export class AdminUserService {
   // update user :/
   updateUser(username: string, user: EditUserBody): Observable<UserResponse> {
     const url = `${environment.apiBaseUrl}/Admin/users/update/${username}`;
-    return this.http.put<UserResponse>(url, user, { withCredentials: true }).pipe(
-      tap(() => this.showSuccessNotification('User Updated Successfully'))
-    );
+    return this.http
+      .put<UserResponse>(url, user, { withCredentials: true })
+      .pipe(
+        tap(() => this.showSuccessNotification('User Updated Successfully'))
+      );
   }
 
   // Helper method to show success notifications
