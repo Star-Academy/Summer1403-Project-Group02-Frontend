@@ -17,9 +17,14 @@ export const routes: Routes = [
   },
   {
     path: '',
+    pathMatch: 'full',
+    redirectTo: 'dashboard/users',
+  },
+  {
+    path: 'dashboard',
     title: 'Dashboard',
     component: DashboardComponent,
-    canActivate: [authGuard],
+    canActivateChild: [authGuard],
     children: [
       {
         path: 'users',

@@ -4,8 +4,6 @@ import { AuthService } from '../services/auth/auth.service';
 import { firstValueFrom } from 'rxjs';
 
 export const authGuard: CanActivateFn = async (route, state) => {
-  console.log('gard');
-
   const authService = inject(AuthService);
   const router = inject(Router);
   // Wait for the user check to complete
@@ -13,9 +11,8 @@ export const authGuard: CanActivateFn = async (route, state) => {
 
   // Get the current user from the observable
   const user = await firstValueFrom(authService.getCurrentUser());
-  console.log('gard2');
-
-  const isLoginRoute = state.url === '/login';
+  const currentUrl = route.url[0].path;
+  const isLoginRoute = currentUrl === 'login';
 
   if (user) {
     if (isLoginRoute) {

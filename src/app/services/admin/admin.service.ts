@@ -22,7 +22,7 @@ export class AdminUserService {
   ) {}
 
   // Fetch all users
-  fetchUsers(pageNumber: 1): Observable<UserResponse> {
+  fetchUsers(pageNumber = 1): Observable<UserResponse> {
     const url = `${environment.apiBaseUrl}/Admin/users`;
     return this.http
       .get<UserResponse>(url, {

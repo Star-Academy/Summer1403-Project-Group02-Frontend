@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -10,7 +10,7 @@ import { TuiButton, TuiSurface } from '@taiga-ui/core';
 import { TuiCheckbox } from '@taiga-ui/kit';
 import { TuiCardLarge } from '@taiga-ui/layout';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
   form!: FormGroup;
   loading = false;
   errorMessage: string | null = null;
+  route = inject(ActivatedRoute);
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -69,8 +70,10 @@ export class LoginComponent implements OnInit {
 
     this.authService.loginUser(credentials).subscribe({
       next: () => {
-        this.loading = false;
-        this.router.navigate(['/']);
+        const returnUrl =
+          this.route.snapshot.queryParamMap.get('returnUrl') || '/';
+
+        this.router.navigate([returnUrl]);
       },
       error: (error) => {
         this.loading = false;
