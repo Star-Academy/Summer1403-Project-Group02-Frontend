@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { TuiButton, TuiDialogContext, TuiLink, TuiTitle } from '@taiga-ui/core';
+import { TuiAlertService, TuiButton, TuiDialogContext, TuiLink, TuiTitle } from '@taiga-ui/core';
 import { TuiCheckbox } from '@taiga-ui/kit';
 import {
   TuiInputModule,
@@ -46,35 +46,36 @@ export class EditUserComponent implements OnInit {
   private readonly context = inject<TuiDialogContext>(POLYMORPHEUS_CONTEXT);
   private readonly adminEditUserService = inject(AdminEditUserService);
   private readonly adminService = inject(AdminUserService);
+  private readonly alerts = inject(TuiAlertService);
 
-  form!: FormGroup;
+  edit_form!: FormGroup;
   protected user!: User;
 
   ngOnInit(): void {
 
     this.user = this.adminEditUserService.getUser();
 
-    this.form = new FormGroup({
+    this.edit_form = new FormGroup({
       firstName: new FormControl(this.user.firstName, [
         Validators.required,
-        Validators.minLength(2),
+        Validators.minLength(3),
       ]),
       lastName: new FormControl(this.user.lastName, [
         Validators.required,
-        Validators.minLength(2),
+        Validators.minLength(3),
       ]),
       email: new FormControl(this.user.email, [Validators.required, Validators.email]),
     });
   }
 
   protected submit() {
-    if (!this.form.invalid) {
+    if (!this.edit_form.invalid) {
       // call api here to edit user
 
       const editBody: EditUserBody = {
-        firstName: this.form.value.firstName,
-        lastName: this.form.value.lastName,
-        email: this.form.value.email,
+        firstName: this.edit_form.value.firstName,
+        lastName: this.edit_form.value.lastName,
+        email: this.edit_form.value.email,
       }
 
       this.adminService.updateUser(this.user.username, editBody).subscribe({
@@ -86,7 +87,22 @@ export class EditUserComponent implements OnInit {
       );
 
     } else {
-      // show errorr
+
+      if (this.edit_form.controls['firstName'].invalid) {
+        this.alerts.open('Please make sure first name is valid. First name must have at least 3 characters.', { label: 'Invalid Form!', appearance: 'warning' }).subscribe();
+      }
+
+      else if (this.edit_form.controls['lastName'].invalid) {
+        this.alerts.open('Please make sure last name is valid. Last name must have at least 3 characters.', { label: 'Invalid Form!', appearance: 'warning' }).subscribe();
+      }
+
+      else if (this.edit_form.controls['email'].invalid) {
+        this.alerts.open('Please make sure email is valid.', { label: 'Invalid Form!', appearance: 'warning' }).subscribe();
+      }
+
+      else {
+        this.alerts.open('Please make sure all fields are valid', { label: 'Invalid Form!', appearance: 'warning' }).subscribe();
+      }
     }
   }
 }
