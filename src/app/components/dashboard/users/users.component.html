@@ -32,7 +32,7 @@
           {{ i.firstName + " " + i.lastName | titlecase }}
         </td>
         <td class="tui-table__td">{{ i.username }}</td>
-        <td class="tui-table__td">
+        <td tuiFade class="flex tui-table__td">
           <tui-chip
             *ngFor="let r of i.roles"
             appearance="{{ r.roleType | roleAppearance }}"
