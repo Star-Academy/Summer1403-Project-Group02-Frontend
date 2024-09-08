@@ -1,0 +1,39 @@
+<form [formGroup]="form">
+  <h2 tuiTitle="m">Update Information</h2>
+  <tui-input
+    tuiTextfieldSize="m"
+    class="tui-space_top-5"
+    formControlName="name"
+    [tuiTextfieldLabelOutside]="true"
+  >
+    name
+  </tui-input>
+
+  <tui-input
+    tuiTextfieldSize="m"
+    class="tui-space_top-3 tui-space_bottom-3"
+    [tuiTextfieldLabelOutside]="true"
+    formControlName="family"
+  >
+    family
+  </tui-input>
+
+  <tui-input
+    tuiTextfieldSize="m"
+    class="tui-space_top-3 tui-space_bottom-5"
+    [tuiTextfieldLabelOutside]="true"
+    formControlName="email"
+  >
+    email
+  </tui-input>
+
+  <button
+    size="m"
+    tuiButton
+    [loading]="loading"
+    type="button"
+    (click)="submit()"
+  >
+    Submit
+  </button>
+</form>
