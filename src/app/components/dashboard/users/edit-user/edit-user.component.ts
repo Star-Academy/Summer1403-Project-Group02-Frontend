@@ -50,8 +50,8 @@ export class EditUserComponent implements OnInit {
   private readonly adminService = inject(AdminUserService);
   private readonly alerts = inject(TuiAlertService);
 
-  protected edit_form!: FormGroup;
-  protected role_form!: FormGroup;
+  edit_form!: FormGroup;
+  role_form!: FormGroup;
   protected user!: User;
   protected roles!: string[];
 
@@ -85,7 +85,7 @@ export class EditUserComponent implements OnInit {
     });
   }
 
-  protected onToggledRoleItemChange(role: string) {
+  onToggledRoleItemChange(role: string) {
     const roles = this.role_form.controls['roles'].value as string[];
 
     if (roles.includes(role)) {
@@ -112,7 +112,7 @@ export class EditUserComponent implements OnInit {
   }
 
   protected submit() {
-    if (!this.edit_form.invalid) {
+    if (this.edit_form.valid) {
 
       const editBody: EditUserBody = {
         firstName: this.edit_form.value.firstName,

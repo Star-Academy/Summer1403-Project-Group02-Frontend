@@ -1,11 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditUserComponent } from './edit-user.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TuiInputModule, TuiInputPasswordModule } from '@taiga-ui/legacy';
-import { TuiButton, TuiLink } from '@taiga-ui/core';
-import { TuiCheckbox } from '@taiga-ui/kit';
+import { TuiInputModule, TuiInputPasswordModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
+import { TuiAlertService, TuiButton, TuiDataList, TuiIcon, TuiLink, TuiTitle } from '@taiga-ui/core';
+import { POLYMORPHEUS_CONTEXT } from '@taiga-ui/polymorpheus';
+import { TuiCheckbox, TuiDataListWrapper, TuiFilter } from '@taiga-ui/kit';
 import { TuiInputDateModule } from '@taiga-ui/legacy';
 import { By } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
+import { Observable, of } from 'rxjs';
+import { AdminEditUserService } from '../../../../services/admin/admin-edit-user.service';
+import { AdminUserService } from '../../../../services/admin/admin.service';
+import { RoleResponse } from '../../../../models/api/roleResponse';
 
 describe('EditUserComponent', () => {
   let component: EditUserComponent;
@@ -14,15 +20,94 @@ describe('EditUserComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        TuiTitle,
+        CommonModule,
         ReactiveFormsModule,
         TuiInputModule,
         TuiInputPasswordModule,
-        TuiButton,
         TuiLink,
+        TuiIcon,
+        TuiButton,
         TuiCheckbox,
-        TuiInputDateModule,
-        EditUserComponent,
+        TuiTextfieldControllerModule,
+        TuiDataListWrapper,
+        TuiDataList,
+        TuiFilter,
       ],
+      providers: [
+        {
+            provide: POLYMORPHEUS_CONTEXT,
+            useValue: jasmine.createSpyObj({
+                open: jasmine.createSpyObj({
+                    afterClosed: of('closed')
+                })
+            })
+        },
+        {
+            provide: AdminEditUserService,
+            useValue: jasmine.createSpyObj({
+                getUser: 
+                    {
+                      username: "admin",
+                      firstName: "admin",
+                      lastName: "adminn",
+                      email: "admin@admin.admin",
+                      roles: [{roleType: "Admin"}]
+                    }
+            })
+        },
+        {
+            provide: AdminUserService,
+            useValue: jasmine.createSpyObj({
+                fetchRoles: jasmine.createSpyObj({
+                    subscribe: new Observable<RoleResponse>((subscriber) => {
+                      subscriber.next(
+                      {
+                        data: [
+                          {roleType: "Admin"},
+                          {roleType: "User"},
+                          {roleType: "Guest"}
+                        ],
+                        type: 200,
+                        message: "msg"
+                      });
+                      subscriber.complete();
+                    }
+                      
+                    )
+                    
+                }),
+                updateUser: jasmine.createSpyObj({
+                    subscribe: of({
+                      data:  {
+                        username: "admin",
+                        firstName: "aa",
+                        lastName: "bb",
+                        email: "admin@admin.admin",
+                        roles: []
+                      },
+                      type: 200,
+                      message: "msg",
+                    })
+                }),
+                removeRoleFromUser: jasmine.createSpyObj({
+                    subscribe: new Observable<void>()
+                }),
+                addRoleToUser: jasmine.createSpyObj({
+                    subscribe: new Observable<void>()
+                })
+            }),
+             
+        },
+        {
+            provide: TuiAlertService,
+            useValue: jasmine.createSpyObj({
+              open: jasmine.createSpyObj({
+                afterClosed: of('closed')
+            })
+            })
+        }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(EditUserComponent);
@@ -37,9 +122,7 @@ describe('EditUserComponent', () => {
   it('should initialize form with required controls', () => {
     expect(component.edit_form.contains('firstName')).toBeTrue();
     expect(component.edit_form.contains('lastName')).toBeTrue();
-    expect(component.edit_form.contains('password')).toBeTrue();
     expect(component.edit_form.contains('email')).toBeTrue();
-    expect(component.edit_form.contains('dob')).toBeTrue();
   });
 
   it('should make the firstName control required and validate its length', () => {
@@ -47,10 +130,13 @@ describe('EditUserComponent', () => {
     firstNameControl?.setValue('');
     expect(firstNameControl?.valid).toBeFalse();
 
-    firstNameControl?.setValue('A');
+    firstNameControl?.setValue('1');
     expect(firstNameControl?.valid).toBeFalse();
 
-    firstNameControl?.setValue('John');
+    firstNameControl?.setValue('12');
+    expect(firstNameControl?.valid).toBeFalse();
+
+    firstNameControl?.setValue('123');
     expect(firstNameControl?.valid).toBeTrue();
   });
 
@@ -59,10 +145,13 @@ describe('EditUserComponent', () => {
     lastNameControl?.setValue('');
     expect(lastNameControl?.valid).toBeFalse();
 
-    lastNameControl?.setValue('D');
+    lastNameControl?.setValue('1');
     expect(lastNameControl?.valid).toBeFalse();
 
-    lastNameControl?.setValue('Doe');
+    lastNameControl?.setValue('12');
+    expect(lastNameControl?.valid).toBeFalse();
+
+    lastNameControl?.setValue('123');
     expect(lastNameControl?.valid).toBeTrue();
   });
 
@@ -78,39 +167,38 @@ describe('EditUserComponent', () => {
     expect(emailControl?.valid).toBeTrue();
   });
 
-  it('should make the password control required and validate its length', () => {
-    const passwordControl = component.edit_form.get('password');
-    passwordControl?.setValue('');
-    expect(passwordControl?.valid).toBeFalse();
-
-    passwordControl?.setValue('abc');
-    expect(passwordControl?.valid).toBeFalse();
-
-    passwordControl?.setValue('strongpassword');
-    expect(passwordControl?.valid).toBeTrue();
-  });
-
-  it('should validate the dob control as required', () => {
-    const dobControl = component.edit_form.get('dob');
-    dobControl?.setValue('');
-    expect(dobControl?.valid).toBeFalse();
-
-    dobControl?.setValue('2000-01-01');
-    expect(dobControl?.valid).toBeTrue();
-  });
-
-  it('should render the "Register" title inside the tuiIsland', () => {
+  it('should render the "Edit User" title inside the tuiTitle', () => {
     const titleElement = fixture.debugElement.query(
-      By.css('.tui-island__title')
+      By.css('#edit_form h3')
     ).nativeElement;
-    expect(titleElement.textContent).toContain('Register');
+    expect(titleElement.textContent).toContain('Edit User');
   });
 
-  it('should render a register button', () => {
-    const registerButton = fixture.debugElement.query(
-      By.css('a[appearance="accent"]')
-    );
-    expect(registerButton).toBeTruthy();
-    expect(registerButton.nativeElement.textContent).toContain('Register');
+  it('disables the submit button when the edit form is invalid', () => {
+    const submitButton = fixture.debugElement.query(By.css('button[type="button"]'));
+    component.edit_form.setValue({ firstName: '', lastName: '', email: '' });
+    fixture.detectChanges();
+    expect(submitButton.nativeElement.disabled).toBeTrue();
   });
+
+  it('enables the submit button when the edit form is valid', () => {
+    const submitButton = fixture.debugElement.query(By.css('button[type="button"]'));
+    component.edit_form.setValue({ firstName: 'John', lastName: 'Doe', email: 'John@Doe.dev' });
+    fixture.detectChanges();
+    expect(submitButton.nativeElement.disabled).toBeFalse();
+  });
+
+  it('should render the "Edit Roles" title inside the tuiTitle', () => {
+    const titleElement = fixture.debugElement.query(
+      By.css('#role_form h3')
+    ).nativeElement;
+    expect(titleElement.textContent).toContain('Edit Roles');
+  });
+
+  it('should render the roles inside the TuiFilter', () => {
+    const roles = fixture.debugElement.queryAll(By.css('tui-filter label'));
+    console.log(roles);
+    expect(roles.length).toBe(3);
+  });
+
 });

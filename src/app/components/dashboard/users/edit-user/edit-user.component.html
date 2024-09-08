@@ -1,4 +1,4 @@
-<form [formGroup]="edit_form">
+<form id="edit_form" [formGroup]="edit_form">
   <div class="tui-col_12">
     <h3 tuiTitle="m">
       Edit User
@@ -32,6 +32,7 @@
       (click)="submit()"
       type="button"
       size="m"
+      [disabled]="edit_form.invalid"
       appearance="primary"
     >
       Edit User
@@ -39,7 +40,7 @@
   </div>
 </form>
 
-<form class="tui-space_top-9" [formGroup]="role_form">
+<form id="role_form" class="tui-space_top-9" [formGroup]="role_form">
   <div class="tui-col_12">
     <h3 tuiTitle="m">
       Edit Roles
