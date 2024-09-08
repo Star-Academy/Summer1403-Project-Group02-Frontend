@@ -59,6 +59,9 @@ export class ChangePassDialogComponent {
         complete: () => {
           this.loading = false;
         },
+        error: () => {
+          this.loading = false;
+        },
       });
     }
   }
