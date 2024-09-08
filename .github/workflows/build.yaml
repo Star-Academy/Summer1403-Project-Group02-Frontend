@@ -80,3 +80,36 @@ jobs:
           push: true
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
+
+      - name: Update deployment
+        uses: "@actions/github-script"
+        with:
+          github-token: ${{ secrets.DEPLOYMENT_PAT }}
+          script: |
+            if(!'${{ secrets.DEPLOYMENT_PAT }}') {
+              console.log('No PAT provided, skipping deployment update')
+              return
+            }
+
+            const owner = '${{ secrets.DEPLOYMENT_OWNER }}'
+            const repo = '${{ secrets.DEPLOYMENT_REPO }}'
+            const workflow_id = '${{ secrets.DEPLOYMENT_WORKFLOW }}'
+            const ref = 'main'
+            const deployment_name = '${{ secrets.DEPLOYMENT_NAME }}'
+            const version = '${{ needs.tag.outputs.new_version }}'
+
+            if (!owner || !repo || !workflow_id || !deployment_name || !version) {
+              core.setFailed('Missing required inputs')
+              return
+            }
+
+            await github.actions.createWorkflowDispatch({
+              owner: owner,
+              repo: repo,
+              workflow_id: workflow_id,
+              ref: ref,
+              inputs: {
+                version: version,
+                deployment: deployment_name,
+              }
+            })
