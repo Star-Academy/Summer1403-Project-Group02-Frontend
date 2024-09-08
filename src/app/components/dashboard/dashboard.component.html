@@ -71,15 +71,15 @@
       <button routerLink="profile" iconStart="@tui.user" tuiAsideItem>
         <span tuiFade>Profile</span>
       </button>
-      <button iconStart="@tui.settings" tuiAsideItem>
-        <span tuiFade>Settings</span>
+      <button iconStart="@tui.log-out" (click)="logout()" tuiAsideItem>
+        <span tuiFade>Logout</span>
       </button>
       <button
         tuiAsideItem
         [iconStart]="expanded ? '@tui.chevron-left' : '@tui.chevron-right'"
         (click)="expanded = !expanded"
       >
-        <span tuiFade>{{ expanded ? 'Collapse' : 'Expand' }}</span>
+        <span tuiFade>{{ expanded ? "Collapse" : "Expand" }}</span>
       </button>
     </footer>
   </aside>
