@@ -87,7 +87,7 @@ jobs:
     needs: [build, tag]
 
     concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+      group: ${{ github.workflow }}-${{ github.ref }}-deployment
       cancel-in-progress: true
 
     steps:
