@@ -52,37 +52,38 @@ export class RegisterComponent implements OnInit {
   private readonly adminUserService = inject(AdminUserService);
 
   rej_form!: FormGroup;
-  protected roles_item !: string[];
+  protected roles_item!: string[];
 
   ngOnInit(): void {
     this.adminUserService.fetchRoles().subscribe({
       next: (response: RoleResponse) => {
         this.roles_item = response.data.map((role) => role.roleType);
       },
-    })
+    });
 
     this.rej_form = new FormGroup({
       userName: new FormControl(null, [
         Validators.required,
-        Validators.minLength(2),
+        Validators.minLength(3),
       ]),
       firstName: new FormControl(null, [
         Validators.required,
-        Validators.minLength(2),
+        Validators.minLength(3),
       ]),
       lastName: new FormControl(null, [
         Validators.required,
-        Validators.minLength(2),
+        Validators.minLength(3),
       ]),
       password: new FormControl(null, [
         Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(30),
+        Validators.minLength(8),
+        Validators.pattern(
+          '^(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$'
+        ),
       ]),
       email: new FormControl(null, [Validators.required, Validators.email]),
       roles: new FormControl([], [Validators.required]),
     });
-
   }
 
   protected rejSubmit() {
@@ -104,9 +105,7 @@ export class RegisterComponent implements OnInit {
           this.context.completeWith();
         },
       });
-    }
-
-    else {
+    } else {
       // Optionally, show a validation error message
       console.error('Form is invalid');
       this.rej_form.markAsDirty();
