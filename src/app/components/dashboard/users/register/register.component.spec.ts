@@ -35,15 +35,15 @@ describe('RegisterComponent', () => {
   });
 
   it('should initialize form with required controls', () => {
-    expect(component.rej_form.contains('firstName')).toBeTrue();
-    expect(component.rej_form.contains('lastName')).toBeTrue();
-    expect(component.rej_form.contains('password')).toBeTrue();
-    expect(component.rej_form.contains('email')).toBeTrue();
-    expect(component.rej_form.contains('dob')).toBeTrue();
+    expect(component.form.contains('firstName')).toBeTrue();
+    expect(component.form.contains('lastName')).toBeTrue();
+    expect(component.form.contains('password')).toBeTrue();
+    expect(component.form.contains('email')).toBeTrue();
+    expect(component.form.contains('dob')).toBeTrue();
   });
 
   it('should make the firstName control required and validate its length', () => {
-    const firstNameControl = component.rej_form.get('firstName');
+    const firstNameControl = component.form.get('firstName');
     firstNameControl?.setValue('');
     expect(firstNameControl?.valid).toBeFalse();
 
@@ -55,7 +55,7 @@ describe('RegisterComponent', () => {
   });
 
   it('should make the lastName control required and validate its length', () => {
-    const lastNameControl = component.rej_form.get('lastName');
+    const lastNameControl = component.form.get('lastName');
     lastNameControl?.setValue('');
     expect(lastNameControl?.valid).toBeFalse();
 
@@ -67,7 +67,7 @@ describe('RegisterComponent', () => {
   });
 
   it('should validate the email control', () => {
-    const emailControl = component.rej_form.get('email');
+    const emailControl = component.form.get('email');
     emailControl?.setValue('');
     expect(emailControl?.valid).toBeFalse();
 
@@ -79,7 +79,7 @@ describe('RegisterComponent', () => {
   });
 
   it('should make the password control required and validate its length', () => {
-    const passwordControl = component.rej_form.get('password');
+    const passwordControl = component.form.get('password');
     passwordControl?.setValue('');
     expect(passwordControl?.valid).toBeFalse();
 
@@ -91,7 +91,7 @@ describe('RegisterComponent', () => {
   });
 
   it('should validate the dob control as required', () => {
-    const dobControl = component.rej_form.get('dob');
+    const dobControl = component.form.get('dob');
     dobControl?.setValue('');
     expect(dobControl?.valid).toBeFalse();
 

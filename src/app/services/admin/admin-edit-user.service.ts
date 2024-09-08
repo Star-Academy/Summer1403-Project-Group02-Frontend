@@ -8,6 +8,9 @@ export class AdminEditUserService {
 
   private cur_user!: User;
 
+  constructor() {
+  }
+
   setUser(user: User) {
     this.cur_user = user;
   }

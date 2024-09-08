@@ -20,8 +20,6 @@ import {
 import { POLYMORPHEUS_CONTEXT } from '@taiga-ui/polymorpheus';
 import { AdminEditUserService } from '../../../../services/admin/admin-edit-user.service';
 import { User } from '../../../../models/user';
-import { AdminUserService } from '../../../../services/admin/admin.service';
-import { EditUserBody } from '../../../../models/api/editUser';
 
 @Component({
   selector: 'app-register',
@@ -45,25 +43,28 @@ import { EditUserBody } from '../../../../models/api/editUser';
 export class EditUserComponent implements OnInit {
   private readonly context = inject<TuiDialogContext>(POLYMORPHEUS_CONTEXT);
   private readonly adminEditUserService = inject(AdminEditUserService);
-  private readonly adminService = inject(AdminUserService);
 
   form!: FormGroup;
-  protected user!: User;
 
   ngOnInit(): void {
 
-    this.user = this.adminEditUserService.getUser();
+    const user: User = this.adminEditUserService.getUser();
 
     this.form = new FormGroup({
-      firstName: new FormControl(this.user.firstName, [
+      firstName: new FormControl(user.firstName, [
         Validators.required,
         Validators.minLength(2),
       ]),
-      lastName: new FormControl(this.user.lastName, [
+      lastName: new FormControl(user.lastName, [
         Validators.required,
         Validators.minLength(2),
       ]),
-      email: new FormControl(this.user.email, [Validators.required, Validators.email]),
+      password: new FormControl(null, [
+        // Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(30),
+      ]),
+      email: new FormControl(user.email, [Validators.required, Validators.email]),
     });
   }
 
@@ -71,20 +72,8 @@ export class EditUserComponent implements OnInit {
     if (!this.form.invalid) {
       // call api here to edit user
 
-      const editBody: EditUserBody = {
-        firstName: this.form.value.firstName,
-        lastName: this.form.value.lastName,
-        email: this.form.value.email,
-      }
-
-      this.adminService.updateUser(this.user.username, editBody).subscribe({
-        next: () => {
-          // close dialog
-          this.context.completeWith();
-        },
-      }
-      );
-
+      // if OK compelete this 
+      this.context.completeWith();
     } else {
       // show errorr
     }

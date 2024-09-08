@@ -1,10 +1,8 @@
 <div id="user-container" tuiCardLarge tuiSurface="elevated">
-  <nav id="user-nav" tuiHeader>
+  <nav id="user-nav" tuiHeader class="px-6 pt-6">
     <h3 [style.gap]="0" tuiTitle>
       Users
-      <div tuiSubtitle class="hidden md:block">
-        Here, you can manage users' info.
-      </div>
+      <div tuiSubtitle>Here, you can manage users' info.</div>
     </h3>
 
     <div tuiAccessories>
@@ -16,7 +14,7 @@
 
   <table class="tui-table">
     <thead>
-      <tr class="tui-table__tr">
+      <tr id="table_header" class="tui-table__tr bg-neutral-100 text-black">
         <th class="tui-table__th">Name</th>
         <th class="tui-table__th">Username</th>
         <th class="tui-table__th">Role</th>
@@ -27,7 +25,10 @@
 
     <tbody>
       <!-- Use *ngFor with the signal value using users() -->
-      <tr *ngFor="let i of users()" class="tui-table__tr">
+      <tr
+        *ngFor="let i of users()"
+        class="tui-table__tr tui-table__tr_border_none"
+      >
         <td class="tui-table__td">
           {{ i.firstName + " " + i.lastName | titlecase }}
         </td>
@@ -46,7 +47,7 @@
           <a href="mailto:{{ i.email }}">{{ i.email }}</a>
         </td>
 
-        <td class="tui-table__td" [style.width.rem]="7">
+        <td class="tui-table__td">
           <button
             tuiIconButton
             size="s"

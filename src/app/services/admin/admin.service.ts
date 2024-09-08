@@ -5,11 +5,9 @@ import { tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { NotificationService } from '../notif/notification.service';
 import { SUCCESS_MESSAGES_MAP } from '../../constants/success-messages';
-import { AllUserResponse, UserResponse } from '../../models/api/userResponse';
+import { UserResponse } from '../../models/api/userResponse';
 import { User } from '../../models/user';
 import { RoleResponse } from '../../models/api/roleResponse';
-import { UserBody } from '../../models/api/userBody';
-import { EditUserBody } from '../../models/api/editUser';
 
 @Injectable({
   providedIn: 'root',
@@ -39,17 +37,17 @@ export class AdminUserService {
   }
 
   // Get a user by username
-  getUser(username: string): Observable<UserResponse> {
+  getUser(username: string): Observable<User> {
     const url = `${environment.apiBaseUrl}/Admin/users/${username}`;
     return this.http
-      .get<UserResponse>(url, { withCredentials: true })
+      .get<User>(url, { withCredentials: true })
       .pipe(
         tap(() => this.showSuccessNotification('User Retrieved Successfully'))
       );
   }
 
   // Create a new user
-  createUser(user: UserBody): Observable<User> {
+  createUser(user: Partial<User>): Observable<User> {
     const url = `${environment.apiBaseUrl}/Admin/users`;
     return this.http.post<User>(url, user, { withCredentials: true }).pipe(
       tap((newUser) => {
@@ -108,16 +106,6 @@ export class AdminUserService {
       .delete<void>(url, { withCredentials: true })
       .pipe(
         tap(() => this.showSuccessNotification('Role Removed Successfully'))
-      );
-  }
-
-  // update user :/
-  updateUser(username: string, user: EditUserBody): Observable<UserResponse> {
-    const url = `${environment.apiBaseUrl}/Admin/users/update/${username}`;
-    return this.http
-      .put<UserResponse>(url, user, { withCredentials: true })
-      .pipe(
-        tap(() => this.showSuccessNotification('User Updated Successfully'))
       );
   }
 
