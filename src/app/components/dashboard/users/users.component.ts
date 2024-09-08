@@ -1,4 +1,4 @@
-import { NgForOf, TitleCasePipe } from '@angular/common';
+import { NgForOf, NgIf, TitleCasePipe } from '@angular/common';
 import {
   Component,
   inject,
@@ -23,7 +23,7 @@ import {
   TuiChip,
   TuiFade,
 } from '@taiga-ui/kit';
-import { TuiCardLarge, TuiHeader } from '@taiga-ui/layout';
+import { TuiCardLarge, TuiHeader, TuiBlockStatus } from '@taiga-ui/layout';
 import { RoleAppearancePipe } from '../../../pipes/role-appearance.pipe';
 import { UsernamePipe } from '../../../pipes/username.pipe';
 import type { TuiConfirmData } from '@taiga-ui/kit';
@@ -54,8 +54,10 @@ import { AdminEditUserService } from '../../../services/admin/admin-edit-user.se
     RouterLink,
     TitleCasePipe,
     RoleAppearancePipe,
+    TuiBlockStatus,
     TuiChip,
     NgForOf,
+    NgIf,
   ],
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
@@ -66,7 +68,10 @@ export class UsersComponent implements OnInit {
   private readonly injector = inject(INJECTOR);
   private readonly adminUserService = inject(AdminUserService);
   private readonly adminEditUserService = inject(AdminEditUserService);
-
+  
+  protected page_index!: number;
+  protected page_valid!: boolean;
+  
   // Use the signal API to store the users
   protected users = signal<User[]>([]);
 
@@ -89,19 +94,49 @@ export class UsersComponent implements OnInit {
   );
 
   ngOnInit(): void {
+    this.page_index = 1;
+    this.page_valid = false;
     this.loadUsers();
   }
 
   private loadUsers(): void {
-    this.adminUserService.fetchUsers().subscribe({
+    this.adminUserService.fetchUsers(this.page_index).subscribe({
       next: (response) => {
-        this.users.set(response.data); // Update the signal with the fetched data
-        console.log(this.users());
+        if (response.data) {
+          this.users.set(response.data); // Update the signal with the fetched data
+          this.page_valid = true;
+        }
+
+        else {
+          this.page_valid = false;
+        }
       },
       error: (err) => {
         console.error('Failed to load users:', err);
       },
     });
+  }
+
+  protected canNext():boolean {
+    return this.page_valid;
+  }
+
+  protected canPrev():boolean {
+    return this.page_index > 1;
+  }
+
+  protected nextPage() {
+    if (this.canNext()) {
+      this.page_index++;
+      this.loadUsers();
+    }
+  }
+  
+  protected prevPage() {
+    if (this.canPrev()) {
+      this.page_index--;
+      this.loadUsers();
+    }
   }
 
   protected showEditUserDialog(username: string): void {

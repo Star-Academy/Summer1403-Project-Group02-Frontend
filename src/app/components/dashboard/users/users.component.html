@@ -26,6 +26,17 @@
     </thead>
 
     <tbody>
+       	<tui-block-status *ngIf="!page_valid">
+    <img
+        alt="not found"
+        src="/not-found.svg"
+        tuiSlot="top"
+        class="image"
+    />
+ 
+    <h4>Users Not Found</h4>
+ 
+    </tui-block-status>
       <!-- Use *ngFor with the signal value using users() -->
       <tr *ngFor="let i of users()" class="tui-table__tr">
         <td class="tui-table__td">
@@ -69,5 +80,28 @@
         </td>
       </tr>
     </tbody>
+    <tfoot class="flex flex-row justify-center items-center gap-4">
+      <button
+      tuiIconButton
+      (click)="prevPage()"
+        appearance="flat"
+        iconStart="@tui.arrow-left"
+        [disabled]="!canPrev()"
+      >
+        prev
+      </button>
+
+      <p>{{page_index}}</p>
+
+      <button
+        tuiIconButton
+        (click)="nextPage()"
+        appearance="flat"
+        iconStart="@tui.arrow-right"
+        [disabled]="!canNext()"
+      >
+        next
+      </button>
+    </tfoot>
   </table>
 </div>

@@ -12,15 +12,19 @@
     margin-top: 1rem;
     height: 100%;
 
-    $thead-height: 2.5rem;
+    $tHF-height: 2.5rem;
 
     thead {
-      height: $thead-height;
+      height: $tHF-height;
+    }
+    
+    tfoot{
+      height: $tHF-height;
     }
 
     tbody {
       display: block;
-      height: calc(100% - #{$thead-height});
+      height: calc(100% - 2 * #{$tHF-height});
       overflow-y: auto;
 
       &::-webkit-scrollbar {

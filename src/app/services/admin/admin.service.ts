@@ -24,8 +24,8 @@ export class AdminUserService {
   ) { }
 
   // Fetch all users
-  fetchUsers(): Observable<AllUserResponse> {
-    const url = `${environment.apiBaseUrl}/Admin/users`;
+  fetchUsers(page_index: number): Observable<AllUserResponse> {
+    const url = `${environment.apiBaseUrl}/Admin/users?pageNumber=${page_index}`;
     return this.http.get<AllUserResponse>(url, { withCredentials: true }).pipe(
       tap((response) => {
         this.usersSubject.next(response.data);
