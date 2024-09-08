@@ -196,7 +196,7 @@ describe('EditUserComponent', () => {
   });
 
   it('should render the roles inside the TuiFilter', () => {
-    const roles = fixture.debugElement.queryAll(By.css('tui-filter label'));
+    const roles = fixture.debugElement.queryAll(By.css('label'));
     console.log(roles);
     expect(roles.length).toBe(3);
   });
