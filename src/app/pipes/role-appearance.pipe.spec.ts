@@ -6,14 +6,19 @@ describe('RoleAppearancePipe Tests', () => {
     expect(pipe).toBeTruthy();
   });
 
-  it("return 'success' when value is 'Admin'", () => {
+  it("return 'success' when value is 'SystemAdmin'", () => {
     const pipe = new RoleAppearancePipe();
-    expect(pipe.transform('Admin')).toBe('success');
+    expect(pipe.transform('SystemAdmin')).toBe('success');
   });
 
-  it("return 'warning' when value is 'Developer'", () => {
+  it("return 'warning' when value is 'DataAdmin'", () => {
     const pipe = new RoleAppearancePipe();
-    expect(pipe.transform('Developer')).toBe('warning');
+    expect(pipe.transform('DataAdmin')).toBe('warning');
+  });
+
+  it("return 'info' when value is 'Analyst'", () => {
+    const pipe = new RoleAppearancePipe();
+    expect(pipe.transform('Analyst')).toBe('info');
   });
 
   it("return 'neutral' by default case", () => {
