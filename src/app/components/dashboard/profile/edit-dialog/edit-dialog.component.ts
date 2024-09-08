@@ -34,7 +34,6 @@ export class EditDialogComponent implements OnInit {
   private readonly context = inject<TuiDialogContext>(POLYMORPHEUS_CONTEXT);
 
   protected form!: FormGroup;
-  protected loading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -58,18 +57,11 @@ export class EditDialogComponent implements OnInit {
   protected submit(): void {
     if (this.form.valid) {
       const { name, family, email } = this.form.value;
-      this.loading = true;
 
       this.updateService.editUser(name, family, email).subscribe({
         next: () => {
           this.authService.loadCurrentUser();
           this.context.completeWith();
-        },
-        error: () => {
-          this.loading = false;
-        },
-        complete: () => {
-          this.loading = false;
         },
       });
     }

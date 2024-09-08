@@ -30,7 +30,7 @@
   <button
     size="m"
     tuiButton
-    [loading]="loading"
+    [disabled]="form.invalid"
     type="button"
     (click)="submit()"
   >

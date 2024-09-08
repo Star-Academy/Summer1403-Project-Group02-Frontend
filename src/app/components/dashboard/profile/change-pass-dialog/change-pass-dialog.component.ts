@@ -35,32 +35,33 @@ export class ChangePassDialogComponent {
   private readonly context = inject<TuiDialogContext>(POLYMORPHEUS_CONTEXT);
 
   protected form: FormGroup;
-  protected loading = false;
 
   constructor(
     private fb: FormBuilder,
     private changePasswordService: ChangePasswordService
   ) {
     this.form = this.fb.group({
-      oldPass: ['', Validators.required],
-      newPass: ['', Validators.required],
+      oldPass: ['', [Validators.required]],
+      newPass: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.pattern(
+            '^(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$'
+          ),
+        ],
+      ],
     });
   }
 
   protected submit(): void {
     if (this.form.valid) {
       const { oldPass, newPass } = this.form.value;
-      this.loading = true;
 
       this.changePasswordService.changePassword(oldPass, newPass).subscribe({
         next: () => {
           this.context.completeWith();
-        },
-        complete: () => {
-          this.loading = false;
-        },
-        error: () => {
-          this.loading = false;
         },
       });
     }
