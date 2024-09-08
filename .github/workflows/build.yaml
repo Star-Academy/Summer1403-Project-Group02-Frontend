@@ -85,6 +85,11 @@ jobs:
     name: Update deployment
     runs-on: ubuntu-latest
     needs: [build, tag]
+
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+
     steps:
       - name: Check if deployment PAT is set
         id: deployment_check
