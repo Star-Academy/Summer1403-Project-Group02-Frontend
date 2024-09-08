@@ -81,16 +81,16 @@ jobs:
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
 
+  deployment:
+    name: Update deployment
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - name: Update deployment
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.DEPLOYMENT_PAT }}
           script: |
-            if(!'${{ secrets.DEPLOYMENT_PAT }}') {
-              console.log('No PAT provided, skipping deployment update')
-              return
-            }
-
             const owner = '${{ secrets.DEPLOYMENT_OWNER }}'
             const repo = '${{ secrets.DEPLOYMENT_REPO }}'
             const workflow_id = '${{ secrets.DEPLOYMENT_WORKFLOW }}'
@@ -103,7 +103,8 @@ jobs:
               return
             }
 
-            await github.actions.createWorkflowDispatch({
+            // Trigger the workflow dispatch using Octokit API (from github object)
+            await github.rest.actions.createWorkflowDispatch({
               owner: owner,
               repo: repo,
               workflow_id: workflow_id,
@@ -112,4 +113,6 @@ jobs:
                 version: version,
                 deployment: deployment_name,
               }
-            })
+            });
+  
+            console.log('Workflow dispatch triggered successfully.');
