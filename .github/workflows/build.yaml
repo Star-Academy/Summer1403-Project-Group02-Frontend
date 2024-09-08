@@ -84,7 +84,7 @@ jobs:
   deployment:
     name: Update deployment
     runs-on: ubuntu-latest
-    needs: build
+    needs: [build, tag]
     steps:
       - name: Update deployment
         uses: actions/github-script@v7
