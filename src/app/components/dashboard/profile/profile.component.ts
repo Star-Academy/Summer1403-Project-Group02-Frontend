@@ -4,13 +4,9 @@ import {
   Component,
   inject,
   INJECTOR,
+  OnInit,
 } from '@angular/core';
-import {
-  ReactiveFormsModule,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import {
   TuiButton,
   TuiIcon,
@@ -36,7 +32,7 @@ import { ChangePassDialogComponent } from './change-pass-dialog/change-pass-dial
 import type { TuiConfirmData } from '@taiga-ui/kit';
 import { AuthService } from '../../../services/auth/auth.service';
 import { Router } from '@angular/router';
-import { OnInit } from '@angular/core';
+import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
 
 @Component({
   selector: 'app-profile',
@@ -79,37 +75,28 @@ export class ProfileComponent implements OnInit {
     new PolymorpheusComponent(ChangePassDialogComponent, this.injector)
   );
 
-  protected form = new FormGroup({
-    first_name: new FormControl<string>('name', Validators.required),
-    last_name: new FormControl<string>('family', Validators.required),
-    email: new FormControl<string>('mail@mail.com', [
-      Validators.required,
-      Validators.email,
-    ]),
-  });
+  private readonly editDialog = this.dialogs.open(
+    new PolymorpheusComponent(EditDialogComponent, this.injector)
+  );
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) {}
+
   ngOnInit(): void {
-    this.form.disable();
-  }
-
-  editHandler() {
-    if (this.form.enabled) {
-      if (this.form.valid) {
-        // api call here
-
-        // after success
-        this.form.disable();
-      } else {
-        this.form.markAllAsTouched();
+    this.authService.getCurrentUser().subscribe((user) => {
+      if (user) {
+        this.name = `${user.firstName} ${user.lastName}`;
+        this.username = user.username;
+        this.roles = user.roles.map((role) => role.roleType);
       }
-    } else {
-      this.form.enable();
-    }
+    });
   }
 
   protected showChangePassDialog(): void {
     this.changePassDialog.subscribe();
+  }
+
+  protected showUpdateInfoDialog(): void {
+    this.editDialog.subscribe();
   }
 
   protected showLogoutDialog(): void {

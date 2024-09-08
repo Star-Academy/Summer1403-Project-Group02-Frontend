@@ -28,6 +28,14 @@
       <div class="flex gap-2 w-full md:w-auto flex-col md:flex-row">
         <button
           tuiButton
+          (click)="showUpdateInfoDialog()"
+          appearance="secondary"
+          size="m"
+        >
+          update info
+        </button>
+        <button
+          tuiButton
           (click)="showChangePassDialog()"
           appearance="secondary"
           size="m"
@@ -48,44 +56,6 @@
     <div
       class="flex flex-col md:flex-row w-full h-full gap-4 items-stretch justify-center"
     >
-      <form [formGroup]="form" class="flex w-full flex-col gap-2">
-        <tui-input
-          tuiTextfieldSize="m"
-          formControlName="first_name"
-          [tuiTextfieldLabelOutside]="true"
-        >
-          type your first name
-        </tui-input>
-
-        <tui-input
-          tuiTextfieldSize="m"
-          formControlName="last_name"
-          [tuiTextfieldLabelOutside]="true"
-        >
-          type your last name
-        </tui-input>
-
-        <tui-input
-          tuiTextfieldSize="m"
-          formControlName="email"
-          [tuiTextfieldLabelOutside]="true"
-        >
-          type your email address
-        </tui-input>
-
-        <button
-          class="w-full"
-          tuiButton
-          [loading]="form.pending"
-          [disabled]="form.invalid"
-          appearance="{{ form.enabled ? 'primary' : 'secondary' }}"
-          size="m"
-          (click)="editHandler()"
-        >
-          {{ form.enabled ? "Save" : "Edit" }}
-        </button>
-      </form>
-
       <div id="quotes" class="w-full rounded-2xl p-4">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi illo
         quidem laudantium iste quibusdam eius officia perspiciatis fuga odit
