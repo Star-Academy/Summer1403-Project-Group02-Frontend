@@ -8,6 +8,7 @@ import { LoginResponse } from '../../models/api/loginResponse';
 import { LogoutResponse } from '../../models/api/logoutResponse';
 import { NotificationService } from '../notif/notification.service';
 import { SUCCESS_MESSAGES_MAP } from '../../constants/success-messages';
+import { UserResponse } from '../../models/api/userResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,16 @@ export class AuthService {
 
   getCurrentUser(): Observable<User | undefined> {
     return this.currentUserSubject.asObservable();
+  }
+
+  loadCurrentUser() {
+    this.http
+      .get<UserResponse>(`${environment.apiBaseUrl}/Authentication`, {
+        withCredentials: true,
+      })
+      .subscribe((user) => {
+        this.currentUserSubject.next(user.data);
+      });
   }
 
   private checkIfUserIsLoggedIn(): void {
