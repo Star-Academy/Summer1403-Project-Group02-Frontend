@@ -1,3 +1,4 @@
+[![codecov](https://codecov.io/gh/Star-Academy/Summer1403-Project-Group02-Frontend/graph/badge.svg?token=S3RGPY11GL)](https://codecov.io/gh/Star-Academy/Summer1403-Project-Group02-Frontend)
 # Summer1403-Project-Group02-Frontend
 
 - @Mr-MRF-Dev
