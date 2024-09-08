@@ -1,11 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditUserComponent } from './edit-user.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TuiInputModule, TuiInputPasswordModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
-import { TuiAlertService, TuiButton, TuiDataList, TuiIcon, TuiLink, TuiTitle } from '@taiga-ui/core';
+import {
+  TuiInputModule,
+  TuiInputPasswordModule,
+  TuiTextfieldControllerModule,
+} from '@taiga-ui/legacy';
+import {
+  TuiAlertService,
+  TuiButton,
+  TuiDataList,
+  TuiIcon,
+  TuiLink,
+  TuiTitle,
+} from '@taiga-ui/core';
 import { POLYMORPHEUS_CONTEXT } from '@taiga-ui/polymorpheus';
 import { TuiCheckbox, TuiDataListWrapper, TuiFilter } from '@taiga-ui/kit';
-import { TuiInputDateModule } from '@taiga-ui/legacy';
 import { By } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { Observable, of } from 'rxjs';
@@ -36,78 +46,72 @@ describe('EditUserComponent', () => {
       ],
       providers: [
         {
-            provide: POLYMORPHEUS_CONTEXT,
-            useValue: jasmine.createSpyObj({
-                open: jasmine.createSpyObj({
-                    afterClosed: of('closed')
-                })
-            })
-        },
-        {
-            provide: AdminEditUserService,
-            useValue: jasmine.createSpyObj({
-                getUser: 
-                    {
-                      username: "admin",
-                      firstName: "admin",
-                      lastName: "adminn",
-                      email: "admin@admin.admin",
-                      roles: [{roleType: "Admin"}]
-                    }
-            })
-        },
-        {
-            provide: AdminUserService,
-            useValue: jasmine.createSpyObj({
-                fetchRoles: jasmine.createSpyObj({
-                    subscribe: new Observable<RoleResponse>((subscriber) => {
-                      subscriber.next(
-                      {
-                        data: [
-                          {roleType: "Admin"},
-                          {roleType: "User"},
-                          {roleType: "Guest"}
-                        ],
-                        type: 200,
-                        message: "msg"
-                      });
-                      subscriber.complete();
-                    }
-                      
-                    )
-                    
-                }),
-                updateUser: jasmine.createSpyObj({
-                    subscribe: of({
-                      data:  {
-                        username: "admin",
-                        firstName: "aa",
-                        lastName: "bb",
-                        email: "admin@admin.admin",
-                        roles: []
-                      },
-                      type: 200,
-                      message: "msg",
-                    })
-                }),
-                removeRoleFromUser: jasmine.createSpyObj({
-                    subscribe: new Observable<void>()
-                }),
-                addRoleToUser: jasmine.createSpyObj({
-                    subscribe: new Observable<void>()
-                })
+          provide: POLYMORPHEUS_CONTEXT,
+          useValue: jasmine.createSpyObj({
+            open: jasmine.createSpyObj({
+              afterClosed: of('closed'),
             }),
-             
+          }),
         },
         {
-            provide: TuiAlertService,
-            useValue: jasmine.createSpyObj({
-              open: jasmine.createSpyObj({
-                afterClosed: of('closed')
-            })
-            })
-        }
-      ]
+          provide: AdminEditUserService,
+          useValue: jasmine.createSpyObj({
+            getUser: {
+              username: 'admin',
+              firstName: 'admin',
+              lastName: 'adminn',
+              email: 'admin@admin.admin',
+              roles: [{ roleType: 'Admin' }],
+            },
+          }),
+        },
+        {
+          provide: AdminUserService,
+          useValue: jasmine.createSpyObj({
+            fetchRoles: jasmine.createSpyObj({
+              subscribe: new Observable<RoleResponse>((subscriber) => {
+                subscriber.next({
+                  data: [
+                    { roleType: 'Admin' },
+                    { roleType: 'User' },
+                    { roleType: 'Guest' },
+                  ],
+                  type: 200,
+                  message: 'msg',
+                });
+                subscriber.complete();
+              }),
+            }),
+            updateUser: jasmine.createSpyObj({
+              subscribe: of({
+                data: {
+                  username: 'admin',
+                  firstName: 'aa',
+                  lastName: 'bb',
+                  email: 'admin@admin.admin',
+                  roles: [],
+                },
+                type: 200,
+                message: 'msg',
+              }),
+            }),
+            removeRoleFromUser: jasmine.createSpyObj({
+              subscribe: new Observable<void>(),
+            }),
+            addRoleToUser: jasmine.createSpyObj({
+              subscribe: new Observable<void>(),
+            }),
+          }),
+        },
+        {
+          provide: TuiAlertService,
+          useValue: jasmine.createSpyObj({
+            open: jasmine.createSpyObj({
+              afterClosed: of('closed'),
+            }),
+          }),
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(EditUserComponent);
@@ -175,15 +179,23 @@ describe('EditUserComponent', () => {
   });
 
   it('disables the submit button when the edit form is invalid', () => {
-    const submitButton = fixture.debugElement.query(By.css('button[type="button"]'));
+    const submitButton = fixture.debugElement.query(
+      By.css('button[type="submit"]')
+    );
     component.edit_form.setValue({ firstName: '', lastName: '', email: '' });
     fixture.detectChanges();
     expect(submitButton.nativeElement.disabled).toBeTrue();
   });
 
   it('enables the submit button when the edit form is valid', () => {
-    const submitButton = fixture.debugElement.query(By.css('button[type="button"]'));
-    component.edit_form.setValue({ firstName: 'John', lastName: 'Doe', email: 'John@Doe.dev' });
+    const submitButton = fixture.debugElement.query(
+      By.css('button[type="submit"]')
+    );
+    component.edit_form.setValue({
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'John@Doe.dev',
+    });
     fixture.detectChanges();
     expect(submitButton.nativeElement.disabled).toBeFalse();
   });
@@ -200,5 +212,4 @@ describe('EditUserComponent', () => {
     console.log(roles);
     expect(roles.length).toBe(3);
   });
-
 });
