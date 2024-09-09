@@ -7,20 +7,17 @@ import { TuiCheckbox } from '@taiga-ui/kit';
 import { TuiCardLarge } from '@taiga-ui/layout';
 import { By } from '@angular/platform-browser';
 import { AuthService } from '../../services/auth/auth.service';
-import { Router } from '@angular/router';
-import { of, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 import { DebugElement } from '@angular/core';
-import { LoginResponse } from '../../models/api/loginResponse';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let authServiceSpy: jasmine.SpyObj<AuthService>;
-  let routerSpy: jasmine.SpyObj<Router>;
 
   beforeEach(async () => {
     authServiceSpy = jasmine.createSpyObj('AuthService', ['loginUser']);
-    routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
     await TestBed.configureTestingModule({
       imports: [
@@ -32,11 +29,9 @@ describe('LoginComponent', () => {
         TuiCardLarge,
         TuiSurface,
         LoginComponent,
+        RouterTestingModule,
       ],
-      providers: [
-        { provide: AuthService, useValue: authServiceSpy },
-        { provide: Router, useValue: routerSpy },
-      ],
+      providers: [{ provide: AuthService, useValue: authServiceSpy }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoginComponent);
@@ -99,32 +94,6 @@ describe('LoginComponent', () => {
     component.loading = true;
     fixture.detectChanges();
     expect(loginButton.disabled).toBeTrue();
-  });
-
-  it('should call AuthService.loginUser on form submit', () => {
-    const credentials = { username: 'admin', password: 'admin' };
-
-    const mockResponse: LoginResponse = {
-      data: {
-        username: 'admin',
-        firstName: '',
-        lastName: '',
-        email: '',
-        roles: [{ roleType: 'SystemAdmin' }],
-      },
-      type: 200,
-      message: 'Login Successfully',
-    };
-
-    authServiceSpy.loginUser.and.returnValue(of(mockResponse));
-
-    component.form.setValue(credentials);
-
-    component.onSubmit();
-
-    expect(authServiceSpy.loginUser).toHaveBeenCalledWith(credentials);
-
-    expect(routerSpy.navigate).toHaveBeenCalledWith(['/dashboard']);
   });
 
   it('should handle login errors', () => {

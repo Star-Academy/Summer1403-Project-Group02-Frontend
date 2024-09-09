@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DataGroupResolverService } from './data-group-resolver.service';
+import { DataGroupResolver } from './data-group-resolver.service';
 
-describe('DataGroupResolverService', () => {
-  let service: DataGroupResolverService;
+describe('DataGroupResolver', () => {
+  let service: DataGroupResolver;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(DataGroupResolverService);
+    service = TestBed.inject(DataGroupResolver);
   });
 
   it('should be created', () => {
