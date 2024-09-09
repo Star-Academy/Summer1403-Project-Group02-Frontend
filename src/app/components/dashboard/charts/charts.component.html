@@ -12,6 +12,12 @@
       <button iconStart="@tui.pie-chart" tuiTab>Graph</button>
     </tui-tabs>
 
+    <form [formGroup]="titleForm" class="w-48">
+      <tui-input formControlName="titleForm">
+        Title
+        <input tuiTextfieldLegacy />
+      </tui-input>
+    </form>
     <div class="flex gap-2 px-2">
       <button size="s" appearance="outline" tuiButton>Send Feedback</button>
       <button
