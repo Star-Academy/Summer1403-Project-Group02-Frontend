@@ -11,7 +11,10 @@ export const authGuard: CanActivateFn = async (route, state) => {
 
   // Get the current user from the observable
   const user = await firstValueFrom(authService.getCurrentUser());
-  const currentUrl = route.url[0].path;
+  let currentUrl = null;
+  if (route.url[0]?.path) {
+    currentUrl = route.url[0].path;
+  }
   const isLoginRoute = currentUrl === 'login';
 
   if (user) {

@@ -6,6 +6,8 @@ import { ProfileComponent } from './components/dashboard/profile/profile.compone
 import { GraphComponent } from './components/dashboard/graph/graph.component';
 import { ImportComponent } from './components/dashboard/import/import.component';
 import { ChartsComponent } from './components/dashboard/charts/charts.component';
+import { authGuard } from './guards/auth.guard';
+import { HomeComponent } from './components/dashboard/home/home.component';
 
 export const routes: Routes = [
   {
@@ -15,7 +17,7 @@ export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'dashboard/users',
+    redirectTo: 'dashboard',
   },
   {
     path: 'dashboard',
@@ -23,6 +25,11 @@ export const routes: Routes = [
     component: DashboardComponent,
     canActivateChild: [authGuard],
     children: [
+      {
+        path: '',
+        component: HomeComponent,
+        title: 'Dashboard Home',
+      },
       {
         path: 'users',
         component: UsersComponent,

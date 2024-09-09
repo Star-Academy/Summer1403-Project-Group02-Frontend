@@ -1,0 +1,26 @@
+@for (group of dataGroups; track group.dataGroupId) {
+<div class="first hero">
+  <img
+    class="hero-profile-img"
+    src="https://png.pngtree.com/background/20230625/original/pngtree-low-poly-abstract-background-with-dynamic-network-connections-and-cutting-edge-picture-image_4046611.jpg"
+    alt=""
+  />
+  <div class="hero-description-bk"></div>
+  <div class="hero-logo">
+    <img
+      src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png"
+      alt=""
+    />
+  </div>
+  <div class="hero-description">
+    <p>{{ group.name }}</p>
+  </div>
+  <div class="hero-date">
+    <p>{{ group.createAt | date : 'short' }}</p>
+    <p>{{ group.updateAt | date : 'short' }}</p>
+  </div>
+  <div class="hero-btn">
+    <a href="#">Learn More</a>
+  </div>
+</div>
+}
