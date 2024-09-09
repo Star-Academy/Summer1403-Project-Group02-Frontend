@@ -71,16 +71,16 @@ describe('LoginComponent', () => {
     expect(passwordControl?.valid).toBeFalse();
   });
 
-  it('should render the "Sign in" text inside the tuiCardLarge', () => {
+  it('should render the "Welcome Back" text inside the tuiCardLarge', () => {
     const cardTitle = fixture.debugElement.query(
       By.css('.tui-island__title')
     ).nativeElement;
-    expect(cardTitle.textContent).toContain('Sign in');
+    expect(cardTitle.textContent).toContain('Welcome Back');
   });
 
   it('should render a login button', () => {
     const loginButton = fixture.debugElement.query(
-      By.css('button[appearance="accent"]')
+      By.css('button[type="submit"]')
     );
     expect(loginButton).toBeTruthy();
     expect(loginButton.nativeElement.textContent).toContain('Login');
@@ -92,7 +92,7 @@ describe('LoginComponent', () => {
     fixture.detectChanges();
 
     const loginButton = fixture.debugElement.query(
-      By.css('button[appearance="accent"]')
+      By.css('button[type="submit"]')
     ).nativeElement;
     expect(loginButton.disabled).toBeTrue();
 
