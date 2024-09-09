@@ -54,14 +54,25 @@
     </div>
 
     <div
-      class="flex flex-col md:flex-row w-full h-full gap-4 items-stretch justify-center"
+      class="flex flex-col md:flex-row w-full h-full gap-8 items-stretch justify-center"
     >
-      <div id="quotes" class="w-full rounded-2xl p-4">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi illo
-        quidem laudantium iste quibusdam eius officia perspiciatis fuga odit
-        unde consequuntur a sequi eaque facere ratione aliquam, quo, dolorum
-        iure.
-      </div>
+      <a class="info-card" href="/docs" target="_blank">
+        <img alt="Documentation" src="/doc.svg" tuiSlot="top" />
+        <h4>Documentation</h4>
+        learn more about the app and how to use it
+      </a>
+
+      <a class="info-card" href="{{ github_repo }}" target="_blank">
+        <img alt="Repository" src="/repo.svg" tuiSlot="top" />
+        <h4>Repository</h4>
+        view the source code of the app and contribute to its improvement
+      </a>
+
+      <a class="info-card" href="/support" target="_blank">
+        <img alt="support" src="/support.svg" tuiSlot="top" />
+        <h4>Support</h4>
+        get help from the community and the developers
+      </a>
     </div>
   </div>
 </div>

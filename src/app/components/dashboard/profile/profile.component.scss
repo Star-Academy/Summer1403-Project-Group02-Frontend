@@ -6,7 +6,7 @@
 
   #bg-user {
     background: url("/user-bg.jpeg") no-repeat center / cover;
-    height: 14rem;
+    height: 10rem;
     border-radius: 0;
     border: 0;
 
@@ -31,10 +31,27 @@
       transform: translateY(-2rem);
     }
 
-    #quotes {
-      border: 1px dashed #c2c2c2;
-      background-color: var(--tui-background-base-alt);
-      color: var(--tui-text-primary);
+    .info-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding-inline: 3rem;
+      gap: 1rem;
+
+      text-align: center;
+
+      img {
+        $img-size: 9rem;
+        width: $img-size;
+        height: $img-size;
+      }
+
+      h4 {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-block-start: 0.5rem;
+      }
     }
   }
 }

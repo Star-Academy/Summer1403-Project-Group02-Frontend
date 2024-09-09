@@ -22,7 +22,7 @@ import {
   TuiFade,
   TUI_CONFIRM,
 } from '@taiga-ui/kit';
-import { TuiCardLarge } from '@taiga-ui/layout';
+import { TuiBlockStatus, TuiCardLarge } from '@taiga-ui/layout';
 import { AvatarTextPipe } from '../../../pipes/avatar-text.pipe';
 import { UsernamePipe } from '../../../pipes/username.pipe';
 import { RoleAppearancePipe } from '../../../pipes/role-appearance.pipe';
@@ -33,6 +33,7 @@ import type { TuiConfirmData } from '@taiga-ui/kit';
 import { AuthService } from '../../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-profile',
@@ -58,6 +59,7 @@ import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
     RoleAppearancePipe,
     TuiChip,
     NgForOf,
+    TuiBlockStatus,
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
@@ -81,7 +83,11 @@ export class ProfileComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router) {}
 
+  protected github_repo!: string;
+
   ngOnInit(): void {
+    this.github_repo = environment.githubRepo;
+
     this.authService.getCurrentUser().subscribe((user) => {
       if (user) {
         this.name = `${user.firstName} ${user.lastName}`;
