@@ -34,7 +34,7 @@ import { ChangePasswordService } from '../../../../services/user/change-password
 export class ChangePassDialogComponent {
   private readonly context = inject<TuiDialogContext>(POLYMORPHEUS_CONTEXT);
 
-  protected form: FormGroup;
+  form: FormGroup;
 
   constructor(
     private fb: FormBuilder,
