@@ -1,0 +1,24 @@
+<div class="first hero">
+  <img
+    class="hero-profile-img"
+    src="https://png.pngtree.com/background/20230625/original/pngtree-low-poly-abstract-background-with-dynamic-network-connections-and-cutting-edge-picture-image_4046611.jpg"
+    alt=""
+  />
+  <div class="hero-description-bk"></div>
+  <div class="hero-logo">
+    <img
+      src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png"
+      alt=""
+    />
+  </div>
+  <div class="hero-description">
+    <p>{{ data.name }}</p>
+  </div>
+  <div class="hero-date">
+    <p>Created at: {{ data.createAt | date : 'short' }}</p>
+    <p>Updated at: {{ data.updateAt | date : 'short' }}</p>
+  </div>
+  <div class="hero-btn">
+    <a appearance="glass" size="m" tuiButton>Open</a>
+  </div>
+</div>
