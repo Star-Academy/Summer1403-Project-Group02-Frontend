@@ -181,7 +181,7 @@ describe('RegisterComponent', () => {
     dobControl?.setValue([]);
     expect(dobControl?.valid).toBeFalse();
 
-    dobControl?.setValue(['2000-01-Admin']);
+    dobControl?.setValue(['Admin']);
     expect(dobControl?.valid).toBeTrue();
   });
 
