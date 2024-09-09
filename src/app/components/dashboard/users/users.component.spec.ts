@@ -22,7 +22,6 @@ import {
 import { TuiCardLarge, TuiHeader } from '@taiga-ui/layout';
 import { RoleAppearancePipe } from '../../../pipes/role-appearance.pipe';
 import { UsernamePipe } from '../../../pipes/username.pipe';
-import { TUI_CONFIRM } from '@taiga-ui/kit';
 import { AdminUserService } from '../../../services/admin/admin.service';
 import { AdminEditUserService } from '../../../services/admin/admin-edit-user.service';
 import {
@@ -113,15 +112,20 @@ describe('UsersComponent', () => {
             }),
           }),
         },
-        { provide: AdminEditUserService, useValue:  jasmine.createSpyObj({
-            setUser: []
+        {
+          provide: AdminEditUserService,
+          useValue: jasmine.createSpyObj({
+            setUser: [],
           }),
         },
-        { provide: TuiDialogService, useValue: jasmine.createSpyObj({
+        {
+          provide: TuiDialogService,
+          useValue: jasmine.createSpyObj({
             open: jasmine.createSpyObj({
               afterClosed: of('closed'),
             }),
-          }), },
+          }),
+        },
         { provide: INJECTOR, useValue: INJECTOR },
       ],
     }).compileComponents();
