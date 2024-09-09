@@ -1,5 +1,5 @@
 export interface ChangepassResponse {
-  data: Record<string, never>;
+  data: object;
   type: number;
   message: string;
 }
