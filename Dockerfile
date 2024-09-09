@@ -16,7 +16,8 @@ LABEL org.opencontainers.image.source="https://github.com/Star-Academy/Summer140
 
 WORKDIR /app
 
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY ./server.conf /etc/nginx/conf.d/default.conf
 RUN nginx -t
 
 EXPOSE 80
