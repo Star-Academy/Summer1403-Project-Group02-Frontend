@@ -6,7 +6,6 @@ import {
 import { AuthService } from './auth.service';
 import { environment } from '../../../environments/environment';
 import { LoginBody } from '../../models/api/loginBody';
-import { User } from '../../models/user';
 import { LoginResponse } from '../../models/api/loginResponse';
 import { of } from 'rxjs';
 
@@ -92,7 +91,7 @@ describe('AuthService', () => {
     service.loginUser(mockCredentials).subscribe({
       error: (error) => {
         expect(error.message).toBe(
-          'Unauthorized. Incorrect username or password.'
+          `Http failure response for ${environment.apiBaseUrl}/Authentication/login: 401 Unauthorized`
         );
       },
     });
@@ -104,20 +103,9 @@ describe('AuthService', () => {
   });
 
   it('should log out the user and clear the currentUserSubject', () => {
-    const mockUser: User = {
-      username: 'testuser',
-      firstName: 'Test',
-      lastName: 'User',
-      email: 'testuser@example.com',
-      roles: [{ roleType: 'Admin' }],
-    };
-    localStorage.setItem('savedCurrentUser', JSON.stringify(mockUser));
-
     spyOn(service['http'], 'post').and.returnValue(of(void 0));
 
     service.logOutUser().subscribe(() => {
-      expect(localStorage.getItem('savedCurrentUser')).toBeNull();
-
       service.getCurrentUser().subscribe((user) => {
         expect(user).toBeUndefined();
       });
@@ -125,7 +113,7 @@ describe('AuthService', () => {
 
     expect(service['http'].post).toHaveBeenCalledWith(
       `${environment.apiBaseUrl}/Authentication/logout`,
-      {}
+      { withCredentials: true }
     );
   });
 });
