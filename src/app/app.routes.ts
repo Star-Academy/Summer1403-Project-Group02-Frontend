@@ -30,9 +30,9 @@ export const routes: Routes = [
         path: '',
         component: HomeComponent,
         title: 'Dashboard Home',
-        resolve: {
-          dataGroups: DataGroupResolver,
-        },
+        // resolve: {
+        //   dataGroups: DataGroupResolver,
+        // },
       },
       {
         path: 'users',
