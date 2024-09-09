@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 
 import { AdminEditUserService } from './admin-edit-user.service';
 import { User } from '../../models/user';
-import { Role } from '../../models/role';
 
 describe('AdminEditUserService', () => {
   let service: AdminEditUserService;
@@ -18,11 +17,11 @@ describe('AdminEditUserService', () => {
 
   it('should set and get user', () => {
     const user: User = {
-      username: "Admin",
-      firstName: "Name",
-      lastName: "Family",
-      email: "admin@admin.admin",
-      roles: [{ roleType: "Admin" }],
+      username: 'Admin',
+      firstName: 'Name',
+      lastName: 'Family',
+      email: 'admin@admin.admin',
+      roles: [{ roleType: 'Admin' }],
     };
 
     service.setUser(user);
