@@ -37,7 +37,7 @@ export class AuthService {
       });
   }
 
-  private checkIfUserIsLoggedIn(): void {
+  checkIfUserIsLoggedIn(): void {
     const savedCurrentUser = localStorage.getItem('savedCurrentUser');
     if (savedCurrentUser) {
       const parsedUser: User = JSON.parse(savedCurrentUser);
