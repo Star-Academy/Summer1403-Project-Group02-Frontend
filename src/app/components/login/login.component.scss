@@ -1,55 +1,83 @@
 $padding: 1rem;
 $padding-large: 1.25rem;
 
-.tui-island {
-  position: relative;
-  display: block;
-  border-radius: var(--tui-radius-xl);
-  background-color: var(--tui-background-base);
-  word-wrap: break-word;
-  text-decoration: none;
-  color: var(--tui-text-primary);
-  outline: none;
-  box-sizing: content-box;
-  --t-padding: 1rem !important;
+#main {
+  background-image: url("/login-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 
-  &:not(&--hoverable)::before {
-    // @include fullsize();
-
-    content: '';
-    box-sizing: border-box;
-    border: 1px solid var(--tui-border-normal);
-    border-radius: inherit;
-    pointer-events: none;
+  .main-card {
+    border-radius: var(--tui-radius-xl);
+    background-color: var(--tui-background-base);
+    color: var(--tui-text-primary);
   }
 
-  &:focus,
-  &:hover:focus {
-    &::before {
-      border-color: var(--tui-border-focus);
+  .Rimg {
+    height: 100%;
+    border-radius: var(--tui-radius-xl);
+    background-image: url("/user-bg.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .tui-island {
+    position: relative;
+    display: block;
+    border-radius: var(--tui-radius-xl);
+    background-color: var(--tui-background-base);
+    word-wrap: break-word;
+    text-decoration: none;
+    color: var(--tui-text-primary);
+    outline: none;
+    box-sizing: content-box;
+    --t-padding: 1rem !important;
+
+    &:not(&--hoverable)::before {
+      // @include fullsize();
+
+      content: "";
+      box-sizing: border-box;
+      // border: 1px solid var(--tui-border-normal);
+      border-radius: inherit;
+      pointer-events: none;
+    }
+
+    &:focus,
+    &:hover:focus {
+      &::before {
+        border-color: var(--tui-border-focus);
+      }
+    }
+
+    &__title {
+      // text-align: center;
+      font-weight: bold;
+      font: var(--tui-font-heading-3);
+      margin: 0 0 0.5rem;
+    }
+
+    &__paragraph {
+      // text-align: center;
+      margin: 0 0 1rem 0;
+      color: var(--tui-text-secondary);
+    }
+
+    .tui-island &__footer-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: unset;
+      width: calc(100% + 1.875rem);
+      margin: $padding calc(-1rem + 1px) calc(-1rem + 1px);
+      border-top: 1px solid var(--tui-border-normal);
+      border-radius: 0 0 var(--tui-radius-xl) var(--tui-radius-xl);
+      text-align: center;
     }
   }
+}
 
-  &__title {
-    font: var(--tui-font-heading-6);
-    margin: 0 0 0.75rem;
-  }
-
-  &__paragraph {
-    margin: 0 0 1rem 0;
-    color: var(--tui-text-secondary);
-  }
-
-  .tui-island &__footer-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    max-width: unset;
-    width: calc(100% + 1.875rem);
-    margin: $padding calc(-1rem + 1px) calc(-1rem + 1px);
-    border-top: 1px solid var(--tui-border-normal);
-    border-radius: 0 0 var(--tui-radius-xl) var(--tui-radius-xl);
-    text-align: center;
-    margin-top: 16px !important;
-  }
+.tui-island:not(.tui-island_hoverable)::before {
+  border: 0;
 }

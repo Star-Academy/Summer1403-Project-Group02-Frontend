@@ -1,0 +1,107 @@
+<div id="user-container" tuiCardLarge tuiSurface="elevated">
+  <nav id="user-nav" tuiHeader>
+    <h3 [style.gap]="0" tuiTitle>
+      Users
+      <div tuiSubtitle class="hidden md:block">
+        Here, you can manage users' info.
+      </div>
+    </h3>
+
+    <div tuiAccessories>
+      <button tuiButton iconStart="@tui.plus" (click)="showRejDialog()">
+        Add new User
+      </button>
+    </div>
+  </nav>
+
+  <table class="tui-table">
+    <thead>
+      <tr class="tui-table__tr">
+        <th class="tui-table__th">Name</th>
+        <th class="tui-table__th">Username</th>
+        <th class="tui-table__th">Role</th>
+        <th class="tui-table__th">Email</th>
+        <th class="tui-table__th" [style.width.rem]="7">Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+       	<tui-block-status *ngIf="!page_valid">
+    <img
+        alt="not found"
+        src="/not-found.svg"
+        tuiSlot="top"
+        class="image"
+    />
+ 
+    <h4>Users Not Found</h4>
+ 
+    </tui-block-status>
+      <!-- Use *ngFor with the signal value using users() -->
+      <tr *ngFor="let i of users()" class="tui-table__tr">
+        <td class="tui-table__td">
+          {{ i.firstName + " " + i.lastName | titlecase }}
+        </td>
+        <td class="tui-table__td">{{ i.username }}</td>
+        <td tuiFade class="flex tui-table__td">
+          <tui-chip
+            *ngFor="let r of i.roles"
+            appearance="{{ r.roleType | roleAppearance }}"
+            size="s"
+            class="tui-space_right-1"
+          >
+            {{ r.roleType }}
+          </tui-chip>
+        </td>
+        <td class="tui-table__td">
+          <a href="mailto:{{ i.email }}">{{ i.email }}</a>
+        </td>
+
+        <td class="tui-table__td" [style.width.rem]="7">
+          <button
+            tuiIconButton
+            size="s"
+            (click)="showEditUserDialog(i.username)"
+            appearance="flat"
+            iconStart="@tui.pen"
+          >
+            edit user
+          </button>
+          <button
+            size="s"
+            (click)="showDeleteDialog(i.username)"
+            tuiIconButton
+            appearance="flat"
+            [style.color]="'red'"
+            iconStart="@tui.trash"
+          >
+            delete user
+          </button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot class="flex flex-row justify-center items-center gap-4">
+      <button
+      tuiIconButton
+      (click)="prevPage()"
+        appearance="flat"
+        iconStart="@tui.arrow-left"
+        [disabled]="!canPrev()"
+      >
+        prev
+      </button>
+
+      <p>{{page_index}}</p>
+
+      <button
+        tuiIconButton
+        (click)="nextPage()"
+        appearance="flat"
+        iconStart="@tui.arrow-right"
+        [disabled]="!canNext()"
+      >
+        next
+      </button>
+    </tfoot>
+  </table>
+</div>

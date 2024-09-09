@@ -1,0 +1,57 @@
+#profile-card {
+  padding: 0;
+  border-radius: 0;
+  height: 100%;
+  justify-content: flex-start;
+
+  #bg-user {
+    background: url("/user-bg.jpeg") no-repeat center / cover;
+    height: 10rem;
+    border-radius: 0;
+    border: 0;
+
+    &:before {
+      background: rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  #card-up {
+    transform: translateY(calc(-1 * var(--t-gap)));
+    margin-inline: 2rem;
+    margin-block-start: 0;
+
+    #avatar {
+      transform: translateY(calc(-50%));
+      border: 1px solid #858585;
+      background-color: var(--tui-background-base-alt);
+      color: var(--tui-text-primary);
+    }
+
+    #prof-header {
+      transform: translateY(-2rem);
+    }
+
+    .info-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding-inline: 3rem;
+      gap: 1rem;
+
+      text-align: center;
+
+      img {
+        $img-size: 9rem;
+        width: $img-size;
+        height: $img-size;
+      }
+
+      h4 {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-block-start: 0.5rem;
+      }
+    }
+  }
+}

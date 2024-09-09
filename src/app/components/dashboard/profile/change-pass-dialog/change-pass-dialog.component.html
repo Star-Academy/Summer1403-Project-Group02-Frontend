@@ -1,0 +1,45 @@
+<form [formGroup]="form">
+  <h2 tuiTitle="m">Change Password</h2>
+
+  <ul class="tui-space_top-5 tui-space_bottom-5">
+    <li tuiSubtitle>The password must be at least 8 characters long.</li>
+    <li tuiSubtitle class="tui-space_top-2">
+      It must contain at least one uppercase letter (A-Z).
+    </li>
+    <li tuiSubtitle class="tui-space_top-2">
+      It must contain at least one special character from the set !&#64;#$%^&*.
+    </li>
+    <li tuiSubtitle class="tui-space_top-2">
+      It can contain lowercase letters (a-z), digits (0-9), and the special
+      characters mentioned above.
+    </li>
+  </ul>
+
+  <tui-input-password
+    tuiTextfieldSize="m"
+    class="tui-space_top-5"
+    formControlName="oldPass"
+    [tuiTextfieldLabelOutside]="true"
+  >
+    old password
+  </tui-input-password>
+
+  <tui-input-password
+    tuiTextfieldSize="m"
+    class="tui-space_top-3 tui-space_bottom-5"
+    [tuiTextfieldLabelOutside]="true"
+    formControlName="newPass"
+  >
+    new password
+  </tui-input-password>
+
+  <button
+    size="m"
+    tuiButton
+    [disabled]="form.invalid"
+    type="submit"
+    (click)="submit()"
+  >
+    Submit
+  </button>
+</form>

@@ -1,0 +1,44 @@
+<!-- <div class="flex flex-col items-center justify-center h-screen">
+  <div class="text-center">
+    <div class="text-4xl font-bold text-gray-800">Welcome to Dashboard</div>
+    <div class="text-lg text-gray-500 mt-2">
+      You can open your recent datasets or create a new one
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <button
+      class="px-6 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600"
+    >
+      Create new one
+    </button>
+  </div>
+</div> -->
+<div class="mt-14 flex justify-center flex-col fade-in-up">
+  <div class="text-center">
+    <div class="text-4xl font-bold text-gray-800">Welcome to Dashboard</div>
+    <div class="text-lg text-gray-500 mt-2">
+      You can open your recent datasets or create a new one
+    </div>
+  </div>
+
+  <div class="mt-4 flex justify-center fade-in-up">
+    <!-- Optional: Accessories like buttons or icons can go here -->
+    <button
+      tuiButton
+      class="inline-block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-300 ease-in-out"
+      (click)="navigateToImport()"
+    >
+      Import New Dataset
+    </button>
+  </div>
+</div>
+@if (loading) {
+<p>loading...</p>
+} @else {
+<div class="grid-container">
+  @for (group of dataGroups; track group.dataGroupId) {
+  <app-dataset-card [data]="group" />
+  }
+</div>
+}

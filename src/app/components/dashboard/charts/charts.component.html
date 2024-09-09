@@ -1,0 +1,46 @@
+<section class="flex flex-col w-full h-full">
+  <div
+    id="chart-header"
+    class="flex flex-row gap-4 items-center justify-between px-6"
+  >
+    <div>
+      <h1 class="text-xl font-bold">Charts</h1>
+    </div>
+
+    <tui-tabs [(activeItemIndex)]="activeItemIndex">
+      <button iconStart="@tui.import" tuiTab>Import</button>
+      <button iconStart="@tui.pie-chart" tuiTab>Graph</button>
+    </tui-tabs>
+
+    <form [formGroup]="titleForm" class="w-48">
+      <tui-input formControlName="titleForm">
+        Title
+        <input tuiTextfieldLegacy />
+      </tui-input>
+    </form>
+    <div class="flex gap-2 px-2">
+      <button size="s" appearance="outline" tuiButton>Send Feedback</button>
+      <button
+        size="s"
+        appearance="Opposite"
+        iconStart="@tui.info"
+        tuiIconButton
+      ></button>
+      <button
+        size="s"
+        iconStart="@tui.settings"
+        tuiIconButton
+        appearance="Opposite"
+      ></button>
+      <button
+        size="s"
+        iconStart="@tui.users"
+        tuiIconButton
+        appearance="Opposite"
+      ></button>
+    </div>
+  </div>
+
+  <app-import class="h-full" [hidden]="activeItemIndex !== 0"></app-import>
+  <app-graph class="h-full" [hidden]="activeItemIndex !== 1"></app-graph>
+</section>

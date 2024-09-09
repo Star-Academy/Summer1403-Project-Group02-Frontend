@@ -1,0 +1,78 @@
+<!-- <header id="header" tuiNavigationHeader>
+  <button
+    [size]="buttonSize()"
+    iconStart="@tui.layout-grid"
+    (click)="expanded = !expanded"
+    tuiIconButton
+  >
+    Menu
+  </button>
+
+  <span tuiNavigationLogo>
+    <span>{{ title }}</span>
+  </span>
+
+  <hr />
+
+  <button [size]="buttonSize()" iconStart="@tui.sun" tuiIconButton>
+    Change Theme
+  </button>
+  <button [size]="buttonSize()" iconStart="@tui.bell" tuiIconButton>
+    Notifications
+    <tui-badge-notification>1 </tui-badge-notification>
+  </button>
+  <button
+    [size]="buttonSize()"
+    routerLink="profile"
+    appearance="secondary"
+    iconStart="@tui.user"
+    tuiButton
+  >
+    {{ full_name | titlecase }}
+  </button>
+</header> -->
+
+<div id="container" [style.display]="'flex'">
+  <aside [tuiNavigationAside]="expanded" class="aside">
+    <header>
+      <button
+        routerLink="/dashboard"
+        iconStart="@tui.home"
+        [routerLinkActiveOptions]="{ exact: true }"
+        tuiAsideItem
+      >
+        <span tuiFade>Dasboard</span>
+      </button>
+    </header>
+
+    <button routerLink="users" iconStart="@tui.users" tuiAsideItem>
+      <span tuiFade>Users</span>
+    </button>
+
+    <button routerLink="charts" iconStart="@tui.pie-chart" tuiAsideItem>
+      <span tuiFade>Application</span>
+    </button>
+
+    <hr />
+    <button iconStart="@tui.plus" tuiAsideItem><span tuiFade>Add</span></button>
+    <footer>
+      <button routerLink="profile" iconStart="@tui.user" tuiAsideItem>
+        <span tuiFade>Profile</span>
+      </button>
+      <button iconStart="@tui.log-out" (click)="logout()" tuiAsideItem>
+        <span tuiFade>Logout</span>
+      </button>
+      <button
+        tuiAsideItem
+        [iconStart]="expanded ? '@tui.chevron-left' : '@tui.chevron-right'"
+        (click)="expanded = !expanded"
+      >
+        <span tuiFade>{{ expanded ? "Collapse" : "Expand" }}</span>
+      </button>
+    </footer>
+  </aside>
+
+  <main id="main">
+    <router-outlet [style.height]="0" />
+  </main>
+</div>

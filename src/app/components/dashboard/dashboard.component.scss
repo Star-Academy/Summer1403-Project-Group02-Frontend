@@ -1,0 +1,94 @@
+// #header {
+//   height: calc(var(--tui-height-m) + 0.25rem);
+//   background-color: #131720;
+
+//   & button {
+//     max-width: none;
+//   }
+// }
+
+#container {
+  height: 100vh;
+  background-color: #f5f6f6;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+#main {
+  height: 100%;
+  width: 100%;
+
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+}
+
+#main::-webkit-scrollbar {
+  width: 0;
+}
+
+.aside {
+  background-color: #131720;
+  height: 100%;
+}
+
+.aside button span {
+  margin-inline-start: 0.5rem;
+}
+
+:host {
+  --tui-shadow-small: 0 0.125rem 0.25rem rgba#131720;
+}
+
+header[tuiNavigationHeader]:before {
+  box-shadow: 0 -1.5rem #131720;
+}
+
+aside[tuiNavigationAside] {
+  background: #131720;
+}
+
+aside[tuiNavigationAside]:before {
+  box-shadow: 0 -1.5rem #131720;
+  width: 0;
+  height: 0;
+}
+
+header[tuiNavigationHeader]:after {
+  box-shadow: 0 -1.5rem #131720;
+}
+
+@media (min-width: 768px) {
+  // #header {
+  //   font: var(--tui-font-text-m);
+  //   height: calc(var(--tui-height-l) + 0.25rem);
+  // }
+
+  #container {
+    font: var(--tui-font-text-m);
+  }
+
+  aside {
+    padding: 1rem;
+    [tuiButton][data-size="s"]:not([tuiIconButton][data-appearance="icon"]):not(
+        [tuiIconButton][data-appearance="link"]
+      ):before {
+      font-size: 1.1rem;
+    }
+
+    button {
+      font: var(--tui-font-text-m);
+      --t-size: var(--tui-height-m);
+      --t-radius: var(--tui-radius-m);
+    }
+  }
+}
+
+aside[tuiNavigationAside][_ngcontent-ng-c2979599704]:before {
+  box-shadow: none !important;
+}

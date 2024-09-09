@@ -5,9 +5,8 @@ import {
 } from '@angular/common/http/testing';
 import { AuthService } from './auth.service';
 import { environment } from '../../../environments/environment';
-import { LoginAPI } from '../../models/api/loginAPI';
-import { CurrentUser } from '../../models/current-user';
-import { LoginAPIResponse } from '../../models/api/login-apiresponse';
+import { LoginBody } from '../../models/api/loginBody';
+import { LoginResponse } from '../../models/api/loginResponse';
 import { of } from 'rxjs';
 
 describe('AuthService', () => {
@@ -50,11 +49,11 @@ describe('AuthService', () => {
   // });
 
   it('should log in a user and store the user data', () => {
-    const mockCredentials: LoginAPI = {
+    const mockCredentials: LoginBody = {
       username: 'testuser',
       password: 'password',
     };
-    const mockResponse: LoginAPIResponse = {
+    const mockResponse: LoginResponse = {
       data: {
         username: 'testuser',
         firstName: 'Test',
@@ -83,7 +82,7 @@ describe('AuthService', () => {
   });
 
   it('should handle errors properly when logging in', () => {
-    const mockCredentials: LoginAPI = {
+    const mockCredentials: LoginBody = {
       username: 'testuser',
       password: 'wrongpassword',
     };
@@ -92,7 +91,7 @@ describe('AuthService', () => {
     service.loginUser(mockCredentials).subscribe({
       error: (error) => {
         expect(error.message).toBe(
-          'Unauthorized. Incorrect username or password.'
+          `Http failure response for ${environment.apiBaseUrl}/Authentication/login: 401 Unauthorized`
         );
       },
     });
@@ -104,20 +103,9 @@ describe('AuthService', () => {
   });
 
   it('should log out the user and clear the currentUserSubject', () => {
-    const mockUser: CurrentUser = {
-      username: 'testuser',
-      firstName: 'Test',
-      lastName: 'User',
-      email: 'testuser@example.com',
-      roles: [{ roleType: 'Admin' }],
-    };
-    localStorage.setItem('savedCurrentUser', JSON.stringify(mockUser));
-
     spyOn(service['http'], 'post').and.returnValue(of(void 0));
 
     service.logOutUser().subscribe(() => {
-      expect(localStorage.getItem('savedCurrentUser')).toBeNull();
-
       service.getCurrentUser().subscribe((user) => {
         expect(user).toBeUndefined();
       });
@@ -125,7 +113,7 @@ describe('AuthService', () => {
 
     expect(service['http'].post).toHaveBeenCalledWith(
       `${environment.apiBaseUrl}/Authentication/logout`,
-      {}
+      { withCredentials: true }
     );
   });
 });
