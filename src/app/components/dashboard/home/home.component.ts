@@ -1,38 +1,40 @@
-import { Component } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import {
+  DataGroup,
+  DatasetCardComponent,
+} from './dataset-card/dataset-card.component';
+import { TuiHeader } from '@taiga-ui/layout';
+import { TuiButton } from '@taiga-ui/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [DatePipe],
+  imports: [DatasetCardComponent, TuiHeader, TuiButton],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent {
-  dataGroups = [
-    {
-      dataGroupId: 1,
-      name: 'Group 1',
-      createAt: '2024-08-28T18:20:18.474778Z',
-      updateAt: '2024-08-28T18:20:18.474778Z',
-    },
-    // {
-    //   dataGroupId: 2,
-    //   name: 'Group 2',
-    //   createAt: '2024-08-28T18:55:19.984789Z',
-    //   updateAt: '2024-08-28T18:55:19.984789Z',
-    // },
-    // {
-    //   dataGroupId: 3,
-    //   name: 'Group 3',
-    //   createAt: '2024-08-28T22:44:32.227683Z',
-    //   updateAt: '2024-08-28T22:44:32.227683Z',
-    // },
-    // {
-    //   dataGroupId: 4,
-    //   name: 'Group 4',
-    //   createAt: '2024-09-06T15:32:53.280587Z',
-    //   updateAt: '2024-09-06T15:32:53.280587Z',
-    // },
-  ];
+export class HomeComponent implements OnInit {
+  dataGroups: DataGroup[] = []; // Initialize as an empty array
+  loading = true;
+
+  constructor(private router: Router, private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    // Show loader while data is being fetched
+    this.route.data.subscribe(
+      (data) => {
+        this.dataGroups = data['dataGroups']; // Fetch the data from the resolver
+        this.loading = false; // Data fetched, turn off the loader
+      },
+      (error) => {
+        console.error('Error fetching data groups:', error);
+        this.loading = false; // Turn off loader even if there's an error
+      }
+    );
+  }
+
+  navigateToImport() {
+    this.router.navigate(['/dashboard/import']);
+  }
 }
