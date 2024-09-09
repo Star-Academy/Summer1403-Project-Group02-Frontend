@@ -97,15 +97,15 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  protected showChangePassDialog(): void {
+  showChangePassDialog(): void {
     this.changePassDialog.subscribe();
   }
 
-  protected showUpdateInfoDialog(): void {
+  showUpdateInfoDialog(): void {
     this.editDialog.subscribe();
   }
 
-  protected showLogoutDialog(): void {
+  showLogoutDialog(): void {
     const data: TuiConfirmData = {
       content: 'Are you sure you want to logout?',
       yes: 'Yes',
