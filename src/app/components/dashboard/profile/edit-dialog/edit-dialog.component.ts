@@ -33,7 +33,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 export class EditDialogComponent implements OnInit {
   private readonly context = inject<TuiDialogContext>(POLYMORPHEUS_CONTEXT);
 
-  protected form!: FormGroup;
+  form!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
